@@ -1,16 +1,24 @@
 import { Checkbox, Form, Input } from 'antd';
 import { credentials } from '../../../constants';
 import { useState } from 'react';
-
-interface LoginInformation {
-  username: string;
-  password: string;
-  remember: boolean;
-}
+import { useDispatch } from 'react-redux';
+import { authenticate } from '../../../store/users/actions';
+import { LoginInformation } from '../../../store/users/types';
+import { useSelector } from 'react-redux';
+import { selectUserLoadingState } from '../../../store/users/selectors';
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  const dispatch = useDispatch();
+
+  const isLoading = useSelector(selectUserLoadingState);
+
+  console.log(isLoading, 'isLoading');
+
   const onLogin = (value: LoginInformation) => {
+    dispatch(authenticate(value));
+
     if (credentials[value.username] === value.password) {
       console.info('login success');
       onLoginSuccess(value);

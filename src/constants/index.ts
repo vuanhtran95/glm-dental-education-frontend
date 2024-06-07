@@ -1,4 +1,4 @@
-import { Credentials } from './types';
+import { Credentials } from '../types';
 
 export const MODE = {
   DEVELOPMENT: 'development',
