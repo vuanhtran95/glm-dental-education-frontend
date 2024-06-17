@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import inactiveMicrophone from '../../assets/inactive-microphone.png';
 import activeMicrophone from '../../assets/active-microphone.gif';
-import { getHealth } from '../../services/api';
+// import { getHealth } from '../../services/api';
 
 const Home = () => {
   const [initialised, setInitialised] = useState<boolean>(false);
@@ -10,10 +10,10 @@ const Home = () => {
 
   useEffect(() => {
     if (!initialised) {
-      getHealth().then(() => {
-        setInitialised(true);
-        setLoading(false);
-      });
+      // getHealth().then(() => {
+      //   setInitialised(true);
+      //   setLoading(false);
+      // });
     }
   }, [initialised]);
 

@@ -1,5 +1,11 @@
 import './App.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+} from 'react-router-dom';
+
 import Settings from './pages/settings';
 import NotFound from './pages/404';
 import Chat from './pages/chat';
@@ -7,18 +13,15 @@ import Login from './pages/authentication/login';
 import SignUp from './pages/authentication/signup';
 
 function App() {
+  const ProtectedRoutes = () => {
+    const localStorageToken = localStorage.getItem('token');
+    return localStorageToken ? <Outlet /> : <Navigate to='/login' replace />;
+  };
+
   const router = createBrowserRouter([
     {
       path: '/',
       element: <Login />,
-      // loader: rootLoader,
-      // children: [
-      //   {
-      //     path: 'team',
-      //     element: <Team />,
-      //     loader: teamLoader,
-      //   },
-      // ],
     },
     {
       path: '/login',
@@ -29,18 +32,24 @@ function App() {
       element: <SignUp />,
     },
     {
-      path: '/settings',
-      element: <Settings />,
-    },
-    {
-      path: '/chat',
-      element: <Chat />,
-    },
-    {
       path: '*',
       element: <NotFound />,
     },
+    {
+      element: <ProtectedRoutes />,
+      children: [
+        {
+          path: '/settings',
+          element: <Settings />,
+        },
+        {
+          path: '/chat',
+          element: <Chat />,
+        },
+      ],
+    },
   ]);
+
   return <RouterProvider router={router} />;
 }
 

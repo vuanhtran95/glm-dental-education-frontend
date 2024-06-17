@@ -1,14 +1,38 @@
-export interface LoginInformation {
-  username: string;
-  password: string;
-  remember: boolean;
+import { DataPayload } from '../../types';
+import { USER_AUTHENTICATE, USER_INFO_FETCH } from './actionTypes';
+
+export interface AuthenticatePayload extends DataPayload {
+  value: {
+    username: string;
+    password: string;
+  };
+}
+
+export interface AuthenticateAction {
+  type: typeof USER_AUTHENTICATE;
+  payload: AuthenticatePayload;
+}
+
+export interface GetUserInfoPayload extends DataPayload {}
+
+export interface GetUserInfoAction {
+  type: typeof USER_INFO_FETCH;
+  payload: AuthenticatePayload;
+}
+
+export enum UserRole {
+  SYSTEM = 'system',
+  USER = 'user',
+}
+export interface UserInfo {
+  _id: string;
+  accountId: string;
+  role: UserRole;
+  fullName: string;
 }
 
 export interface UserState {
-  data: null | unknown;
   loading: boolean;
-  error: null | boolean;
-  token: string | null;
 }
 
 export interface UserData {}
@@ -24,3 +48,15 @@ export type UserAction =
   | {
       type: 'USER_UNAUTHORIZED';
     };
+
+export interface AuthenticationResponse {
+  data: {
+    token: string;
+  };
+}
+
+export interface UserResponse {
+  data: {
+    user: UserInfo;
+  };
+}
