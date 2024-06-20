@@ -8,14 +8,17 @@ import {
 
 import Settings from './pages/settings';
 import NotFound from './pages/404';
-import Chat from './pages/chat';
+import Dashboard from './pages/dashboard';
 import Login from './pages/authentication/login';
 import SignUp from './pages/authentication/signup';
+import Chat from './pages/chat';
+import MainPage from './MainPage';
+import Scenario from './pages/scenario';
 
-function App() {
+const App = () => {
   const ProtectedRoutes = () => {
     const localStorageToken = localStorage.getItem('token');
-    return localStorageToken ? <Outlet /> : <Navigate to='/login' replace />;
+    return localStorageToken ? <MainPage /> : <Navigate to='/login' replace />;
   };
 
   const router = createBrowserRouter([
@@ -36,14 +39,22 @@ function App() {
       element: <NotFound />,
     },
     {
-      element: <ProtectedRoutes />,
+      element: <ProtectedRoutes></ProtectedRoutes>,
       children: [
         {
           path: '/settings',
           element: <Settings />,
         },
         {
-          path: '/chat',
+          path: '/dashboard',
+          element: <Dashboard />,
+        },
+        {
+          path: '/scenario',
+          element: <Scenario />,
+        },
+        {
+          path: '/chat/:id',
           element: <Chat />,
         },
       ],
@@ -51,6 +62,6 @@ function App() {
   ]);
 
   return <RouterProvider router={router} />;
-}
+};
 
 export default App;

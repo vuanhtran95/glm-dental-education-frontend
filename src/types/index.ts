@@ -1,4 +1,4 @@
-import { UserState } from '../store/users/types';
+import { UserState } from '../store/user/types';
 
 export interface RootState {
   user: UserState;

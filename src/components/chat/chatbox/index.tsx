@@ -1,6 +1,6 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { List, Skeleton } from 'antd';
-import { Message, Role } from '../../../pages/chat';
+import { Message, Role } from '../../../pages/dashboard';
 import LoadingIcon from '../skeleton';
 
 interface Props {

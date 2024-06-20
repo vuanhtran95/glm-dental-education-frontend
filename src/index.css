@@ -107,3 +107,9 @@ input:focus, select:hover, textarea:focus, .ant-select-selector {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.data-table {
+  .ant-table-tbody > tr:hover {
+    cursor: pointer;
+  }
+}

@@ -1,10 +1,10 @@
 import { Checkbox, Form, Input } from 'antd';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { authenticate } from '../../../store/users/actions';
-import { LoginInformation } from '../../../store/users/types';
+import { authenticate } from '../../../store/user/actions';
+import { LoginInformation } from '../../../store/user/types';
 import { useSelector } from 'react-redux';
-import { selectUserLoadingState } from '../../../store/users/selectors';
+import { selectUserLoadingState } from '../../../store/user/selectors';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -16,7 +16,7 @@ const Login = () => {
   const isLoading = useSelector(selectUserLoadingState);
 
   const onLogin = (value: LoginInformation) => {
-    dispatch(authenticate(value, () => navigate('/chat')));
+    dispatch(authenticate(value, () => navigate('/dashboard')));
   };
 
   return (
