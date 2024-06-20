@@ -47,7 +47,7 @@ function* getScenarioDetail(action: ScenarioDetailFetchAction) {
   }
 }
 
-export default function* dialogSaga() {
+export default function* scenarioSaga() {
   yield takeLatest(SCENARIO_LIST_FETCH, getScenarioList);
   yield takeLatest(SCENARIO_DETAIL_FETCH, getScenarioDetail);
 }

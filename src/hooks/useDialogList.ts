@@ -16,7 +16,6 @@ const useDialogList = ({ userId }: Props) => {
 
   const fetchDialogList = useCallback(() => {
     if (!userId) return;
-    console.log(userId, 'userId');
     dispatch(fetchDialogListAction(userId));
   }, [dispatch, userId]);
 

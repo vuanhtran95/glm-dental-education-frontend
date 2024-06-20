@@ -6,8 +6,8 @@ const menu = [
     label: 'Dashboard',
   },
   {
-    url: '/chat',
-    label: 'Chat',
+    url: '/dialog',
+    label: 'Dialog',
   },
 ];
 

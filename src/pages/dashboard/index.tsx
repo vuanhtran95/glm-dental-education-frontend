@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import 'regenerator-runtime';
 import useSpeechToText from '../../hooks/useSpeechToText';
 import useTextToSpeech from '../../hooks/useTextToSpeech';
-import { voiceList } from '../chat/constants';
+import { voiceList } from '../dialog/constants';
 import { getUserInfo } from '../../utils';
 import useDialogList from '../../hooks/useDialogList';
 import WelcomeBanner from './components/welcome-banner';

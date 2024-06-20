@@ -5,7 +5,7 @@ interface Props {
   index: number;
 }
 
-const ChatItemText = ({ name, time, content, index }: Props) => {
+const MessageItemText = ({ name, time, content, index }: Props) => {
   const isRightAlign = index / 2 !== 0;
   console.log(isRightAlign, 'isRightAlign');
 
@@ -37,4 +37,4 @@ const ChatItemText = ({ name, time, content, index }: Props) => {
   );
 };
 
-export default ChatItemText;
+export default MessageItemText;

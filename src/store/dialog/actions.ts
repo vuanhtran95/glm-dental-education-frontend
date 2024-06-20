@@ -3,10 +3,12 @@ import { DIALOG_DETAIL_FETCH, DIALOG_LIST_FETCH } from './actionTypes';
 import { SuccessCallback } from '../../types';
 
 export const fetchDialogListAction = (
+  userId: string,
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback
 ) =>
   action(DIALOG_LIST_FETCH, {
+    userId,
     successCallback,
     errorCallback,
   });

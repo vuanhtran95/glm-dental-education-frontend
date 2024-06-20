@@ -1,4 +1,5 @@
 import { SuccessCallback, ErrorCallback } from '../../types';
+import { ScenarioDetail } from '../scenario/types';
 import { DIALOG_LIST_FETCH } from './actionTypes';
 
 export interface DialogListFetchAction {
@@ -33,6 +34,7 @@ export interface DialogDetailWithMessage {
   detail: {
     dialog: DialogDetail;
     messages: MessageDetail[];
+    scenario: ScenarioDetail;
   };
 }
 

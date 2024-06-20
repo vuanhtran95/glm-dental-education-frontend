@@ -14,6 +14,7 @@ export interface SymptomDetail {
 }
 
 export interface ScenarioDetail {
+  name: string;
   patientName: string;
   age: number;
   symptoms: SymptomDetail[];

@@ -1,23 +1,33 @@
 import { Space, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
-import { DialogDetail } from '../../../store/dialog/types';
 import dayjs from 'dayjs';
-import { useNavigate } from 'react-router-dom';
+import { ScenarioDetail, SymptomDetail } from '../../../store/scenario/types';
 
 interface Props {
-  data: DialogDetail[];
+  data: ScenarioDetail[];
 }
 
 const DataTable = ({ data }: Props) => {
-  const navigate = useNavigate();
-
-  const columns: TableProps<DialogDetail>['columns'] = [
+  const columns: TableProps<ScenarioDetail>['columns'] = [
     {
-      title: 'Conversation Name',
+      title: 'Scenario Name',
       dataIndex: 'name',
       key: 'name',
       render: (text) => <a>{text || 'No Name'}</a>,
-      onCellClick: (row) => navigate(`/dialog/${row._id}`),
+    },
+    {
+      title: 'Patient Name',
+      dataIndex: 'patientName',
+      key: 'patientName',
+      render: (text) => <a>{text || 'No Name'}</a>,
+    },
+    {
+      title: 'Symptoms',
+      dataIndex: 'symptoms',
+      key: 'symptoms',
+      render: (symptoms: SymptomDetail[]) => {
+        return symptoms.map((e) => <span>{e.name}, </span>);
+      },
     },
     {
       title: 'Created At',
@@ -45,7 +55,7 @@ const DataTable = ({ data }: Props) => {
       dataSource={data}
       onRow={(record) => {
         return {
-          onClick: () => navigate(`/dialog/${record._id}`), // click row
+          // onClick: () => navigate(`/dialog/${record._id}`),
         };
       }}
     />
