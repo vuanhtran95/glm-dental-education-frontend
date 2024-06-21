@@ -1,6 +1,10 @@
 import { SuccessCallback, ErrorCallback } from '../../types';
 import { ScenarioDetail } from '../scenario/types';
-import { DIALOG_LIST_FETCH } from './actionTypes';
+import {
+  DIALOG_CREATE,
+  DIALOG_LIST_FETCH,
+  MESSAGE_CREATE,
+} from './actionTypes';
 
 export interface DialogListFetchAction {
   type: typeof DIALOG_LIST_FETCH;
@@ -15,8 +19,27 @@ export interface DialogDetailFetchAction {
     dialogId: string;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
-    resolve: (data: any) => void;
-    reject: () => void;
+  };
+}
+
+export interface DialogCreateAction {
+  type: typeof DIALOG_CREATE;
+  payload: {
+    createdUserId: string;
+    scenarioId: string;
+    name: string;
+    successCallback?: SuccessCallback;
+    errorCallback?: ErrorCallback;
+  };
+}
+
+export interface MessageCreateAction {
+  type: typeof MESSAGE_CREATE;
+  payload: {
+    content: string;
+    dialogId: string;
+    successCallback?: SuccessCallback;
+    errorCallback?: ErrorCallback;
   };
 }
 

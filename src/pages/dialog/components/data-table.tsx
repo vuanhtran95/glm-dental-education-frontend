@@ -1,4 +1,4 @@
-import { Space, Table, Tag } from 'antd';
+import { Space, Table } from 'antd';
 import type { TableProps } from 'antd';
 import { DialogDetail } from '../../../store/dialog/types';
 import dayjs from 'dayjs';

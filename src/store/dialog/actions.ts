@@ -1,5 +1,10 @@
 import { action } from 'typesafe-actions';
-import { DIALOG_DETAIL_FETCH, DIALOG_LIST_FETCH } from './actionTypes';
+import {
+  DIALOG_CREATE,
+  DIALOG_DETAIL_FETCH,
+  DIALOG_LIST_FETCH,
+  MESSAGE_CREATE,
+} from './actionTypes';
 import { SuccessCallback } from '../../types';
 
 export const fetchDialogListAction = (
@@ -18,3 +23,31 @@ export const fetchDialogDetailAction = (
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback
 ) => action(DIALOG_DETAIL_FETCH, { dialogId, successCallback, errorCallback });
+
+export const createDialogAction = (
+  createdUserId: string,
+  scenarioId: string,
+  name: string,
+  successCallback?: SuccessCallback,
+  errorCallback?: ErrorCallback
+) =>
+  action(DIALOG_CREATE, {
+    createdUserId,
+    scenarioId,
+    name,
+    successCallback,
+    errorCallback,
+  });
+
+export const createMessageAction = (
+  content: string,
+  dialogId: string,
+  successCallback?: SuccessCallback,
+  errorCallback?: ErrorCallback
+) =>
+  action(MESSAGE_CREATE, {
+    content,
+    dialogId,
+    successCallback,
+    errorCallback,
+  });

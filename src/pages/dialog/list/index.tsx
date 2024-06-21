@@ -1,181 +1,76 @@
 import { useCallback, useEffect, useState } from 'react';
-// import { processMessage } from '../../services/api';
-import 'regenerator-runtime';
-import useSpeechToText from '../../../hooks/useSpeechToText';
-import useTextToSpeech from '../../../hooks/useTextToSpeech';
 import { getUserInfo } from '../../../utils';
 import useDialogList from '../../../hooks/useDialogList';
 import DataTable from '../components/data-table';
 import Header from '../../../components/header';
 import Button from '../../../components/button';
-
-export interface Message {
-  role: Role;
-  content: string;
-}
-
-export enum Role {
-  'USER' = 'user',
-  'SYSTEM' = 'assistant',
-}
+import Modal from '../../../components/modal';
+import Input from '../../../components/input';
+import Select from '../../../components/select';
+import useScenarioList from '../../../hooks/useScenarioList';
+import { useDispatch } from 'react-redux';
+import { createDialogAction } from '../../../store/dialog/actions';
 
 const DialogList = () => {
-  const [message, setMessage] = useState<string>('');
-  const [dialog, setDialog] = useState<Message[]>([]);
-  const [options, setOptions] = useState<string[]>(
-    (JSON.parse(localStorage.getItem('tags') || '[]') as string[]) || []
-  );
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { scenarioOptions, fetchScenarioList } = useScenarioList();
 
-  const [isInitialised, setIsInitialised] = useState<boolean>(false);
-
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const userInfo = getUserInfo();
+  const [createDialogName, setCreateDialogName] = useState<string>('');
+  const [createScenarioId, setCreateScenarioId] = useState<string>('');
+
+  const dispatch = useDispatch();
 
   const { dialogs, fetchDialogList } = useDialogList({
     userId: userInfo?._id || '',
   });
 
-  const [patientName, setPatientName] = useState<string>(
-    localStorage.getItem('patientName') || ''
-  );
-  const [patientContext, setPatientContext] = useState<string>(
-    localStorage.getItem('context') || ''
-  );
+  const onCreateDialog = useCallback(() => {
+    setIsModalVisible(true);
+  }, []);
 
-  const { startListening, stopListening, reset, transcript, listening } =
-    useSpeechToText();
-
-  const { onSpeak, setVoiceId } = useTextToSpeech();
-
-  const onAsk = useCallback(
-    (text?: string, autoSpeaking?: boolean) => {
-      setIsLoading(true);
-      return new Promise((resolve, reject) => {
-        stopListening();
-        setMessage('');
-        reset();
-        // processMessage(
-        //   text || message,
-        //   dialog,
-        //   options,
-        //   patientContext,
-        //   patientName
-        // )
-        //   .then((data) => {
-        //     !!autoSpeaking &&
-        //       onSpeak(data).then(() => {
-        //         // startListening({ continuous: true, interimResults: true });
-        //       });
-        //     setDialog([
-        //       ...dialog,
-        //       {
-        //         role: Role.USER,
-        //         content: message,
-        //       },
-        //       {
-        //         role: Role.SYSTEM,
-        //         content: data,
-        //       },
-        //     ]);
-        //     setMessage('');
-        //     setIsLoading(false);
-        //     resolve(resolve);
-        //   })
-        //   .catch(() => {
-        //     setIsLoading(false);
-        //     reject(reject);
-        //   });
-      });
-    },
-    [
-      stopListening,
-      reset,
-      message,
-      dialog,
-      options,
-      patientContext,
-      patientName,
-      onSpeak,
-      startListening,
-    ]
-  );
-
-  const onVoiceAsk = useCallback(() => {
-    if (listening) {
-      stopListening();
-    } else {
-      setMessage('');
-      reset();
-      startListening({ continuous: true, interimResults: true });
-    }
-  }, [listening, reset, startListening, stopListening]);
-
-  const onChangeTags = (values: string[]) => {
-    setOptions(values);
-    localStorage.setItem('tags', JSON.stringify(values));
-  };
-
-  const onChangeVoice = useCallback(
-    (value) => {
-      setVoice(value);
-
-      setVoiceId(value);
-    },
-    [setVoiceId]
-  );
-
-  // const onChangeContext = (value: string) => {
-  //   setPatientContext(value);
-  //   localStorage.setItem('context', value);
-  // };
-
-  const onChangePatientName = (value: string) => {
-    setPatientName(value);
-    localStorage.setItem('patientName', value);
-  };
-
-  const onSave = () => {
-    setDialog([]);
-  };
-
-  useEffect(() => {
-    setMessage(transcript);
-  }, [transcript]);
-
-  useEffect(() => {
-    if (!isInitialised) {
-      setIsInitialised(true);
-      setIsLoading(true);
-      // onAsk()
-      //   .then(() => {
-      //     setIsInitialised(true);
-      //     setIsLoading(false);
-      //   })
-      //   .catch(() => {
-      //     setIsInitialised(true);
-      //     setIsLoading(false);
-      //   });
-    }
-  }, [isInitialised, onAsk]);
+  const onSubmitDialog = useCallback(() => {
+    if (!userInfo?._id) return;
+    dispatch(
+      createDialogAction(userInfo?._id, createScenarioId, createDialogName)
+    );
+    setIsModalVisible(false);
+  }, [createDialogName, createScenarioId, dispatch, userInfo?._id]);
 
   useEffect(() => {
     fetchDialogList();
-  }, [fetchDialogList]);
+    fetchScenarioList();
+  }, [fetchDialogList, fetchScenarioList]);
 
   return (
     <>
       <div className='flex justify-between align-middle	'>
         <Header title='Dialog' />
         <div className='flex align-middle flex-col justify-center'>
-          <Button
-            label={'Create'}
-            onClick={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
+          <Button label={'Create'} onClick={onCreateDialog} />
         </div>
       </div>
       <DataTable data={dialogs} />
+      <Modal
+        visible={isModalVisible}
+        title='Create Dialog'
+        onClose={() => setIsModalVisible(false)}
+        onSubmit={onSubmitDialog}
+      >
+        <>
+          <Input
+            label={'Dialog Name'}
+            onChange={(e) => setCreateDialogName(e)}
+          />
+          <Select
+            className='mt-6'
+            label={'Scenario'}
+            options={scenarioOptions}
+            name={'scenarioId'}
+            onChange={(e) => setCreateScenarioId(e)}
+          />
+        </>
+      </Modal>
     </>
   );
 };

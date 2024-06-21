@@ -6,9 +6,7 @@ interface Props {
 }
 
 const MessageItemText = ({ name, time, content, index }: Props) => {
-  const isRightAlign = index / 2 !== 0;
-
-  console.log(content, 'name');
+  const isRightAlign = index % 2 === 0;
 
   return (
     <div
