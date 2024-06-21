@@ -13,6 +13,7 @@ import SignUp from './pages/authentication/signup';
 import Dialog from './pages/dialog';
 import MainPage from './MainPage';
 import Scenario from './pages/scenario';
+import Chat from './pages/chat';
 
 const App = () => {
   const ProtectedRoutes = () => {
@@ -47,6 +48,10 @@ const App = () => {
         {
           path: '/dashboard',
           element: <Dashboard />,
+        },
+        {
+          path: '/chat',
+          element: <Chat />,
         },
         {
           path: '/scenario',

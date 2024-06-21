@@ -1,10 +1,11 @@
 import { Virtuoso } from 'react-virtuoso';
-import MessageItemText from './components/message-item-text';
+import MessageItemText from '../../components/message-box/message-item-text';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import useDialogDetail from '../../hooks/useDialogDetail';
 import { MessageDetail } from '../../store/dialog/types';
 import dayjs from 'dayjs';
+import MessageBox from '../../components/message-box/message-box';
 
 const Dialog = () => {
   const params = useParams();
@@ -29,24 +30,7 @@ const Dialog = () => {
           <p>Symptoms: {scenario?.symptoms.map((s) => s.name + ', ')}</p>
         </div>
       </div>
-      <Virtuoso
-        data={dialogDetail?.detail.messages || []}
-        style={{ height: '600px' }}
-        totalCount={200}
-        itemContent={(index: number, message: MessageDetail) => {
-          const date = dayjs(message.createdAt);
-          console.log(message, 'message');
-
-          return (
-            <MessageItemText
-              name={''}
-              time={date.format('DD MM YYYY hh:ss')}
-              content={message.content}
-              index={index}
-            />
-          );
-        }}
-      />
+      <MessageBox messages={dialogDetail?.detail.messages} />
     </>
   );
 };
