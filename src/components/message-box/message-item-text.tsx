@@ -8,6 +8,8 @@ interface Props {
 const MessageItemText = ({ name, time, content, index }: Props) => {
   const isRightAlign = index / 2 !== 0;
 
+  console.log(content, 'name');
+
   return (
     <div
       className={`flex items-start gap-2.5 my-4 ${

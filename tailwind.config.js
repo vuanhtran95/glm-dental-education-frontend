@@ -10,6 +10,9 @@ export default {
         1024: '256rem',
         2048: '512rem',
       },
+      colors: {
+        primary: '#646cff',
+      },
     },
   },
   plugins: [],

@@ -10,7 +10,6 @@ interface Props {
 const MessageBox = ({ messages }: Props) => {
   return (
     <Virtuoso
-      frameBorder={10}
       data={messages || []}
       style={{ height: '600px' }}
       totalCount={200}

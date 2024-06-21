@@ -10,15 +10,19 @@ import NotFound from './pages/404';
 import Dashboard from './pages/dashboard';
 import Login from './pages/authentication/login';
 import SignUp from './pages/authentication/signup';
-import Dialog from './pages/dialog';
-import MainPage from './MainPage';
+import DialogList from './pages/dialog/list';
+import DialogDetail from './pages/dialog/detail';
 import Scenario from './pages/scenario';
-import Chat from './pages/chat';
+import PageContainer from './components/page-container';
 
 const App = () => {
   const ProtectedRoutes = () => {
     const localStorageToken = localStorage.getItem('token');
-    return localStorageToken ? <MainPage /> : <Navigate to='/login' replace />;
+    return localStorageToken ? (
+      <PageContainer />
+    ) : (
+      <Navigate to='/login' replace />
+    );
   };
 
   const router = createBrowserRouter([
@@ -50,16 +54,16 @@ const App = () => {
           element: <Dashboard />,
         },
         {
-          path: '/chat',
-          element: <Chat />,
+          path: '/dialog',
+          element: <DialogList />,
+        },
+        {
+          path: '/dialog/:id',
+          element: <DialogDetail />,
         },
         {
           path: '/scenario',
           element: <Scenario />,
-        },
-        {
-          path: '/dialog/:id',
-          element: <Dialog />,
         },
       ],
     },
