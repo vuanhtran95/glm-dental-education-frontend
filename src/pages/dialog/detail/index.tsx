@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import MessageBox from '../../../components/message-box/message-box';
 import useDialogDetail from '../../../hooks/useDialogDetail';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Header from '../../../components/header';
 import Input from '../../../components/input';
 import Button from '../../../components/button';
@@ -13,7 +13,10 @@ const DialogDetail = () => {
 
   const dialogId = params.id;
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [createMessage, setCreateMessage] = useState<string>('');
+
   const { dialogDetail, fetchDialogDetail } = useDialogDetail({
     dialogId,
   });
@@ -25,10 +28,12 @@ const DialogDetail = () => {
   const scenario = dialogDetail?.detail.scenario;
 
   const onCreateMessage = useCallback(() => {
+    setIsLoading(true);
     if (!dialogId) return;
     const successCallback = () => {
-      setCreateMessage('');
       fetchDialogDetail();
+      setCreateMessage('');
+      setIsLoading(false);
     };
     dispatch(createMessageAction(createMessage, dialogId, successCallback));
   }, [createMessage, dialogId, dispatch, fetchDialogDetail]);
@@ -41,10 +46,10 @@ const DialogDetail = () => {
     <>
       <Header title={`Dialog: ${dialog?.name || ''}`} />
       <div className='flex flex-row gap-x-36'>
-        <div className=''>
+        <div className='max-w-60'>
           <div>Scenario:</div>
           <div>Patient name: {scenario?.patientName}</div>
-          <div>Symptoms: {scenario?.symptoms.map((e) => `${e.name}, `)}</div>
+          <div>Symptoms: {scenario?.symptoms}</div>
         </div>
         <div className='grow'>
           <div className='w-full border p-4'>
@@ -52,10 +57,17 @@ const DialogDetail = () => {
           </div>
           <div className='flex align-middle	justify-between items-end	'>
             <div className='w-full mr-4'>
-              <Input value={createMessage} onChange={setCreateMessage} />
+              <Input
+                value={createMessage}
+                onChange={(e) => setCreateMessage(e as string)}
+              />
             </div>
             <div>
-              <Button label={'Send'} onClick={() => onCreateMessage()} />
+              <Button
+                label={'Send'}
+                onClick={() => onCreateMessage()}
+                loading={isLoading}
+              />
             </div>
           </div>
         </div>

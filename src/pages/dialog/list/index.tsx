@@ -17,7 +17,11 @@ const DialogList = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const userInfo = getUserInfo();
   const [createDialogName, setCreateDialogName] = useState<string>('');
-  const [createScenarioId, setCreateScenarioId] = useState<string>('');
+  const [createScenarioId, setCreateScenarioId] = useState<string>(
+    scenarioOptions?.[0]?.key
+  );
+
+  console.log(createScenarioId, 'createScenarioId');
 
   const dispatch = useDispatch();
 
@@ -31,11 +35,25 @@ const DialogList = () => {
 
   const onSubmitDialog = useCallback(() => {
     if (!userInfo?._id) return;
+    const successCallback = () => {
+      setIsModalVisible(false);
+      fetchDialogList();
+    };
     dispatch(
-      createDialogAction(userInfo?._id, createScenarioId, createDialogName)
+      createDialogAction(
+        userInfo?._id,
+        createScenarioId,
+        createDialogName,
+        successCallback
+      )
     );
-    setIsModalVisible(false);
-  }, [createDialogName, createScenarioId, dispatch, userInfo?._id]);
+  }, [
+    createDialogName,
+    createScenarioId,
+    dispatch,
+    fetchDialogList,
+    userInfo?._id,
+  ]);
 
   useEffect(() => {
     fetchDialogList();

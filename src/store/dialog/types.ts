@@ -64,6 +64,7 @@ export interface DialogDetailWithMessage {
 export enum EMessageRole {
   SYSTEM = 'system',
   USER = 'user',
+  ASSISTANT = 'assistant',
 }
 
 export interface MessageDetail {

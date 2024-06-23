@@ -11,11 +11,9 @@ const useScenarioList = () => {
   const scenarios: ScenarioDetail[] = useSelector(selectScenarioListState);
 
   const scenarioOptions = useMemo(() => {
-    return scenarios.map(({ name, patientName, _id, symptoms }) => ({
+    return scenarios.map(({ patientName, _id }) => ({
       key: _id,
-      label: `Scenario: ${name || 'No Name'} - Patient: ${
-        patientName || ''
-      } - Symptoms: ${symptoms.map((s) => s.name + '-')}`,
+      label: `Scenario Id: ${_id} - Patient: ${patientName || ''}`,
     }));
   }, [scenarios]);
 

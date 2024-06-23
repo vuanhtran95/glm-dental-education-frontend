@@ -90,6 +90,7 @@ function* createMessage(action: MessageCreateAction) {
       type: MESSAGE_CREATE_SUCCESS,
       data: response.data,
     });
+
     successCallback?.();
   } catch (err) {
     yield put({ type: MESSAGE_CREATE_FAILED });

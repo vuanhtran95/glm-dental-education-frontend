@@ -4,7 +4,7 @@ interface Props {
   options: Option[];
   label: string;
   name: string;
-  className: string;
+  className?: string;
   onChange: (value: any) => void;
 }
 

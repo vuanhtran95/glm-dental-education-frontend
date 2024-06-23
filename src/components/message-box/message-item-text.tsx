@@ -1,12 +1,38 @@
+import { EMessageRole, MessageDetail } from '../../store/dialog/types';
+import dayjs from 'dayjs';
+import avatar from '../../assets/avatar.png';
+import patient from '../../assets/patient.png';
+import { useMemo } from 'react';
+
 interface Props {
-  name: string;
-  time: string;
-  content: string;
+  message: MessageDetail;
   index: number;
 }
 
-const MessageItemText = ({ name, time, content, index }: Props) => {
-  const isRightAlign = index % 2 === 0;
+const MessageItemText = ({ message }: Props) => {
+  const { createdAt, content, role } = message;
+
+  console.log(message, 'message');
+
+  const date = dayjs(createdAt).format('YYYY MM DD');
+
+  const displayedRole = useMemo(() => {
+    switch (role) {
+      case EMessageRole.ASSISTANT:
+        return 'Patient';
+      case EMessageRole.USER:
+        return 'Doctor';
+      default:
+        return 'System';
+    }
+  }, [role]);
+
+  const img =
+    role === EMessageRole.USER || role === EMessageRole.SYSTEM
+      ? avatar
+      : patient;
+
+  const isRightAlign = role === EMessageRole.USER;
 
   return (
     <div
@@ -14,18 +40,14 @@ const MessageItemText = ({ name, time, content, index }: Props) => {
         isRightAlign && 'justify-end'
       }`}
     >
-      <img
-        className='w-8 h-8 rounded-full'
-        src='/docs/images/people/profile-picture-3.jpg'
-        alt='Jese image'
-      />
+      <img className='w-8 h-8 rounded-full' src={img} alt='Jese image' />
       <div className='flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700'>
         <div className='flex items-center space-x-2 rtl:space-x-reverse'>
           <span className='text-sm font-semibold text-gray-900 dark:text-white'>
-            {name || 'No Name'}
+            {displayedRole}
           </span>
           <span className='text-sm font-normal text-gray-500 dark:text-gray-400'>
-            {time}
+            {date}
           </span>
         </div>
         <p className='text-sm font-normal py-2.5 text-gray-900 dark:text-white'>

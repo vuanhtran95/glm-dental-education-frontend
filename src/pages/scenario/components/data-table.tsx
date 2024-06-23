@@ -26,7 +26,7 @@ const DataTable = ({ data }: Props) => {
       dataIndex: 'symptoms',
       key: 'symptoms',
       render: (symptoms: SymptomDetail[]) => {
-        return symptoms.map((e) => <span>{e.name}, </span>);
+        return <span>{symptoms}</span>;
       },
     },
     {

@@ -1,5 +1,5 @@
 import { ErrorCallback, SuccessCallback } from '../../types';
-import { SCENARIO_LIST_FETCH } from './actionTypes';
+import { SCENARIO_CREATE, SCENARIO_LIST_FETCH } from './actionTypes';
 
 export interface ScenarioState {
   scenarios: ScenarioDetail[];
@@ -8,9 +8,9 @@ export interface ScenarioState {
   scenarioDetail: ScenarioDetail | null;
 }
 
-export interface SymptomDetail {
-  name: string;
-  description: string;
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
 }
 
 export interface ScenarioDetail {
@@ -18,7 +18,12 @@ export interface ScenarioDetail {
   name: string;
   patientName: string;
   age: number;
-  symptoms: SymptomDetail[];
+  gender: Gender;
+  symptoms: string;
+  medicalHistory: string;
+  communicationStyle: string;
+  lifeStyle?: string;
+  additionalInformation?: string;
   createdAt: string;
   updatedAt: string;
   isDeleted: boolean;
@@ -38,8 +43,27 @@ export interface ScenarioDetailFetchAction {
     scenarioId: string;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
-    resolve: (data: any) => void;
-    reject: () => void;
+  };
+}
+
+export interface ScenarioDetailCreateAction {
+  type: typeof SCENARIO_CREATE;
+  payload: {
+    scenarioDetail: Pick<
+      ScenarioDetail,
+      | 'name'
+      | 'patientName'
+      | 'age'
+      | 'gender'
+      | 'medicalHistory'
+      | 'lifeStyle'
+      | 'additionalInformation'
+      | 'symptoms'
+      | 'createdUserId'
+      | 'communicationStyle'
+    >;
+    successCallback?: SuccessCallback;
+    errorCallback?: ErrorCallback;
   };
 }
 

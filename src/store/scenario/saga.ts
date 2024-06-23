@@ -1,12 +1,14 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import api from '../../services/api';
 import {
+  ScenarioDetailCreateAction,
   ScenarioDetailFetchAction,
   ScenarioDetailResponse,
   ScenarioListFetchAction,
   ScenarioListResponse,
 } from './types';
 import {
+  SCENARIO_CREATE,
   SCENARIO_DETAIL_FETCH,
   SCENARIO_DETAIL_FETCHED_FAILED,
   SCENARIO_DETAIL_FETCHED_SUCCESS,
@@ -47,7 +49,25 @@ function* getScenarioDetail(action: ScenarioDetailFetchAction) {
   }
 }
 
+function* createScenario(action: ScenarioDetailCreateAction) {
+  const { scenarioDetail, successCallback, errorCallback } = action.payload;
+  try {
+    const response: ScenarioDetailResponse = yield call(() =>
+      api.post(`api/scenarios/`, { ...scenarioDetail })
+    );
+    yield put({
+      type: SCENARIO_DETAIL_FETCHED_SUCCESS,
+      data: response.data,
+    });
+    successCallback?.();
+  } catch (err) {
+    yield put({ type: SCENARIO_DETAIL_FETCHED_FAILED });
+    errorCallback?.();
+  }
+}
+
 export default function* scenarioSaga() {
   yield takeLatest(SCENARIO_LIST_FETCH, getScenarioList);
   yield takeLatest(SCENARIO_DETAIL_FETCH, getScenarioDetail);
+  yield takeLatest(SCENARIO_CREATE, createScenario);
 }

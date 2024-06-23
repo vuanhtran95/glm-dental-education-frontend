@@ -1,7 +1,6 @@
 import { Virtuoso } from 'react-virtuoso';
 import { MessageDetail } from '../../store/dialog/types';
 import MessageItemText from './message-item-text';
-import dayjs from 'dayjs';
 import { useCallback, useEffect, useRef } from 'react';
 
 interface Props {
@@ -12,11 +11,13 @@ const MessageBox = ({ messages }: Props) => {
   const virtuoso = useRef(null);
 
   const onScrollBottom = useCallback(() => {
-    virtuoso?.current?.scrollToIndex({
-      index: messages.length - 1,
-      align: 'end',
-      behavior: 'auto',
-    });
+    setTimeout(() => {
+      virtuoso?.current?.scrollToIndex({
+        index: messages.length,
+        align: 'end',
+        behavior: 'auto',
+      });
+    }, 0);
   }, [messages.length]);
 
   useEffect(() => {
@@ -30,15 +31,7 @@ const MessageBox = ({ messages }: Props) => {
       style={{ height: '600px' }}
       totalCount={200}
       itemContent={(index: number, message: MessageDetail) => {
-        const date = dayjs(message.createdAt);
-        return (
-          <MessageItemText
-            name={''}
-            time={date.format('DD MM YYYY hh:ss')}
-            content={message.content}
-            index={index}
-          />
-        );
+        return <MessageItemText message={message} index={index} />;
       }}
     />
   );

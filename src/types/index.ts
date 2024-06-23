@@ -4,7 +4,7 @@ export interface RootState {
   user: UserState;
 }
 
-export type SuccessCallback = () => void;
+export type SuccessCallback = (id?: string) => void;
 export type ErrorCallback = (error?: string) => void;
 
 export interface DataPayload {
