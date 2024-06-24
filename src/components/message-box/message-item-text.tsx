@@ -12,8 +12,6 @@ interface Props {
 const MessageItemText = ({ message }: Props) => {
   const { createdAt, content, role } = message;
 
-  console.log(message, 'message');
-
   const date = dayjs(createdAt).format('YYYY MM DD');
 
   const displayedRole = useMemo(() => {

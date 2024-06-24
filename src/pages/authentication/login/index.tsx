@@ -20,7 +20,7 @@ const Login = () => {
   };
 
   return (
-    <div className='bg-slate-200 w-[600px] p-6 pr-16 pt-16 rounded-lg'>
+    <div className='bg-slate-200 w-[600px] p-6 pr-16 pt-16 rounded-lg m-auto mt-56'>
       <h3 className='font-bold mb-16'>Please login to use the application</h3>
       <div>
         <Form

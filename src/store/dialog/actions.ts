@@ -42,12 +42,14 @@ export const createDialogAction = (
 export const createMessageAction = (
   content: string,
   dialogId: string,
+  role: string,
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback
 ) =>
   action(MESSAGE_CREATE, {
     content,
     dialogId,
+    role,
     successCallback,
     errorCallback,
   });
