@@ -135,7 +135,11 @@ const DialogDetail = () => {
         </div>
         <div className='grow'>
           <div className='w-full border p-4'>
-            <MessageBox messages={messages} />
+            <MessageBox
+              messages={
+                messages?.filter((e) => e.role !== EMessageRole.SYSTEM) || []
+              }
+            />
           </div>
           <div className='flex align-middle	justify-between items-end	'>
             <div className='w-full mr-4'>
