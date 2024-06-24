@@ -21,8 +21,6 @@ const DialogList = () => {
     scenarioOptions?.[0]?.key
   );
 
-  console.log(createScenarioId, 'createScenarioId');
-
   const dispatch = useDispatch();
 
   const { dialogs, fetchDialogList } = useDialogList({
