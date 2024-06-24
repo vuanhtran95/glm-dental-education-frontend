@@ -121,6 +121,12 @@ const DialogDetail = () => {
             <b>Patient name:</b> {scenario?.patientName}
           </div>
           <div>
+            <b>Age: </b> {scenario?.age}
+          </div>
+          <div>
+            <b>Communication style: </b> {scenario?.communicationStyle}
+          </div>
+          <div>
             <b>Symptoms:</b> {scenario?.symptoms}
           </div>
           <div>
