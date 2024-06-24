@@ -48,7 +48,7 @@ const DialogDetail = () => {
         'Content-Type, Authorization, X-Requested-With',
     });
 
-    fetch('http://3.10.217.182:8080/process_message', {
+    fetch('http://18.171.155.16:8080/process_message', {
       method: 'POST',
       headers,
       body: JSON.stringify(bodyMessage),
