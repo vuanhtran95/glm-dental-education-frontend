@@ -6,6 +6,7 @@ interface Props {
   id?: string;
   name?: string;
   value?: string;
+  onChange?: () => void;
 }
 
 const Input = ({ label, value, type = 'text', id, name }: Props) => {

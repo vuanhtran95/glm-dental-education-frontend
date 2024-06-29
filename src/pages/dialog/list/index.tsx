@@ -10,16 +10,23 @@ import Select from '../../../components/select';
 import useScenarioList from '../../../hooks/useScenarioList';
 import { useDispatch } from 'react-redux';
 import { createDialogAction } from '../../../store/dialog/actions';
+import { Form, Formik } from 'formik';
+
+interface DialogFormValues {
+  name: string;
+  scenarioId: string;
+}
 
 const DialogList = () => {
   const { scenarioOptions, fetchScenarioList } = useScenarioList();
 
+  const initialValues: DialogFormValues = {
+    name: '',
+    scenarioId: '',
+  };
+
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const userInfo = getUserInfo();
-  const [createDialogName, setCreateDialogName] = useState<string>('');
-  const [createScenarioId, setCreateScenarioId] = useState<string>(
-    scenarioOptions?.[0]?.key
-  );
 
   const dispatch = useDispatch();
 
@@ -31,27 +38,24 @@ const DialogList = () => {
     setIsModalVisible(true);
   }, []);
 
-  const onSubmitDialog = useCallback(() => {
-    if (!userInfo?._id) return;
-    const successCallback = () => {
-      setIsModalVisible(false);
-      fetchDialogList();
-    };
-    dispatch(
-      createDialogAction(
-        userInfo?._id,
-        createScenarioId,
-        createDialogName,
-        successCallback
-      )
-    );
-  }, [
-    createDialogName,
-    createScenarioId,
-    dispatch,
-    fetchDialogList,
-    userInfo?._id,
-  ]);
+  const onSubmit = useCallback(
+    (values: DialogFormValues) => {
+      if (!userInfo?._id) return;
+      const successCallback = () => {
+        setIsModalVisible(false);
+        fetchDialogList();
+      };
+      dispatch(
+        createDialogAction(
+          userInfo?._id,
+          values.scenarioId,
+          values.name,
+          successCallback
+        )
+      );
+    },
+    [dispatch, fetchDialogList, userInfo?._id]
+  );
 
   useEffect(() => {
     fetchDialogList();
@@ -67,26 +71,26 @@ const DialogList = () => {
         </div>
       </div>
       <DataTable data={dialogs} />
-      <Modal
-        visible={isModalVisible}
-        title='Create Dialog'
-        onClose={() => setIsModalVisible(false)}
-        onSubmit={onSubmitDialog}
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values) => onSubmit(values)}
       >
-        <>
-          <Input
-            label={'Dialog Name'}
-            onChange={(e) => setCreateDialogName(e)}
-          />
-          <Select
-            className='mt-6'
-            label={'Scenario'}
-            options={scenarioOptions}
-            name={'scenarioId'}
-            onChange={(e) => setCreateScenarioId(e)}
-          />
-        </>
-      </Modal>
+        <Form>
+          <Modal
+            visible={isModalVisible}
+            title='Create Dialog'
+            onClose={() => setIsModalVisible(false)}
+          >
+            <Input label='Dialog Name' name='name' />
+            <Select
+              className='mt-6'
+              label={'Scenario'}
+              options={scenarioOptions}
+              name={'scenarioId'}
+            />
+          </Modal>
+        </Form>
+      </Formik>
     </>
   );
 };

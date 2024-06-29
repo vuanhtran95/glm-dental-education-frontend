@@ -33,7 +33,9 @@ const DataTable = ({ data }: Props) => {
       key: 'action',
       render: () => (
         <Space size='middle'>
-          <a>Archive</a>
+          <a>
+            <i className='fa-solid fa-box-archive'></i>
+          </a>
         </Space>
       ),
     },

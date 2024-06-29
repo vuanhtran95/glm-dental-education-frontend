@@ -2,15 +2,18 @@ import { Space, Table } from 'antd';
 import type { TableProps } from 'antd';
 import dayjs from 'dayjs';
 import { ScenarioDetail, SymptomDetail } from '../../../store/scenario/types';
+import useResponsive from '../../../hooks/useResponsive';
 
 interface Props {
   data: ScenarioDetail[];
 }
 
 const DataTable = ({ data }: Props) => {
+  const { isMobile } = useResponsive();
+
   const columns: TableProps<ScenarioDetail>['columns'] = [
     {
-      title: 'Scenario Name',
+      title: 'Name',
       dataIndex: 'name',
       key: 'name',
       render: (text) => <a>{text || 'No Name'}</a>,
@@ -21,29 +24,35 @@ const DataTable = ({ data }: Props) => {
       key: 'patientName',
       render: (text) => <a>{text || 'No Name'}</a>,
     },
-    {
-      title: 'Symptoms',
-      dataIndex: 'symptoms',
-      key: 'symptoms',
-      render: (symptoms: SymptomDetail[]) => {
-        return <span>{symptoms}</span>;
-      },
-    },
-    {
-      title: 'Created At',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (data) => {
-        const date = dayjs(data);
-        return <span>{date.format('YYYY-MM-DD HH:mm:ss')}</span>;
-      },
-    },
+    ...(isMobile
+      ? []
+      : [
+          {
+            title: 'Symptoms',
+            dataIndex: 'symptoms',
+            key: 'symptoms',
+            render: (symptoms: SymptomDetail[]) => {
+              return <span>{symptoms}</span>;
+            },
+          },
+          {
+            title: 'Created At',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (data) => {
+              const date = dayjs(data);
+              return <span>{date.format('YYYY-MM-DD HH:mm:ss')}</span>;
+            },
+          },
+        ]),
     {
       title: 'Action',
       key: 'action',
       render: () => (
         <Space size='middle'>
-          <a>Archive</a>
+          <a>
+            <i className='fa-solid fa-box-archive'></i>
+          </a>
         </Space>
       ),
     },
