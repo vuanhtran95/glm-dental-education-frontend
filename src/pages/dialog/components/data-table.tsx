@@ -13,7 +13,7 @@ const DataTable = ({ data }: Props) => {
 
   const columns: TableProps<DialogDetail>['columns'] = [
     {
-      title: 'Conversation Name',
+      title: 'Name',
       dataIndex: 'name',
       key: 'name',
       render: (text) => <a>{text || 'No Name'}</a>,

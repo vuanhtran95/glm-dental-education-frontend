@@ -2,13 +2,21 @@ interface Props {
   label: string;
   onClick: () => void;
   loading?: boolean;
+  className?: string;
+  type?: string;
 }
 
-const Button = ({ label, onClick, loading = false }: Props) => {
+const Button = ({
+  label,
+  onClick,
+  loading = false,
+  className,
+  type,
+}: Props) => {
   return (
     <button
-      type='button'
-      className='bg-primary h-10'
+      type={type}
+      className={`bg-primary h-10 ${!!className && className}`}
       disabled={!!loading}
       onClick={onClick}
     >

@@ -1,11 +1,14 @@
+import { Field } from 'formik';
+
 interface Props {
   label?: string;
-  onChange: (value: string | number) => void;
-  value: string | number;
   type?: string;
+  id?: string;
+  name?: string;
+  value?: string;
 }
 
-const Input = ({ label, onChange, value, type = 'text' }: Props) => {
+const Input = ({ label, value, type = 'text', id, name }: Props) => {
   return (
     <div>
       {!!label && (
@@ -14,13 +17,11 @@ const Input = ({ label, onChange, value, type = 'text' }: Props) => {
         </label>
       )}
       <div className='mt-2'>
-        <input
+        <Field
           type={type}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
-          id='email'
-          name='email'
-          autoComplete='email'
+          id={id}
+          name={name}
           className='block w-full rounded-md border-0 px-2 py-1.5 bg-white text-black ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600'
         />
       </div>

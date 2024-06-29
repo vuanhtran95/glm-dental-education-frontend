@@ -1,7 +1,19 @@
-import { DataPayload } from '../../types';
-import { USER_AUTHENTICATE, USER_INFO_FETCH } from './actionTypes';
+import { SignUpPayload } from '../../pages/authentication/signup/types';
+import { DataPayload, ErrorCallback, SuccessCallback } from '../../types';
+import {
+  USER_AUTHENTICATE,
+  USER_INFO_FETCH,
+  USER_SIGN_UP,
+} from './actionTypes';
 
 export interface AuthenticatePayload extends DataPayload {
+  value: {
+    username: string;
+    password: string;
+  };
+}
+
+export interface SignUpSagaPayload extends DataPayload {
   value: {
     username: string;
     password: string;
@@ -13,16 +25,24 @@ export interface AuthenticateAction {
   payload: AuthenticatePayload;
 }
 
+export interface SignUpAction {
+  type: typeof USER_SIGN_UP;
+  payload: SignUpSagaPayload;
+}
+
 export interface GetUserInfoPayload extends DataPayload {}
 
 export interface GetUserInfoAction {
   type: typeof USER_INFO_FETCH;
-  payload: AuthenticatePayload;
+  payload: {
+    successCallback: SuccessCallback;
+    errorCallback: ErrorCallback;
+  };
 }
 
 export enum UserRole {
-  SYSTEM = 'system',
-  USER = 'user',
+  STUDENT = 'student',
+  ADMINISTRATOR = 'administrator',
 }
 export interface UserInfo {
   _id: string;
@@ -50,6 +70,12 @@ export type UserAction =
     };
 
 export interface AuthenticationResponse {
+  data: {
+    token: string;
+  };
+}
+
+export interface SignUpResponse {
   data: {
     token: string;
   };

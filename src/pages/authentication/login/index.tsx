@@ -1,81 +1,91 @@
-import { Checkbox, Form, Input } from 'antd';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authenticate } from '../../../store/user/actions';
-import { LoginInformation } from '../../../store/user/types';
-import { useSelector } from 'react-redux';
-import { selectUserLoadingState } from '../../../store/user/selectors';
 import { useNavigate } from 'react-router-dom';
+import Input from '../../../components/input';
+import Button from '../../../components/button';
+import { Formik, Form } from 'formik';
+import { LoginPayload } from './types';
+import { ERROR } from '../../../constants';
+import { useState } from 'react';
+
+interface LoginFormValues {
+  username: string;
+  password: string;
+}
 
 const Login = () => {
-  const [errorMessage, setErrorMessage] = useState<string>();
+  const initialValues: LoginFormValues = { username: '', password: '' };
   const navigate = useNavigate();
+
+  const [notification, setNotification] = useState<string | null>(null);
 
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(selectUserLoadingState);
-
-  const onLogin = (value: LoginInformation) => {
-    dispatch(authenticate(value, () => navigate('/dashboard')));
+  const onSubmit = (values: LoginPayload) => {
+    dispatch(
+      authenticate(
+        values,
+        () => navigate('/dashboard'),
+        () => {
+          setNotification(ERROR.GENERAL_ERROR);
+        }
+      )
+    );
   };
 
   return (
-    <div className='bg-slate-200 w-[600px] p-6 pr-16 pt-16 rounded-lg m-auto mt-56'>
-      <h3 className='font-bold mb-16'>Please login to use the application</h3>
-      <div>
-        <Form
-          name='basic'
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 800 }}
-          initialValues={{ remember: true }}
-          onFinish={(value) => {
-            onLogin(value);
-          }}
-          onFinishFailed={() => {}}
-          autoComplete='off'
+    <div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
+      <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+        <img
+          className='mx-auto h-10 w-auto'
+          src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
+          alt='Your Company'
+        />
+        <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
+          Sign in
+        </h2>
+      </div>
+
+      <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values) => onSubmit(values)}
         >
-          <Form.Item
-            label='Username'
-            name='username'
-            rules={[{ required: true, message: 'Please input your username!' }]}
-            className='username'
-          >
-            <Input />
-          </Form.Item>
+          <Form className='flex flex-col gap-4'>
+            <Input id='username' label='User name' name='username' />
+            <Input
+              type='password'
+              id='password'
+              label='Password'
+              name='password'
+            />
+            <div className='flex justify-center mt-4'>
+              <Button
+                label='Login'
+                onClick={function (): void {
+                  throw new Error('Function not implemented.');
+                }}
+              />
+            </div>
+          </Form>
+        </Formik>
 
-          <Form.Item
-            label='Password'
-            name='password'
-            rules={[{ required: true, message: 'Please input your password!' }]}
-          >
-            <Input.Password />
-          </Form.Item>
+        {!!notification && (
+          <p className='mt-4 text-center text-sm text-red-500'>
+            {notification}
+          </p>
+        )}
 
-          <Form.Item
-            name='remember'
-            valuePropName='checked'
-            wrapperCol={{ offset: 12, span: 16 }}
+        <p className='mt-10 text-center text-sm text-gray-500'>
+          Not a member?
+          <a
+            onClick={() => navigate('/sign-up')}
+            href='#'
+            className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500 ml-1'
           >
-            <Checkbox className='accent-green-500'>Remember me</Checkbox>
-          </Form.Item>
-
-          <Form.Item wrapperCol={{ span: 24 }}>
-            <a
-              // href='/sign-up'
-              href='/'
-              className='mr-8 text-green-700 hover:text-green-900'
-            >
-              Sign up for new account
-            </a>
-            <button className='bg-green-500'>
-              <p className='text-white'>Login</p>
-            </button>
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 5, span: 24 }}>
-            <span className='text-red-500'>{errorMessage}</span>
-          </Form.Item>
-        </Form>
+            Sign up
+          </a>
+        </p>
       </div>
     </div>
   );

@@ -1,72 +1,94 @@
-import { Checkbox, Form, Input } from 'antd';
+import { useDispatch } from 'react-redux';
+import { signUp } from '../../../store/user/actions';
+import { useNavigate } from 'react-router-dom';
+import Input from '../../../components/input';
+import Button from '../../../components/button';
+import { Formik, Form } from 'formik';
+import { UserRole } from '../../../store/user/types';
+import { SignUpPayload } from './types';
+import { ERROR } from '../../../constants';
+import { useState } from 'react';
+
+interface SignUpFormValues {
+  username: string;
+  password: string;
+  role: UserRole;
+  fullName: '';
+}
 
 const SignUp = () => {
-  const onFinish = () => {};
+  const initialValues: SignUpFormValues = {
+    username: '',
+    password: '',
+    role: UserRole.STUDENT,
+    fullName: '',
+  };
+  const navigate = useNavigate();
+
+  const [notification, setNotification] = useState<string | null>(null);
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (values: SignUpPayload) => {
+    console.log(values, 'values');
+
+    dispatch(
+      signUp(values, () => navigate('/login')),
+      () => {
+        setNotification(ERROR.GENERAL_ERROR);
+      }
+    );
+  };
+
   return (
-    <div className='w-128'>
-      <h3 className='font-bold mb-16'>Create new account</h3>
-      <Form
-        name='basic'
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 1000 }}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={() => {}}
-        autoComplete='off'
-      >
-        <Form.Item
-          label='Full name'
-          name='username'
-          rules={[{ required: true, message: 'Please input your name!' }]}
+    <div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
+      <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+        <img
+          className='mx-auto h-10 w-auto'
+          src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
+          alt='Your Company'
+        />
+        <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
+          Sign up to your account
+        </h2>
+      </div>
+      <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values) => onSubmit(values)}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label='Username'
-          name='username'
-          rules={[{ required: true, message: 'Please input your username!' }]}
-        >
-          <Input />
-        </Form.Item>
+          <Form className='flex flex-col gap-4'>
+            <Input id='username' label='User name' name='username' />
+            <Input
+              type='password'
+              id='password'
+              label='Password'
+              name='password'
+            />
+            <Input id='fullName' label='Full name' name='fullName' />
+            <div className='flex justify-center mt-4'>
+              <Button label='Sign up' onClick={() => {}} />
+            </div>
+          </Form>
+        </Formik>
 
-        <Form.Item
-          label='Password'
-          name='password'
-          rules={[{ required: true, message: 'Please input your password!' }]}
-        >
-          <Input.Password />
-        </Form.Item>
+        {!!notification && (
+          <p className='mt-4 text-center text-sm text-red-500'>
+            {notification}
+          </p>
+        )}
 
-        <Form.Item
-          label='Re-enter Password'
-          name='password'
-          rules={[{ required: true, message: 'Please input your password!' }]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name='remember'
-          valuePropName='checked'
-          wrapperCol={{ offset: 18, span: 16 }}
-        >
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-        <input className='bg-transparent' />
-
-        <Form.Item wrapperCol={{ offset: 20, span: 24 }}>
-          <button className='bg-blue-500'>
-            <p className='text-white'>Submit</p>
-          </button>
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 14, span: 24 }}>
-          <span className='mr-2'>
-            <span className='mr-2'>Already has an account?</span>
-            <a href='/login'>Login</a>
-          </span>
-        </Form.Item>
-      </Form>
+        <p className='mt-10 text-center text-sm text-gray-500'>
+          Have an account?
+          <a
+            href='#'
+            onClick={() => navigate('/login')}
+            className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500 ml-1'
+          >
+            Sign in
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

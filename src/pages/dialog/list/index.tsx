@@ -61,8 +61,8 @@ const DialogList = () => {
   return (
     <>
       <div className='flex justify-between align-middle	'>
-        <Header title='Dialog' />
-        <div className='flex align-middle flex-col justify-center'>
+        <Header title='Dialog List' />
+        <div className='flex align-middle flex-col justify-center mr-2'>
           <Button label={'Create'} onClick={onCreateDialog} />
         </div>
       </div>
