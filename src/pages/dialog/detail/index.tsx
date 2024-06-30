@@ -50,39 +50,56 @@ const DialogDetail = () => {
         'Content-Type, Authorization, X-Requested-With',
     });
 
-    fetch('http://18.171.155.16:8080/process_message', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(bodyMessage),
-    })
-      .then((e) => {
-        e.json().then((e) => {
-          dispatch(
-            createMessageAction(
-              createMessage,
-              dialogId,
-              EMessageRole.USER,
-              () =>
-                dispatch(
-                  createMessageAction(
-                    removeTextInsideAsterisks(e),
-                    dialogId,
-                    EMessageRole.ASSISTANT,
-                    () => {
-                      fetchDialogDetail();
-                      setCreateMessage('');
-                      setIsLoading(false);
-                    }
-                  )
-                )
-            )
-          );
-        });
-      })
-      .catch();
+    dispatch(
+      createMessageAction(createMessage, dialogId, EMessageRole.USER, () =>
+        dispatch(
+          createMessageAction(
+            removeTextInsideAsterisks('Test from GPT'),
+            dialogId,
+            EMessageRole.ASSISTANT,
+            () => {
+              fetchDialogDetail();
+              setCreateMessage('');
+              setIsLoading(false);
+            }
+          )
+        )
+      )
+    );
+
+    // fetch('http://18.171.155.16:8080/process_message', {
+    //   method: 'POST',
+    //   headers,
+    //   body: JSON.stringify(bodyMessage),
+    // })
+    //   .then((e) => {
+    //     e.json().then((e) => {
+    //       dispatch(
+    //         createMessageAction(
+    //           createMessage,
+    //           dialogId,
+    //           EMessageRole.USER,
+    //           () =>
+    //             dispatch(
+    //               createMessageAction(
+    //                 removeTextInsideAsterisks(e),
+    //                 dialogId,
+    //                 EMessageRole.ASSISTANT,
+    //                 () => {
+    //                   fetchDialogDetail();
+    //                   setCreateMessage('');
+    //                   setIsLoading(false);
+    //                 }
+    //               )
+    //             )
+    //         )
+    //       );
+    //     });
+    //   })
+    //   .catch();
 
     // dispatch(createMessageAction(createMessage, dialogId));
-  }, [dialogId, messages]);
+  }, [dialogId, messages, createMessage]);
 
   // const onCreateMessage = useCallback(() => {
   //   setIsLoading(true);
@@ -157,7 +174,11 @@ const DialogDetail = () => {
               <input
                 className='block w-full rounded-md border-0 px-2 py-1.5 bg-white text-black ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600'
                 value={createMessage}
-                onChange={(e) => setCreateMessage(e.target.value)}
+                onChange={(e) => {
+                  console.log(e.target.value, 'ee');
+
+                  setCreateMessage(e.target.value);
+                }}
               />
             </div>
             <div>

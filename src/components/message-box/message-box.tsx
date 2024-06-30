@@ -2,6 +2,7 @@ import { Virtuoso } from 'react-virtuoso';
 import { MessageDetail } from '../../store/dialog/types';
 import MessageItemText from './message-item-text';
 import { useCallback, useEffect, useRef } from 'react';
+import MessageItemVoice from './message-item-voice';
 
 interface Props {
   messages: MessageDetail[] | [];

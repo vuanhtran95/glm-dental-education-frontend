@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import avatar from '../../assets/avatar.png';
 import patient from '../../assets/patient.png';
 import { useMemo } from 'react';
+import MessageItemVoice from './message-item-voice';
 
 interface Props {
   message: MessageDetail;
@@ -51,6 +52,7 @@ const MessageItemText = ({ message }: Props) => {
         <p className='text-sm font-normal py-2.5 text-gray-900 dark:text-white'>
           {content}
         </p>
+        <MessageItemVoice />
       </div>
     </div>
   );
