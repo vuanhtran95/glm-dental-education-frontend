@@ -5,7 +5,8 @@ import {
   DIALOG_LIST_FETCH,
   MESSAGE_CREATE,
 } from './actionTypes';
-import { SuccessCallback } from '../../types';
+import { SuccessCallback, ErrorCallback } from '../../types';
+import { MessagePayload } from './types';
 
 export const fetchDialogListAction = (
   userId: string,
@@ -40,16 +41,14 @@ export const createDialogAction = (
   });
 
 export const createMessageAction = (
-  content: string,
+  messages: MessagePayload,
   dialogId: string,
-  role: string,
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback
 ) =>
   action(MESSAGE_CREATE, {
-    content,
+    messages,
     dialogId,
-    role,
     successCallback,
     errorCallback,
   });

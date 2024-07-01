@@ -4,11 +4,11 @@ import useDialogDetail from '../../../hooks/useDialogDetail';
 import { useCallback, useEffect, useState } from 'react';
 import Header from '../../../components/header';
 import Button from '../../../components/button';
-import { useDispatch } from 'react-redux';
-import { createMessageAction } from '../../../store/dialog/actions';
 import { EMessageRole } from '../../../store/dialog/types';
-import { removeTextInsideAsterisks } from '../../../utils';
 import useResponsive from '../../../hooks/useResponsive';
+import useSpeechToText from '../../../hooks/useSpeechToText';
+import useCallToLlama from '../../../hooks/useCallToLlama';
+import useMessage from '../../../hooks/useMessage';
 
 const DialogDetail = () => {
   const params = useParams();
@@ -19,110 +19,76 @@ const DialogDetail = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [createMessage, setCreateMessage] = useState<string>('');
+  const [textMessage, setTextMessage] = useState<string>('');
+
+  const { createMessage } = useMessage({ dialogId });
+
+  const { processMessage } = useCallToLlama();
 
   const { dialogDetail, fetchDialogDetail } = useDialogDetail({
     dialogId,
   });
 
-  const dispatch = useDispatch();
+  const {
+    startListening,
+    stopListening,
+    transcript,
+    listening: isListening,
+    resetTranscript,
+  } = useSpeechToText({ transcribing: true });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const messages = dialogDetail?.detail.messages || [];
+
   const dialog = dialogDetail?.detail.dialog;
   const scenario = dialogDetail?.detail.scenario;
 
-  const onSendMessage = useCallback(() => {
-    setIsLoading(true);
-    if (!dialogId) return;
+  const onSendMessage = useCallback(
+    async (newMessage: string) => {
+      setIsLoading(true);
+      if (!dialogId) return;
 
-    const bodyMessage = {
-      history: [
-        ...messages.map((e) => ({ role: e.role, content: e.content })),
-        { role: EMessageRole.USER, content: createMessage },
-      ],
-    };
+      try {
+        const responseMessage = await processMessage(newMessage, messages);
+        console.log(responseMessage, 'responseMessage');
 
-    const headers = new Headers({
-      'Access-Control-Allow-Origin': '*',
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Headers':
-        'Content-Type, Authorization, X-Requested-With',
-    });
+        createMessage(
+          [
+            { role: EMessageRole.USER, content: newMessage },
+            { role: EMessageRole.ASSISTANT, content: responseMessage },
+          ],
+          () => {
+            setTextMessage('');
+            setIsLoading(false);
+            fetchDialogDetail();
+          },
+          () => {
+            setIsLoading(false);
+          }
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [createMessage, dialogId, fetchDialogDetail, messages, processMessage]
+  );
 
-    dispatch(
-      createMessageAction(createMessage, dialogId, EMessageRole.USER, () =>
-        dispatch(
-          createMessageAction(
-            removeTextInsideAsterisks('Test from GPT'),
-            dialogId,
-            EMessageRole.ASSISTANT,
-            () => {
-              fetchDialogDetail();
-              setCreateMessage('');
-              setIsLoading(false);
-            }
-          )
-        )
-      )
-    );
-
-    // fetch('http://18.171.155.16:8080/process_message', {
-    //   method: 'POST',
-    //   headers,
-    //   body: JSON.stringify(bodyMessage),
-    // })
-    //   .then((e) => {
-    //     e.json().then((e) => {
-    //       dispatch(
-    //         createMessageAction(
-    //           createMessage,
-    //           dialogId,
-    //           EMessageRole.USER,
-    //           () =>
-    //             dispatch(
-    //               createMessageAction(
-    //                 removeTextInsideAsterisks(e),
-    //                 dialogId,
-    //                 EMessageRole.ASSISTANT,
-    //                 () => {
-    //                   fetchDialogDetail();
-    //                   setCreateMessage('');
-    //                   setIsLoading(false);
-    //                 }
-    //               )
-    //             )
-    //         )
-    //       );
-    //     });
-    //   })
-    //   .catch();
-
-    // dispatch(createMessageAction(createMessage, dialogId));
-  }, [dialogId, messages, createMessage]);
-
-  // const onCreateMessage = useCallback(() => {
-  //   setIsLoading(true);
-  //   if (!dialogId) return;
-  //   const successCallback = () => {
-  //     fetchDialogDetail();
-  //     setCreateMessage('');
-  //     setIsLoading(false);
-  //   };
-  //   const errorCallback = () => {
-  //     fetchDialogDetail();
-  //     setCreateMessage('');
-  //     setIsLoading(false);
-  //   };
-  //   dispatch(
-  //     createMessageAction(
-  //       createMessage,
-  //       dialogId,
-  //       successCallback,
-  //       errorCallback
-  //     )
-  //   );
-  // }, [createMessage, dialogId, dispatch, fetchDialogDetail]);
+  const onClickListen = useCallback(() => {
+    if (isListening) {
+      stopListening();
+      onSendMessage(transcript);
+    } else {
+      resetTranscript();
+      startListening({ continuous: true });
+    }
+  }, [
+    isListening,
+    onSendMessage,
+    resetTranscript,
+    startListening,
+    stopListening,
+    transcript,
+  ]);
 
   useEffect(() => {
     fetchDialogDetail();
@@ -170,24 +136,29 @@ const DialogDetail = () => {
             />
           </div>
           <div className='flex align-middle	justify-between items-end	mt-2'>
-            <div className='w-full mr-4'>
+            <div className='w-full'>
               <input
                 className='block w-full rounded-md border-0 px-2 py-1.5 bg-white text-black ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600'
-                value={createMessage}
+                value={textMessage}
                 onChange={(e) => {
-                  console.log(e.target.value, 'ee');
-
-                  setCreateMessage(e.target.value);
+                  setTextMessage(e.target.value);
                 }}
               />
             </div>
-            <div>
+            {textMessage ? (
               <Button
                 label={'Send'}
-                onClick={() => onSendMessage()}
+                onClick={() => onSendMessage(textMessage)}
                 loading={isLoading}
+                className='ml-2'
               />
-            </div>
+            ) : (
+              <Button
+                label={isListening ? 'Listening' : 'Listen'}
+                onClick={() => onClickListen()}
+                className='ml-2'
+              />
+            )}
           </div>
         </div>
       </div>

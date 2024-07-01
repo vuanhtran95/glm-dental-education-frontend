@@ -10,8 +10,6 @@ const Menu = () => {
 
   const [activePath, setActivePath] = useState<string | null>(path);
 
-  console.log(path, 'path');
-
   const menuItems: MenuItem[] = [
     {
       label: 'Dashboard',

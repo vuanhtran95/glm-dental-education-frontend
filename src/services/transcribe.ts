@@ -49,11 +49,8 @@ const transcribe = async () => {
     const data = await transcribeClient.send(
       new StartTranscriptionJobCommand(params)
     );
-    console.log('Success - put', data);
     return data; // For unit tests.
-  } catch (err) {
-    console.log('Error', err);
-  }
+  } catch (err) {}
 };
 
 // snippet-end:[transcribe.JavaScript.jobs.createJobV3]

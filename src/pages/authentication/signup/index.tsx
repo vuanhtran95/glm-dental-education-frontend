@@ -30,8 +30,6 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (values: SignUpPayload) => {
-    console.log(values, 'values');
-
     dispatch(
       signUp(values, () => navigate('/login')),
       () => {

@@ -1,22 +1,30 @@
+import 'regenerator-runtime/runtime';
 import SpeechRecognition, {
+  SpeechRecognitionOptions,
   useSpeechRecognition,
 } from 'react-speech-recognition';
 
-const useSpeechToText = () => {
+const useSpeechToText = (options?: SpeechRecognitionOptions) => {
   const {
     transcript,
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
+    interimTranscript,
+    finalTranscript,
+    isMicrophoneAvailable,
+  } = useSpeechRecognition(options);
 
   return {
     startListening: SpeechRecognition.startListening,
     stopListening: SpeechRecognition.stopListening,
-    reset: resetTranscript,
+    resetTranscript,
     transcript,
     listening,
     browserSupportsSpeechRecognition,
+    interimTranscript,
+    finalTranscript,
+    isMicrophoneAvailable,
   };
 };
 export default useSpeechToText;

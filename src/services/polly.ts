@@ -43,11 +43,8 @@ const polly = async (text: string, voiceId?: VoiceId) => {
 
   try {
     await pollyClient.send(new StartSpeechSynthesisTaskCommand(params));
-    console.log('Success, audio file added to ' + params.OutputS3BucketName);
     // return a url
-  } catch (err) {
-    console.log('Error putting object', err);
-  }
+  } catch (err) {}
 };
 
 export { polly };

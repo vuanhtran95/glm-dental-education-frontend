@@ -36,7 +36,7 @@ export interface DialogCreateAction {
 export interface MessageCreateAction {
   type: typeof MESSAGE_CREATE;
   payload: {
-    content: string;
+    messages: MessagePayload;
     dialogId: string;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
@@ -74,6 +74,8 @@ export interface MessageDetail {
   createdAt: Date;
   dialogId: string;
 }
+
+export type MessagePayload = Array<Pick<MessageDetail, 'content' | 'role'>>;
 
 export interface DialogState {
   dialogs: DialogDetail[];
