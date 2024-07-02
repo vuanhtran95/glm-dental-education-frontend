@@ -52,7 +52,7 @@ const MessageItemText = ({ message }: Props) => {
         <p className='text-sm font-normal py-2.5 text-gray-900 dark:text-white'>
           {content}
         </p>
-        <MessageItemVoice />
+        <MessageItemVoice uri={message.uri} />
       </div>
     </div>
   );

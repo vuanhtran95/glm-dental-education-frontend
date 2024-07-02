@@ -2,7 +2,6 @@ import { Virtuoso } from 'react-virtuoso';
 import { MessageDetail } from '../../store/dialog/types';
 import MessageItemText from './message-item-text';
 import { useCallback, useEffect, useRef } from 'react';
-import MessageItemVoice from './message-item-voice';
 
 interface Props {
   messages: MessageDetail[] | [];
@@ -32,7 +31,7 @@ const MessageBox = ({ messages }: Props) => {
       style={{ height: '600px' }}
       totalCount={200}
       itemContent={(index: number, message: MessageDetail) => {
-        return <MessageItemText message={message} index={index} />;
+        return <MessageItemText message={message} index={index} key={index} />;
       }}
     />
   );

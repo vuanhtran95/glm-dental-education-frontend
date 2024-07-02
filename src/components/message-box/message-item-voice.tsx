@@ -1,8 +1,16 @@
+import { useCallback, useMemo } from 'react';
+
 interface Props {
-  length: string;
+  uri?: string;
 }
 
-const MessageItemVoice = ({ length }: Props) => {
+const MessageItemVoice = ({ uri }: Props) => {
+  const audio = useMemo(() => new Audio(uri), [uri]);
+
+  const play = useCallback(() => {
+    audio.play();
+  }, [audio]);
+
   return (
     <div>
       <div>
@@ -10,6 +18,7 @@ const MessageItemVoice = ({ length }: Props) => {
           <div className='flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700'>
             <div className='flex items-center space-x-2 rtl:space-x-reverse'>
               <button
+                onClick={() => play()}
                 className='inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-100 rounded-lg hover:bg-gray-200 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-600'
                 type='button'
               >

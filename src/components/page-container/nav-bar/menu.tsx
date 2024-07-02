@@ -36,6 +36,7 @@ const Menu = () => {
         {menuItems.map((item) => {
           return (
             <a
+              key={item.label}
               href='#'
               onClick={() => onClickMenuItem(item.pathName)}
               className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
