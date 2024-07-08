@@ -2,8 +2,7 @@ import { EMessageRole, MessageDetail } from '../../store/dialog/types';
 import dayjs from 'dayjs';
 import avatar from '../../assets/avatar.png';
 import patient from '../../assets/patient.png';
-import { useMemo } from 'react';
-import MessageItemVoice from './message-item-voice';
+import { useCallback, useMemo } from 'react';
 
 interface Props {
   message: MessageDetail;
@@ -12,6 +11,19 @@ interface Props {
 
 const MessageItemText = ({ message }: Props) => {
   const { createdAt, content, role } = message;
+
+  const audio = useMemo(() => {
+    const newAudio = new Audio(message.uri);
+    newAudio.preload = 'none';
+    newAudio.setAttribute('type', 'audio/mpeg');
+    return newAudio;
+  }, [message.uri]);
+
+  const onPlay = useCallback(() => {
+    console.log(audio);
+
+    audio.play();
+  }, [audio]);
 
   const date = dayjs(createdAt).format('YYYY MM DD');
 
@@ -49,10 +61,12 @@ const MessageItemText = ({ message }: Props) => {
             {date}
           </span>
         </div>
-        <p className='text-sm font-normal py-2.5 text-gray-900 dark:text-white'>
+        <p
+          className='text-sm font-normal py-2.5 text-gray-900 dark:text-white cursor-pointer'
+          onClick={() => onPlay()}
+        >
           {content}
         </p>
-        <MessageItemVoice uri={message.uri} />
       </div>
     </div>
   );

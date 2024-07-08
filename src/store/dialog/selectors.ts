@@ -11,3 +11,7 @@ export const selectDialogListState = (state: RootState) => {
 export const selectDialogDetailState = (state: RootState) => {
   return state.dialog.dialogDetail;
 };
+
+export const selectIsSentMessage = (state: RootState) => {
+  return state.dialog.isMessageSent;
+};

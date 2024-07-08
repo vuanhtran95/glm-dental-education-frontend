@@ -17,6 +17,7 @@ export interface DialogDetailFetchAction {
   type: typeof DIALOG_LIST_FETCH;
   payload: {
     dialogId: string;
+    isMessageSent: boolean;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
   };
@@ -37,6 +38,16 @@ export interface MessageCreateAction {
   type: typeof MESSAGE_CREATE;
   payload: {
     messages: MessagePayload;
+    dialogId: string;
+    successCallback?: SuccessCallback;
+    errorCallback?: ErrorCallback;
+  };
+}
+
+export interface AudioMessageCreateAction {
+  type: typeof MESSAGE_CREATE;
+  payload: {
+    s3Id: string;
     dialogId: string;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
@@ -73,15 +84,19 @@ export interface MessageDetail {
   content: string;
   createdAt: Date;
   dialogId: string;
+  uri?: string;
 }
 
-export type MessagePayload = Array<Pick<MessageDetail, 'content' | 'role'>>;
+export type MessagePayload = Array<
+  Pick<MessageDetail, 'content' | 'role' | 'uri'>
+>;
 
 export interface DialogState {
   dialogs: DialogDetail[];
   loading: boolean;
   error: boolean;
   dialogDetail: DialogDetailWithMessage | null;
+  isMessageSent: boolean;
 }
 
 export type DialogAction =
@@ -104,6 +119,9 @@ export type DialogAction =
     }
   | {
       type: 'DIALOG_DETAIL_FETCH';
+    }
+  | {
+      type: 'DIALOG_DETAIL_FETCHED_SUCCESS_SENT_MESSAGE';
     };
 
 export interface DialogListResponse {

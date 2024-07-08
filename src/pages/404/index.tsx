@@ -5,7 +5,7 @@ const NotFound = () => {
   return (
     <div>
       <div>Not Found</div>
-      <a onClick={() => navigate('/dashboard')}>Back to home</a>
+      <a onClick={() => navigate('/')}>Back to home</a>
     </div>
   );
 };

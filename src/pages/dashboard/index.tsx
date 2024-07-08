@@ -1,6 +1,6 @@
 import WelcomeBanner from './components/welcome-banner';
 
-const Dashboard = () => {
+const NewChat = () => {
   return (
     <>
       <WelcomeBanner />
@@ -8,4 +8,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default NewChat;

@@ -7,6 +7,7 @@ import {
   DIALOG_DETAIL_FETCH,
   DIALOG_DETAIL_FETCHED_FAILED,
   DIALOG_DETAIL_FETCHED_SUCCESS,
+  DIALOG_DETAIL_FETCHED_SUCCESS_SENT_MESSAGE,
   DIALOG_LIST_FETCH,
   DIALOG_LIST_FETCHED_FAILED,
   DIALOG_LIST_FETCHED_SUCCESS,
@@ -39,7 +40,8 @@ function* getDialogList(action: DialogListFetchAction) {
 }
 
 function* getDialogDetail(action: DialogDetailFetchAction) {
-  const { dialogId, successCallback, errorCallback } = action.payload;
+  const { dialogId, successCallback, errorCallback, isMessageSent } =
+    action.payload;
   try {
     const response: DialogDetailResponse = yield call(() =>
       api.get(`api/dialogs/${dialogId}`)
@@ -49,6 +51,11 @@ function* getDialogDetail(action: DialogDetailFetchAction) {
       data: response.data,
     });
     successCallback?.();
+    if (isMessageSent) {
+      yield put({
+        type: DIALOG_DETAIL_FETCHED_SUCCESS_SENT_MESSAGE,
+      });
+    }
   } catch (err) {
     yield put({ type: DIALOG_DETAIL_FETCHED_FAILED });
     errorCallback?.();

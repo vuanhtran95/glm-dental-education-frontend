@@ -25,7 +25,7 @@ const Login = () => {
     dispatch(
       authenticate(
         values,
-        () => navigate('/dashboard'),
+        () => navigate('/new-chat'),
         () => {
           setNotification(ERROR.GENERAL_ERROR);
         }

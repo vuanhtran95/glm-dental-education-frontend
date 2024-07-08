@@ -7,9 +7,17 @@ interface Props {
   name?: string;
   value?: string;
   onChange?: () => void;
+  placeholder?: string;
 }
 
-const Input = ({ label, value, type = 'text', id, name }: Props) => {
+const Input = ({
+  label,
+  value,
+  type = 'text',
+  id,
+  name,
+  placeholder,
+}: Props) => {
   return (
     <div>
       {!!label && (
@@ -19,11 +27,12 @@ const Input = ({ label, value, type = 'text', id, name }: Props) => {
       )}
       <div className='mt-2'>
         <Field
+          placeholder={placeholder}
           type={type}
           value={value}
           id={id}
           name={name}
-          className='block w-full rounded-md border-0 px-2 py-1.5 bg-white text-black ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600'
+          className='block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
         />
       </div>
     </div>

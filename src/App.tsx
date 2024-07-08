@@ -7,13 +7,13 @@ import {
 
 import Settings from './pages/settings';
 import NotFound from './pages/404';
-import Dashboard from './pages/dashboard';
 import Login from './pages/authentication/login';
 import SignUp from './pages/authentication/signup';
 import DialogList from './pages/dialog/list';
 import DialogDetail from './pages/dialog/detail';
 import Scenario from './pages/scenario';
 import PageContainer from './components/page-container';
+import NewChat from './pages/dashboard';
 
 const App = () => {
   const ProtectedRoutes = () => {
@@ -50,8 +50,8 @@ const App = () => {
           element: <Settings />,
         },
         {
-          path: '/dashboard',
-          element: <Dashboard />,
+          path: '/new-chat',
+          element: <NewChat />,
         },
         {
           path: '/dialog',

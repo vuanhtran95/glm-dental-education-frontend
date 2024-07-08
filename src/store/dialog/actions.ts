@@ -21,9 +21,16 @@ export const fetchDialogListAction = (
 
 export const fetchDialogDetailAction = (
   dialogId: string,
+  isMessageSent?: boolean,
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback
-) => action(DIALOG_DETAIL_FETCH, { dialogId, successCallback, errorCallback });
+) =>
+  action(DIALOG_DETAIL_FETCH, {
+    dialogId,
+    isMessageSent,
+    successCallback,
+    errorCallback,
+  });
 
 export const createDialogAction = (
   createdUserId: string,
