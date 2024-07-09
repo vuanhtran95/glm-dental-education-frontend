@@ -23,7 +23,7 @@ const useCallToLlama = () => {
       };
 
       return new Promise((resolve, reject) => {
-        resolve('Good morning Victor, how are you today?');
+        resolve(Math.random().toString());
       });
 
       return new Promise((resolve, reject) => {

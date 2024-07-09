@@ -33,7 +33,12 @@ const MessageBox = ({ messages }: Props) => {
         totalCount={200}
         itemContent={(index: number, message: MessageDetail) => {
           return (
-            <MessageItemText message={message} index={index} key={index} />
+            <MessageItemText
+              id={index === messages.length - 1 ? 'audio-player' : ''}
+              message={message}
+              index={index}
+              key={index}
+            />
           );
         }}
       />

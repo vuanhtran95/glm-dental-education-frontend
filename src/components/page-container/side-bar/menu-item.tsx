@@ -13,8 +13,6 @@ const MenuItem = () => {
 
   const activeDialogId = useMemo(() => params.id, [params.id]);
 
-  console.log(activeDialogId, 'activeDialogId');
-
   const { dialogs, fetchDialogList } = useDialogList({
     userId: userInfo?._id || '',
   });

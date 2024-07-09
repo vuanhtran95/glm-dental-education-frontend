@@ -3,13 +3,15 @@ import dayjs from 'dayjs';
 import avatar from '../../assets/avatar.png';
 import patient from '../../assets/patient.png';
 import { useCallback, useMemo } from 'react';
+import useTextToSpeech from '../../hooks/useTextToSpeech';
 
 interface Props {
   message: MessageDetail;
   index: number;
+  id: string;
 }
 
-const MessageItemText = ({ message }: Props) => {
+const MessageItemText = ({ message, id }: Props) => {
   const { createdAt, content, role } = message;
 
   const audio = useMemo(() => {
@@ -19,13 +21,13 @@ const MessageItemText = ({ message }: Props) => {
     return newAudio;
   }, [message.uri]);
 
-  const onPlay = useCallback(() => {
-    console.log(audio);
+  const { onSpeak } = useTextToSpeech();
 
+  const onPlay = useCallback(() => {
     audio.play();
   }, [audio]);
 
-  const date = dayjs(createdAt).format('YYYY MM DD');
+  const date = dayjs(createdAt).format('HH:mm');
 
   const displayedRole = useMemo(() => {
     switch (role) {
@@ -43,15 +45,15 @@ const MessageItemText = ({ message }: Props) => {
       ? avatar
       : patient;
 
-  const isRightAlign = role === EMessageRole.USER;
+  const isUserRole = role === EMessageRole.USER;
 
   return (
     <div
       className={`flex items-center gap-2.5 my-4 pr-2 pl-2 ${
-        isRightAlign && 'justify-end'
+        isUserRole && 'justify-end'
       }`}
     >
-      <img className='w-8 h-8 rounded-full' src={img} alt='Jese image' />
+      <img className='w-8 h-8 rounded-full' src={img} />
       <div className='flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700'>
         <div className='flex items-center space-x-2 rtl:space-x-reverse'>
           <span className='text-sm font-semibold text-gray-900 dark:text-white'>
@@ -62,8 +64,14 @@ const MessageItemText = ({ message }: Props) => {
           </span>
         </div>
         <p
+          id={id}
           className='text-sm font-normal py-2.5 text-gray-900 dark:text-white cursor-pointer'
-          onClick={() => onPlay()}
+          onClick={() => {
+            if (isUserRole) onPlay();
+            else {
+              onSpeak(message.content);
+            }
+          }}
         >
           {content}
         </p>
