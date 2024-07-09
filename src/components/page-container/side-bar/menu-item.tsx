@@ -2,13 +2,18 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import NewChatItem from './new-chat-item';
 import useDialogList from '../../../hooks/useDialogList';
 import { getUserInfo } from '../../../utils';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { DialogDetail } from '../../../store/dialog/types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const MenuItem = () => {
   const userInfo = getUserInfo();
   const navigate = useNavigate();
+  const params = useParams();
+
+  const activeDialogId = useMemo(() => params.id, [params.id]);
+
+  console.log(activeDialogId, 'activeDialogId');
 
   const { dialogs, fetchDialogList } = useDialogList({
     userId: userInfo?._id || '',
@@ -55,15 +60,18 @@ const MenuItem = () => {
               >
                 <a
                   href='#'
-                  className='flex items-center p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
+                  className={`${
+                    activeDialogId === dialog._id && 'bg-gray-700'
+                  } flex items-center p-1 text-gray-900 rounded-lg dark:text-white 
+                    hover:bg-gray-100 dark:hover:bg-gray-700 group`}
                 >
-                  <i class='fa-regular fa-message'></i>
+                  <i className='fa-regular fa-message'></i>
                   <span className='flex-1 ms-3 whitespace-nowrap'>
                     {dialog.name}
                   </span>
-                  <span className='inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300'>
+                  {/* <span className='inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300'>
                     Pro
-                  </span>
+                  </span> */}
                 </a>
               </li>
             );

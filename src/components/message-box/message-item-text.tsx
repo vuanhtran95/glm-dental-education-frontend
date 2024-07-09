@@ -47,7 +47,7 @@ const MessageItemText = ({ message }: Props) => {
 
   return (
     <div
-      className={`flex items-start gap-2.5 my-4 ${
+      className={`flex items-center gap-2.5 my-4 pr-2 pl-2 ${
         isRightAlign && 'justify-end'
       }`}
     >

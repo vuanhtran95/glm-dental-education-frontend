@@ -25,15 +25,19 @@ const MessageBox = ({ messages }: Props) => {
   }, [messages.length, onScrollBottom]);
 
   return (
-    <Virtuoso
-      ref={virtuoso}
-      data={messages || []}
-      style={{ height: '600px' }}
-      totalCount={200}
-      itemContent={(index: number, message: MessageDetail) => {
-        return <MessageItemText message={message} index={index} key={index} />;
-      }}
-    />
+    <div className='h-[85vh] md:h-[90vh]'>
+      <Virtuoso
+        ref={virtuoso}
+        data={messages || []}
+        style={{ paddingRight: '10px' }}
+        totalCount={200}
+        itemContent={(index: number, message: MessageDetail) => {
+          return (
+            <MessageItemText message={message} index={index} key={index} />
+          );
+        }}
+      />
+    </div>
   );
 };
 

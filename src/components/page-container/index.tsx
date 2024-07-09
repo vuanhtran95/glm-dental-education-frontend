@@ -3,10 +3,10 @@ import SideBar from './side-bar';
 
 const PageContainer = () => {
   return (
-    <div className='min-h-full'>
+    <div className='md:min-h-screen'>
       <SideBar />
-      <main>
-        <div className='p-4 sm:ml-64'>
+      <main className='md:min-h-screen'>
+        <div className='sm:ml-64 md:min-h-screen'>
           <Outlet />
         </div>
       </main>

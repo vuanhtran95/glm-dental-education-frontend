@@ -1,7 +1,6 @@
 import { Form, Formik } from 'formik';
 import { getUserInfo } from '../../../utils';
 import Input from '../../../components/input';
-import Button from '../../../components/button';
 
 function WelcomeBanner() {
   const user = getUserInfo();

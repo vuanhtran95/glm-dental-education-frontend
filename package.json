@@ -31,6 +31,7 @@
     "dotenv": "^16.4.5",
     "font-awesome": "^4.7.0",
     "formik": "^2.4.6",
+    "framer-motion": "^11.2.13",
     "i": "^0.3.7",
     "microphone-stream": "^6.0.1",
     "npm": "^10.8.1",
