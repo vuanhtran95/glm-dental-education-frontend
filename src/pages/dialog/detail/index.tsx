@@ -3,7 +3,7 @@ import { useAudioRecorder } from 'react-audio-voice-recorder';
 
 import MessageBox from '../../../components/message-box/message-box';
 import useDialogDetail from '../../../hooks/useDialogDetail';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { EMessageRole } from '../../../store/dialog/types';
 import useResponsive from '../../../hooks/useResponsive';
 import useCallToLlama from '../../../hooks/useCallToLlama';
@@ -23,14 +23,12 @@ const DialogDetail = () => {
 
   const isSentMessage = useSelector(selectIsSentMessage);
 
+  const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
+
   const { isMobile } = useResponsive();
   const { uploadBlob } = useAmazonS3();
   const { processMessage } = useCallToLlama();
   const { createMessage } = useMessage({ dialogId });
-
-  const audioRef = React.useRef(null);
-
-  const [audio, setAudio] = useState<string>('');
 
   const { recordingBlob, startRecording, stopRecording, isRecording } =
     useAudioRecorder();
@@ -42,6 +40,10 @@ const DialogDetail = () => {
     resetTranscript,
     listening,
   } = useSpeechToText({});
+
+  const onClickProfile = useCallback(() => {
+    setIsShowProfile(!isShowProfile);
+  }, [isShowProfile]);
 
   const { onSpeak } = useTextToSpeech();
 
@@ -103,9 +105,10 @@ const DialogDetail = () => {
 
   return (
     <div className='flex flex-row min-h-screen'>
-      <div className='grow'>
+      <div className='grow bg-slate-500'>
         <div className='w-full'>
           <MessageBox
+            onClickProfile={onClickProfile}
             messages={
               messages?.filter((e) => e.role !== EMessageRole.SYSTEM) || []
             }
@@ -113,9 +116,7 @@ const DialogDetail = () => {
         </div>
 
         <div className='flex justify-center items-end	mt-4'>
-          <div className='hidden'>
-            <audio id='audio-player' autoPlay src={audio}></audio>
-          </div>
+          <div className='hidden'></div>
           <div className='sticky md:relative w-full px-8'>
             <input
               className='block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -168,7 +169,9 @@ const DialogDetail = () => {
           </div>
         </div>
       </div>
-      {!isMobile && <ScenarioInformation scenario={scenario} />}
+      {!isMobile && isShowProfile && (
+        <ScenarioInformation scenario={scenario} />
+      )}
     </div>
   );
 };

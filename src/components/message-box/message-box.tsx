@@ -5,9 +5,10 @@ import { useCallback, useEffect, useRef } from 'react';
 
 interface Props {
   messages: MessageDetail[] | [];
+  onClickProfile: () => void;
 }
 
-const MessageBox = ({ messages }: Props) => {
+const MessageBox = ({ messages, onClickProfile }: Props) => {
   const virtuoso = useRef(null);
 
   const onScrollBottom = useCallback(() => {
@@ -25,7 +26,7 @@ const MessageBox = ({ messages }: Props) => {
   }, [messages.length, onScrollBottom]);
 
   return (
-    <div className='h-[85vh] md:h-[90vh]'>
+    <div className='h-[85vh]'>
       <Virtuoso
         ref={virtuoso}
         data={messages || []}
@@ -34,6 +35,7 @@ const MessageBox = ({ messages }: Props) => {
         itemContent={(index: number, message: MessageDetail) => {
           return (
             <MessageItemText
+              onClickProfile={onClickProfile}
               id={index === messages.length - 1 ? 'audio-player' : ''}
               message={message}
               index={index}

@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { getUserInfo } from '../../../utils';
 import useDialogList from '../../../hooks/useDialogList';
 import DataTable from '../components/data-table';
-import Header from '../../../components/header';
 import Button from '../../../components/button';
 import Modal from '../../../components/modal';
 import Input from '../../../components/input';

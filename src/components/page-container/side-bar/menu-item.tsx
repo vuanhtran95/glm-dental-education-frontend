@@ -46,7 +46,7 @@ const MenuItem = () => {
           <NewChatItem />
 
           <li>
-            <p className='text-white font-bold'>Recent chat</p>
+            <p className='text-white font-bold text-sm'>Recent chat</p>
           </li>
 
           {dialogs.map((dialog: DialogDetail) => {
@@ -64,7 +64,7 @@ const MenuItem = () => {
                     hover:bg-gray-100 dark:hover:bg-gray-700 group`}
                 >
                   <i className='fa-regular fa-message'></i>
-                  <span className='flex-1 ms-3 whitespace-nowrap'>
+                  <span className='flex-1 ms-3 whitespace-nowrap text-sm'>
                     {dialog.name}
                   </span>
                   {/* <span className='inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300'>

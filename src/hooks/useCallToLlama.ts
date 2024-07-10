@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { removeTextInsideAsterisks } from '../utils';
-import { EMessageRole, MessagePayload } from '../store/dialog/types';
+import { MessagePayload } from '../store/dialog/types';
+import api from '../services/api';
 
 const headers = new Headers({
   'Access-Control-Allow-Origin': '*',
@@ -10,28 +11,28 @@ const headers = new Headers({
     'Content-Type, Authorization, X-Requested-With',
 });
 
-const url = 'http://18.171.155.16:8080/process_message';
+const url =
+  'https://sbyv3a06nk.execute-api.eu-west-2.amazonaws.com/default/Testing/';
 
 const useCallToLlama = () => {
   const processMessage = useCallback(
     (newMessage: string, history: MessagePayload): Promise<string> => {
       const payload = {
-        history: [
-          ...history.map((e) => ({ role: e.role, content: e.content })),
-          { role: EMessageRole.USER, content: newMessage },
-        ],
+        inputs: newMessage,
+        parameters: {
+          max_new_tokens: 48,
+          top_p: 0.9,
+          temperature: 0.6,
+        },
       };
 
       return new Promise((resolve, reject) => {
-        resolve(Math.random().toString());
-      });
-
-      return new Promise((resolve, reject) => {
-        fetch(url, {
-          method: 'POST',
-          headers,
-          body: JSON.stringify(payload),
-        })
+        api
+          .post(url, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(payload),
+          })
           .then((response) => {
             response.json().then((message) => {
               resolve(removeTextInsideAsterisks(message));

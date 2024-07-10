@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import useScenarioList from '../../hooks/useScenarioList';
 import DataTable from './components/data-table';
-import Header from '../../components/header';
 import Button from '../../components/button';
 import Modal from '../../components/modal';
 import { useDispatch } from 'react-redux';
@@ -10,7 +9,7 @@ import { createScenarioAction } from '../../store/scenario/actions';
 import Input from '../../components/input';
 import { Gender, ScenarioDetail } from '../../store/scenario/types';
 import Select from '../../components/select';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 
 interface ScenarioFormValues {
   name: string;
@@ -74,7 +73,6 @@ const Scenario = () => {
   return (
     <>
       <div className='flex justify-between align-middle	'>
-        <Header title='Scenario' />
         <div className='flex align-middle flex-col justify-center mr-2'>
           <Button label={'Create'} onClick={onCreateScenario} />
         </div>
