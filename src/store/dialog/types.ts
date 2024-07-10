@@ -129,10 +129,5 @@ export interface DialogListResponse {
 }
 
 export interface DialogDetailResponse {
-  data: {
-    detail: {
-      dialog: DialogDetail;
-      messages: MessageDetail[];
-    };
-  };
+  data: DialogDetail;
 }

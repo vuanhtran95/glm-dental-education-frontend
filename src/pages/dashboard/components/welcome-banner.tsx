@@ -42,7 +42,6 @@ function WelcomeBanner() {
   );
 
   const onStartConvo = useCallback(() => {
-    setPatientName('');
     user?._id &&
       scenarioDetail?._id &&
       dispatch(
@@ -51,6 +50,7 @@ function WelcomeBanner() {
           scenarioDetail?._id,
           scenarioDetail?.patientName,
           (id?: string) => {
+            setPatientName('');
             id && navigation(`/dialog/${id}`);
           }
         )

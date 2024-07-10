@@ -22,7 +22,7 @@ export const fetchDialogListAction = (
 export const fetchDialogDetailAction = (
   dialogId: string,
   isMessageSent?: boolean,
-  successCallback?: SuccessCallback,
+  successCallback?: (text: string) => void,
   errorCallback?: ErrorCallback
 ) =>
   action(DIALOG_DETAIL_FETCH, {
@@ -36,7 +36,7 @@ export const createDialogAction = (
   createdUserId: string,
   scenarioId: string,
   name: string,
-  successCallback?: SuccessCallback,
+  successCallback?: (id: string) => void,
   errorCallback?: ErrorCallback
 ) =>
   action(DIALOG_CREATE, {

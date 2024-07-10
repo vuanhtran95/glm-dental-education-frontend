@@ -40,22 +40,21 @@ function* getDialogList(action: DialogListFetchAction) {
 }
 
 function* getDialogDetail(action: DialogDetailFetchAction) {
-  const { dialogId, successCallback, errorCallback, isMessageSent } =
-    action.payload;
+  const { dialogId, successCallback, errorCallback } = action.payload;
   try {
     const response: DialogDetailResponse = yield call(() =>
       api.get(`api/dialogs/${dialogId}`)
     );
+
+    const data = response.data;
     yield put({
       type: DIALOG_DETAIL_FETCHED_SUCCESS,
-      data: response.data,
+      data: data,
     });
-    successCallback?.();
-    if (isMessageSent) {
-      yield put({
-        type: DIALOG_DETAIL_FETCHED_SUCCESS_SENT_MESSAGE,
-      });
-    }
+
+    successCallback?.(
+      data.detail.messages[data.detail.messages.length - 1].content
+    );
   } catch (err) {
     yield put({ type: DIALOG_DETAIL_FETCHED_FAILED });
     errorCallback?.();
@@ -77,7 +76,8 @@ function* createDialog(action: DialogCreateAction) {
       type: DIALOG_CREATE_SUCCESS,
       data: response.data,
     });
-    successCallback?.(response.data.detail.dialog._id);
+
+    successCallback?.(response.data._id);
   } catch (err) {
     yield put({ type: DIALOG_CREATE_FAILED });
     errorCallback?.();

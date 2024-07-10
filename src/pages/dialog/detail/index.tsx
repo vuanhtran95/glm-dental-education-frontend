@@ -23,7 +23,7 @@ const DialogDetail = () => {
 
   const isSentMessage = useSelector(selectIsSentMessage);
 
-  const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
+  const [isShowProfile, setIsShowProfile] = useState<boolean>(true);
 
   const { isMobile } = useResponsive();
   const { uploadBlob } = useAmazonS3();
@@ -56,8 +56,10 @@ const DialogDetail = () => {
   const scenario = dialogDetail?.detail.scenario;
 
   const refetch = useCallback(async () => {
-    fetchDialogDetail(true);
-  }, [fetchDialogDetail]);
+    fetchDialogDetail(true, (text: string) => {
+      onSpeak(text);
+    });
+  }, [fetchDialogDetail, onSpeak]);
 
   const onSendMessage = useCallback(
     async (newMessage: string, uri?: string) => {
@@ -85,14 +87,8 @@ const DialogDetail = () => {
   }, [resetTranscript]);
 
   useEffect(() => {
-    fetchDialogDetail();
+    fetchDialogDetail(false);
   }, [fetchDialogDetail]);
-
-  useEffect(() => {
-    if (isSentMessage) {
-      onSpeak(messages[messages.length - 1].content);
-    }
-  }, [isSentMessage, messages, onSpeak]);
 
   return (
     <div className='flex flex-row min-h-screen'>

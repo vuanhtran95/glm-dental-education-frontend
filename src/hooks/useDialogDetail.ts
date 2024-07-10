@@ -17,9 +17,11 @@ const useDialogDetail = ({ dialogId }: Props) => {
   );
 
   const fetchDialogDetail = useCallback(
-    (isMessageSent?: boolean) => {
+    (isMessageSent: boolean, successCallback?: (value: string) => void) => {
       if (!dialogId) return;
-      dispatch(fetchDialogDetailAction(dialogId, isMessageSent));
+      dispatch(
+        fetchDialogDetailAction(dialogId, isMessageSent, successCallback)
+      );
     },
     [dispatch, dialogId]
   );
