@@ -1,7 +1,12 @@
 import MenuItem from './menu-item';
 
-const SideBar = () => {
-  return <MenuItem />;
+interface Props {
+  className?: string;
+  closeSidebar: () => void;
+}
+
+const SideBar = ({ className, closeSidebar }: Props) => {
+  return <MenuItem closeSidebar={closeSidebar} className={className} />;
 };
 
 export default SideBar;
