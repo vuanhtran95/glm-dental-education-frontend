@@ -3,11 +3,9 @@ import api from '../../services/api';
 import {
   DIALOG_CREATE,
   DIALOG_CREATE_FAILED,
-  DIALOG_CREATE_SUCCESS,
   DIALOG_DETAIL_FETCH,
   DIALOG_DETAIL_FETCHED_FAILED,
   DIALOG_DETAIL_FETCHED_SUCCESS,
-  DIALOG_DETAIL_FETCHED_SUCCESS_SENT_MESSAGE,
   DIALOG_LIST_FETCH,
   DIALOG_LIST_FETCHED_FAILED,
   DIALOG_LIST_FETCHED_SUCCESS,
@@ -72,11 +70,6 @@ function* createDialog(action: DialogCreateAction) {
         name,
       })
     );
-    yield put({
-      type: DIALOG_CREATE_SUCCESS,
-      data: response.data,
-    });
-
     successCallback?.(response.data._id);
   } catch (err) {
     yield put({ type: DIALOG_CREATE_FAILED });

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { generateScenarioAction } from '../../../store/scenario/actions';
 import { getUserInfo } from '../../../utils';
-import { ScenarioDetail } from '../../../store/scenario/types';
+import { Gender, ScenarioDetail } from '../../../store/scenario/types';
 import { useSelector } from 'react-redux';
 import {
   selectScenarioDetailState,
@@ -22,7 +22,7 @@ function WelcomeBanner() {
 
   const loading = useSelector(selectScenarioLoadingState);
 
-  const [gender, setGender] = useState<string>('Male');
+  const [gender, setGender] = useState<string>(Gender.MALE);
 
   const scenarioDetail: ScenarioDetail | null = useSelector(
     selectScenarioDetailState
@@ -32,36 +32,36 @@ function WelcomeBanner() {
     (e) => {
       e.preventDefault();
       if (!user?._id) return;
-      dispatch(
-        generateScenarioAction(user?._id, { patientName, gender }, () => {
-          setPatientName('');
-        })
-      );
+      dispatch(generateScenarioAction(user?._id, { patientName, gender }));
     },
     [dispatch, gender, patientName, user?._id]
   );
 
-  const onStartConvo = useCallback(() => {
-    user?._id &&
-      scenarioDetail?._id &&
-      dispatch(
-        createDialogAction(
-          user?._id,
-          scenarioDetail?._id,
-          scenarioDetail?.patientName,
-          (id?: string) => {
-            setPatientName('');
-            id && navigation(`/dialog/${id}`);
-          }
-        )
-      );
-  }, [
-    dispatch,
-    navigation,
-    scenarioDetail?._id,
-    scenarioDetail?.patientName,
-    user?._id,
-  ]);
+  const onStartConvo = useCallback(
+    (e) => {
+      e.preventDefault();
+      user?._id &&
+        scenarioDetail?._id &&
+        dispatch(
+          createDialogAction(
+            user?._id,
+            scenarioDetail?._id,
+            scenarioDetail?.patientName,
+            (id: string) => {
+              navigation(`/dialog/${id}`);
+              return;
+            }
+          )
+        );
+    },
+    [
+      dispatch,
+      navigation,
+      scenarioDetail?._id,
+      scenarioDetail?.patientName,
+      user?._id,
+    ]
+  );
 
   return (
     <section className='bg-white '>
@@ -177,8 +177,11 @@ function WelcomeBanner() {
                 <p className='text-white'>
                   Medical history: {scenarioDetail?.medicalHistory}
                 </p>
+                <p className='text-white'>
+                  Life style: {scenarioDetail?.lifeStyle}
+                </p>
                 <button
-                  onClick={() => onStartConvo()}
+                  onClick={(e) => onStartConvo(e)}
                   type='submit'
                   className='self-end mt-4	text-white w-32 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                 >

@@ -6,9 +6,10 @@ import { useCallback, useEffect, useRef } from 'react';
 interface Props {
   messages: MessageDetail[] | [];
   onClickProfile: () => void;
+  isMale: boolean;
 }
 
-const MessageBox = ({ messages, onClickProfile }: Props) => {
+const MessageBox = ({ messages, onClickProfile, isMale }: Props) => {
   const virtuoso = useRef(null);
 
   const onScrollBottom = useCallback(() => {
@@ -40,6 +41,7 @@ const MessageBox = ({ messages, onClickProfile }: Props) => {
               message={message}
               index={index}
               key={index}
+              isMale={isMale}
             />
           );
         }}

@@ -36,7 +36,7 @@ const MenuItem = ({ className, closeSidebar }: Props) => {
     >
       <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
         <div className='flex items-center mb-5 relative'>
-          <a href='/' className='flex items-center ps-2.5'>
+          <a href='#' className='flex items-center ps-2.5'>
             <img
               src='https://flowbite.com/docs/images/logo.svg'
               className='h-6 me-3 sm:h-7'

@@ -10,9 +10,10 @@ interface Props {
   index: number;
   id: string;
   onClickProfile: () => void;
+  isMale: boolean;
 }
 
-const MessageItemText = ({ message, id, onClickProfile }: Props) => {
+const MessageItemText = ({ message, id, onClickProfile, isMale }: Props) => {
   const { createdAt, content, role } = message;
 
   const audio = useMemo(() => {
@@ -22,7 +23,7 @@ const MessageItemText = ({ message, id, onClickProfile }: Props) => {
     return newAudio;
   }, [message.uri]);
 
-  const { onSpeak } = useTextToSpeech();
+  const { onSpeak } = useTextToSpeech(isMale);
 
   const onPlay = useCallback(() => {
     audio.play();

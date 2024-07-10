@@ -6,22 +6,18 @@ import useDialogDetail from '../../../hooks/useDialogDetail';
 import { useCallback, useEffect, useState } from 'react';
 import { EMessageRole } from '../../../store/dialog/types';
 import useResponsive from '../../../hooks/useResponsive';
-import useCallToLlama from '../../../hooks/useCallToLlama';
 import useMessage from '../../../hooks/useMessage';
 import useAmazonS3 from '../../../hooks/useAmazonS3';
 import ScenarioInformation from './components/scenario-information';
 import useSpeechToText from '../../../hooks/useSpeechToText';
 import { makeS3Uri } from './utils';
-import { useSelector } from 'react-redux';
-import { selectIsSentMessage } from '../../../store/dialog/selectors';
 import useTextToSpeech from '../../../hooks/useTextToSpeech';
+import { Gender } from '../../../store/scenario/types';
 
 const DialogDetail = () => {
   const params = useParams();
 
   const dialogId = params.id;
-
-  const isSentMessage = useSelector(selectIsSentMessage);
 
   const [isShowProfile, setIsShowProfile] = useState<boolean>(true);
 
@@ -44,11 +40,13 @@ const DialogDetail = () => {
     setIsShowProfile(!isShowProfile);
   }, [isShowProfile]);
 
-  const { onSpeak } = useTextToSpeech();
-
   const { dialogDetail, fetchDialogDetail } = useDialogDetail({
     dialogId,
   });
+
+  const { onSpeak } = useTextToSpeech(
+    dialogDetail?.detail.scenario.gender === Gender.MALE
+  );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const messages = dialogDetail?.detail.messages || [];
@@ -95,6 +93,7 @@ const DialogDetail = () => {
       <div className='grow bg-slate-500'>
         <div className='w-full'>
           <MessageBox
+            isMale={dialogDetail?.detail.scenario.gender === Gender.MALE}
             onClickProfile={onClickProfile}
             messages={
               messages?.filter((e) => e.role !== EMessageRole.SYSTEM) || []

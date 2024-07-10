@@ -22,7 +22,7 @@ const ScenarioInformation = ({ scenario }: Props) => {
             Age: {scenario.age} ({scenario.gender})
           </span>
           <p className='dark:text-gray-400 text-sm mt-1'>
-            Date of birth: 14/07/1995
+            Date of birth: {scenario.dateOfBirth}
           </p>
         </div>
 

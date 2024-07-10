@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 const synth = window.speechSynthesis;
 
-const useTextToSpeech = () => {
-  const [voiceId, setVoiceId] = useState<number>(1);
+const useTextToSpeech = (isMale: boolean) => {
+  const [voiceId, setVoiceId] = useState<number>(isMale ? 1 : 159);
 
   const onSpeak = (text: string) => {
     return new Promise((resolve) => {

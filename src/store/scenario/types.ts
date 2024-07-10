@@ -13,8 +13,8 @@ export interface ScenarioState {
 }
 
 export enum Gender {
-  MALE = 'male',
-  FEMALE = 'female',
+  MALE = 'Male',
+  FEMALE = 'Female',
 }
 
 export interface ScenarioDetail {
