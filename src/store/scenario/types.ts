@@ -1,5 +1,9 @@
 import { ErrorCallback, SuccessCallback } from '../../types';
-import { SCENARIO_CREATE, SCENARIO_LIST_FETCH } from './actionTypes';
+import {
+  SCENARIO_CREATE,
+  SCENARIO_GENERATE,
+  SCENARIO_LIST_FETCH,
+} from './actionTypes';
 
 export interface ScenarioState {
   scenarios: ScenarioDetail[];
@@ -62,6 +66,15 @@ export interface ScenarioDetailCreateAction {
       | 'createdUserId'
       | 'communicationStyle'
     >;
+    successCallback?: SuccessCallback;
+    errorCallback?: ErrorCallback;
+  };
+}
+
+export interface ScenarioDetailGenerateAction {
+  type: typeof SCENARIO_GENERATE;
+  payload: {
+    createdUserId: string;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
   };

@@ -85,11 +85,11 @@ function* createDialog(action: DialogCreateAction) {
 }
 
 function* createMessage(action: MessageCreateAction) {
-  const { messages, dialogId, successCallback, errorCallback } = action.payload;
+  const { message, dialogId, successCallback, errorCallback } = action.payload;
   try {
     const response: DialogDetailResponse = yield call(() =>
       api.post(`api/messages`, {
-        messages,
+        message,
         dialogId,
       })
     );

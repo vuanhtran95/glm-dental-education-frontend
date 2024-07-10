@@ -2,6 +2,7 @@ import { action } from 'typesafe-actions';
 import {
   SCENARIO_CREATE,
   SCENARIO_DETAIL_FETCH,
+  SCENARIO_GENERATE,
   SCENARIO_LIST_FETCH,
 } from './actionTypes';
 import { SuccessCallback } from '../../types';
@@ -42,6 +43,17 @@ export const createScenarioAction = (
 ) =>
   action(SCENARIO_CREATE, {
     scenarioDetail,
+    successCallback,
+    errorCallback,
+  });
+
+export const generateScenarioAction = (
+  createdUserId: string,
+  successCallback?: SuccessCallback,
+  errorCallback?: ErrorCallback
+) =>
+  action(SCENARIO_GENERATE, {
+    createdUserId,
     successCallback,
     errorCallback,
   });

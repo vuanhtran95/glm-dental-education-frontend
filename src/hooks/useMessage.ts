@@ -13,18 +13,13 @@ const useMessage = ({ dialogId }: Props) => {
 
   const createMessage = useCallback(
     (
-      messages: MessagePayload,
+      message: MessagePayload,
       successCallback?: SuccessCallback,
       errorCallback?: ErrorCallback
     ) => {
       if (dialogId)
         dispatch(
-          createMessageAction(
-            messages,
-            dialogId,
-            successCallback,
-            errorCallback
-          )
+          createMessageAction(message, dialogId, successCallback, errorCallback)
         );
     },
     [dialogId, dispatch]

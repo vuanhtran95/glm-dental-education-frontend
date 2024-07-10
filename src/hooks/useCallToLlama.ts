@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { removeTextInsideAsterisks } from '../utils';
 import { MessagePayload } from '../store/dialog/types';
-import api from '../services/api';
+import axios from 'axios';
 
 const headers = new Headers({
   'Access-Control-Allow-Origin': '*',
@@ -12,7 +12,7 @@ const headers = new Headers({
 });
 
 const url =
-  'https://sbyv3a06nk.execute-api.eu-west-2.amazonaws.com/default/Testing/';
+  'https://sbyv3a06nk.execute-api.eu-west-2.amazonaws.com/default/Testing';
 
 const useCallToLlama = () => {
   const processMessage = useCallback(
@@ -27,12 +27,18 @@ const useCallToLlama = () => {
       };
 
       return new Promise((resolve, reject) => {
-        api
-          .post(url, {
-            method: 'POST',
-            headers,
-            body: JSON.stringify(payload),
-          })
+        axios
+          .post(
+            'https://sbyv3a06nk.execute-api.eu-west-2.amazonaws.com/default/Testing',
+            {},
+            {
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+              },
+            }
+          )
           .then((response) => {
             response.json().then((message) => {
               resolve(removeTextInsideAsterisks(message));

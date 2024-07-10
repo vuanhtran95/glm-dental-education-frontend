@@ -48,13 +48,13 @@ export const createDialogAction = (
   });
 
 export const createMessageAction = (
-  messages: MessagePayload,
+  message: MessagePayload,
   dialogId: string,
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback
 ) =>
   action(MESSAGE_CREATE, {
-    messages,
+    message,
     dialogId,
     successCallback,
     errorCallback,

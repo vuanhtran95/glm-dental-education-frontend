@@ -87,9 +87,7 @@ export interface MessageDetail {
   uri?: string;
 }
 
-export type MessagePayload = Array<
-  Pick<MessageDetail, 'content' | 'role' | 'uri'>
->;
+export type MessagePayload = Pick<MessageDetail, 'content' | 'uri'>;
 
 export interface DialogState {
   dialogs: DialogDetail[];

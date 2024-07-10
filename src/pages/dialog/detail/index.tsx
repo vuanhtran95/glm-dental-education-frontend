@@ -27,7 +27,6 @@ const DialogDetail = () => {
 
   const { isMobile } = useResponsive();
   const { uploadBlob } = useAmazonS3();
-  const { processMessage } = useCallToLlama();
   const { createMessage } = useMessage({ dialogId });
 
   const { recordingBlob, startRecording, stopRecording, isRecording } =
@@ -65,21 +64,14 @@ const DialogDetail = () => {
       if (!dialogId) return;
 
       try {
-        const responseMessage = await processMessage(newMessage, messages);
-        createMessage(
-          [
-            { role: EMessageRole.USER, content: newMessage, uri },
-            { role: EMessageRole.ASSISTANT, content: responseMessage },
-          ],
-          () => {
-            refetch();
-          }
-        );
+        createMessage({ content: newMessage, uri }, () => {
+          refetch();
+        });
       } catch (e) {
         console.error(e);
       }
     },
-    [createMessage, dialogId, messages, processMessage, refetch]
+    [createMessage, dialogId, refetch]
   );
 
   const onSend = useCallback(async () => {

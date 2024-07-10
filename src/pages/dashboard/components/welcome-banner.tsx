@@ -1,14 +1,23 @@
-import { Form, Formik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { generateScenarioAction } from '../../../store/scenario/actions';
 import { getUserInfo } from '../../../utils';
-import Input from '../../../components/input';
 
 function WelcomeBanner() {
   const user = getUserInfo();
 
-  const initialValues = {
-    username: '',
-    password: '',
+  const dispatch = useDispatch();
+
+  const onGenerate = () => {
+    if (!user?._id) return;
+    dispatch(
+      generateScenarioAction(
+        user?._id,
+        () => {},
+        () => {}
+      )
+    );
   };
+
   return (
     <section className='bg-white '>
       <div className='py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative'>
@@ -42,36 +51,28 @@ function WelcomeBanner() {
         <h1 className='m-12 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
           Hello {user?.fullName}
         </h1>
-        <p className='mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-200'>
-          Please set up the patient information to start a new conversation
+        <p className='mb-8 text-sm font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-200'>
+          Please enter patient name and generate the patient information to
+          start a new conversation
         </p>
         <form className='w-full max-w-md mx-auto'>
-          <label
-            htmlFor='default-email'
-            className='mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white'
-          >
-            Symptoms
-          </label>
-
-          <Formik initialValues={initialValues} onSubmit={(values) => {}}>
-            <Form className='flex flex-col gap-4'>
-              <Input
-                id='patientName'
-                name='patientName'
+          <div className='flex flex-col gap-4'>
+            <div className='relative'>
+              <input
+                id='symptoms'
+                name='symptoms'
                 placeholder='Patient Name'
+                className='block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               />
-
-              <div className='relative'>
-                <Input id='symptoms' name='symptoms' placeholder='Symptoms' />
-                <button
-                  type='submit'
-                  className='text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                >
-                  Submit <i className='fa-solid fa-circle-arrow-right'></i>
-                </button>
-              </div>
-            </Form>
-          </Formik>
+              <button
+                onClick={() => onGenerate()}
+                type='submit'
+                className='text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+              >
+                Generate <i className='fa-solid fa-circle-arrow-right'></i>
+              </button>
+            </div>
+          </div>
         </form>
       </div>
       <div className='bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-900 w-full h-full absolute top-0 left-0 z-0'></div>

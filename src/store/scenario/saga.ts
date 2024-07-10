@@ -3,6 +3,7 @@ import api from '../../services/api';
 import {
   ScenarioDetailCreateAction,
   ScenarioDetailFetchAction,
+  ScenarioDetailGenerateAction,
   ScenarioDetailResponse,
   ScenarioListFetchAction,
   ScenarioListResponse,
@@ -12,6 +13,7 @@ import {
   SCENARIO_DETAIL_FETCH,
   SCENARIO_DETAIL_FETCHED_FAILED,
   SCENARIO_DETAIL_FETCHED_SUCCESS,
+  SCENARIO_GENERATE,
   SCENARIO_LIST_FETCH,
   SCENARIO_LIST_FETCHED_FAILED,
   SCENARIO_LIST_FETCHED_SUCCESS,
@@ -66,8 +68,20 @@ function* createScenario(action: ScenarioDetailCreateAction) {
   }
 }
 
+function* generateScenario(action: ScenarioDetailGenerateAction) {
+  const { createdUserId, successCallback, errorCallback } = action.payload;
+  try {
+    yield call(() => api.post(`api/scenarios/generate`, { createdUserId }));
+    successCallback?.();
+  } catch (err) {
+    yield put({ type: SCENARIO_DETAIL_FETCHED_FAILED });
+    errorCallback?.();
+  }
+}
+
 export default function* scenarioSaga() {
   yield takeLatest(SCENARIO_LIST_FETCH, getScenarioList);
   yield takeLatest(SCENARIO_DETAIL_FETCH, getScenarioDetail);
   yield takeLatest(SCENARIO_CREATE, createScenario);
+  yield takeLatest(SCENARIO_GENERATE, generateScenario);
 }
