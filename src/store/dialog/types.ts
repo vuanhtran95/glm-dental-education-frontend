@@ -37,7 +37,7 @@ export interface DialogCreateAction {
 export interface MessageCreateAction {
   type: typeof MESSAGE_CREATE;
   payload: {
-    messages: MessagePayload;
+    message: MessagePayload;
     dialogId: string;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;

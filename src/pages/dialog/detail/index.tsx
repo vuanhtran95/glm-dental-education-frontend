@@ -77,6 +77,7 @@ const DialogDetail = () => {
   const onSend = useCallback(async () => {
     const s3Id = await uploadBlob(recordingBlob);
     const uri = makeS3Uri(s3Id);
+
     onSendMessage(transcript, uri);
     resetTranscript();
   }, [uploadBlob, recordingBlob, onSendMessage, transcript, resetTranscript]);

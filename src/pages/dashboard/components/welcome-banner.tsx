@@ -1,22 +1,49 @@
 import { useDispatch } from 'react-redux';
 import { generateScenarioAction } from '../../../store/scenario/actions';
 import { getUserInfo } from '../../../utils';
+import { ScenarioDetail } from '../../../store/scenario/types';
+import { useSelector } from 'react-redux';
+import { selectScenarioDetailState } from '../../../store/scenario/selectors';
+import { useCallback } from 'react';
+import { createDialogAction } from '../../../store/dialog/actions';
+import { useNavigate } from 'react-router-dom';
 
 function WelcomeBanner() {
   const user = getUserInfo();
 
+  const navigation = useNavigate();
+
   const dispatch = useDispatch();
 
-  const onGenerate = () => {
+  const scenarioDetail: ScenarioDetail | null = useSelector(
+    selectScenarioDetailState
+  );
+
+  const onGenerate = useCallback(() => {
     if (!user?._id) return;
-    dispatch(
-      generateScenarioAction(
-        user?._id,
-        () => {},
-        () => {}
-      )
-    );
-  };
+    dispatch(generateScenarioAction(user?._id));
+  }, [dispatch, user?._id]);
+
+  const onStartConvo = useCallback(() => {
+    user?._id &&
+      scenarioDetail?._id &&
+      dispatch(
+        createDialogAction(
+          user?._id,
+          scenarioDetail?._id,
+          scenarioDetail?.patientName,
+          (id?: string) => {
+            id && navigation(`/dialog/${id}`);
+          }
+        )
+      );
+  }, [
+    dispatch,
+    navigation,
+    scenarioDetail?._id,
+    scenarioDetail?.patientName,
+    user?._id,
+  ]);
 
   return (
     <section className='bg-white '>
@@ -72,6 +99,24 @@ function WelcomeBanner() {
                 Generate <i className='fa-solid fa-circle-arrow-right'></i>
               </button>
             </div>
+            {scenarioDetail && (
+              <div className='bg-gray-500 w-208 p-4 rounded mt-8 flex flex-col gap-4 align-middle'>
+                <p>
+                  Patient Name: {scenarioDetail?.patientName} (
+                  {scenarioDetail?.gender})
+                </p>
+                <p>Date of birth: {scenarioDetail?.dateOfBirth}</p>
+                <p>Symptoms: {scenarioDetail?.symptoms}</p>
+                <p>Medical history: {scenarioDetail?.medicalHistory}</p>
+                <button
+                  onClick={() => onStartConvo()}
+                  type='submit'
+                  className='text-white w-32 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                >
+                  Start <i className='fa-solid fa-start'></i>
+                </button>
+              </div>
+            )}
           </div>
         </form>
       </div>

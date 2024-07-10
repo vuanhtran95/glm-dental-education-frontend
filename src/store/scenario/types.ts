@@ -21,7 +21,7 @@ export interface ScenarioDetail {
   _id: string;
   name: string;
   patientName: string;
-  age: number;
+  dateOfBirth: number;
   gender: Gender;
   symptoms: string;
   medicalHistory: string;
@@ -112,4 +112,11 @@ export type ScenarioAction =
     }
   | {
       type: 'SCENARIO_DETAIL_FETCH';
+    }
+  | {
+      type: 'SCENARIO_GENERATE_SUCCESS';
+      data: ScenarioDetail;
+    }
+  | {
+      type: 'SCENARIO_GENERATE';
     };

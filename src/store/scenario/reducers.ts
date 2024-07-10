@@ -2,6 +2,8 @@ import {
   SCENARIO_DETAIL_FETCH,
   SCENARIO_DETAIL_FETCHED_FAILED,
   SCENARIO_DETAIL_FETCHED_SUCCESS,
+  SCENARIO_GENERATE,
+  SCENARIO_GENERATE_SUCCESS,
   SCENARIO_LIST_FETCH,
   SCENARIO_LIST_FETCHED_FAILED,
   SCENARIO_LIST_FETCHED_SUCCESS,
@@ -45,6 +47,20 @@ function scenarioReducer(
         error: false,
       };
     case SCENARIO_DETAIL_FETCHED_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        scenarioDetail: action.data,
+      };
+    case SCENARIO_GENERATE:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        scenarioDetail: null,
+      };
+    case SCENARIO_GENERATE_SUCCESS:
       return {
         ...state,
         loading: false,

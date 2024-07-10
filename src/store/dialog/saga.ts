@@ -77,7 +77,7 @@ function* createDialog(action: DialogCreateAction) {
       type: DIALOG_CREATE_SUCCESS,
       data: response.data,
     });
-    successCallback?.();
+    successCallback?.(response.data.detail.dialog._id);
   } catch (err) {
     yield put({ type: DIALOG_CREATE_FAILED });
     errorCallback?.();
@@ -86,12 +86,18 @@ function* createDialog(action: DialogCreateAction) {
 
 function* createMessage(action: MessageCreateAction) {
   const { message, dialogId, successCallback, errorCallback } = action.payload;
+  console.log(message, 'messages');
+
   try {
     const response: DialogDetailResponse = yield call(() =>
-      api.post(`api/messages`, {
-        message,
-        dialogId,
-      })
+      api.post(
+        `api/messages`,
+        {
+          message,
+          dialogId,
+        },
+        { timeout: 15000 }
+      )
     );
     yield put({
       type: MESSAGE_CREATE_SUCCESS,
