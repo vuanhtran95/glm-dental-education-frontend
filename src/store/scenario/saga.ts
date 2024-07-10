@@ -71,10 +71,15 @@ function* createScenario(action: ScenarioDetailCreateAction) {
 }
 
 function* generateScenario(action: ScenarioDetailGenerateAction) {
-  const { createdUserId, successCallback, errorCallback } = action.payload;
+  const { createdUserId, patientInfo, successCallback, errorCallback } =
+    action.payload;
   try {
     const response: ScenarioDetailResponse = yield call(() =>
-      api.post(`api/scenarios/generate`, { createdUserId }, { timeout: 15000 })
+      api.post(
+        `api/scenarios/generate`,
+        { createdUserId, ...patientInfo },
+        { timeout: 15000 }
+      )
     );
     yield put({
       type: SCENARIO_GENERATE_SUCCESS,

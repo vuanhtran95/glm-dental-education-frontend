@@ -29,7 +29,7 @@ export const createScenarioAction = (
     ScenarioDetail,
     | 'name'
     | 'patientName'
-    | 'age'
+    | 'dateOfBirth'
     | 'gender'
     | 'medicalHistory'
     | 'lifeStyle'
@@ -49,11 +49,13 @@ export const createScenarioAction = (
 
 export const generateScenarioAction = (
   createdUserId: string,
+  patientInfo: Pick<ScenarioDetail, 'patientName' | 'gender'>,
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback
 ) =>
   action(SCENARIO_GENERATE, {
     createdUserId,
+    patientInfo,
     successCallback,
     errorCallback,
   });

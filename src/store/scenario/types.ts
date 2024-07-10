@@ -57,7 +57,7 @@ export interface ScenarioDetailCreateAction {
       ScenarioDetail,
       | 'name'
       | 'patientName'
-      | 'age'
+      | 'dateOfBirth'
       | 'gender'
       | 'medicalHistory'
       | 'lifeStyle'
@@ -75,6 +75,7 @@ export interface ScenarioDetailGenerateAction {
   type: typeof SCENARIO_GENERATE;
   payload: {
     createdUserId: string;
+    patientInfo: Pick<ScenarioDetail, 'patientName' | 'gender'>;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
   };

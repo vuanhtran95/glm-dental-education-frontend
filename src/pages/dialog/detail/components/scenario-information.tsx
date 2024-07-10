@@ -47,9 +47,6 @@ const ScenarioInformation = ({ scenario }: Props) => {
             <p className='text-gray-200 text-sm mb-3'>
               <b>Medical History: </b> {scenario.medicalHistory}
             </p>
-            <p className='text-gray-200 text-sm mb-3'>
-              <b>Additional Information: </b> {scenario.additionalInformation}
-            </p>
           </div>
         </div>
       </div>

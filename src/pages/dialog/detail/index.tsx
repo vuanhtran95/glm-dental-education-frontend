@@ -64,9 +64,7 @@ const DialogDetail = () => {
       if (!dialogId) return;
 
       try {
-        createMessage({ content: newMessage, uri }, () => {
-          refetch();
-        });
+        createMessage({ content: newMessage, uri }, refetch);
       } catch (e) {
         console.error(e);
       }
