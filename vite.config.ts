@@ -7,4 +7,9 @@ export default defineConfig({
   server: {
     port: 4000,
   },
+  resolve: {
+    alias: {
+      src: '/src',
+    },
+  },
 });

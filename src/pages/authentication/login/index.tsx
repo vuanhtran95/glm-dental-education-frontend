@@ -1,46 +1,53 @@
 import { useDispatch } from 'react-redux';
-import { authenticate } from '../../../store/user/actions';
-import { useNavigate } from 'react-router-dom';
-import Input from '../../../components/input';
-import Button from '../../../components/button';
+import { useCallback, useState } from 'react';
 import { Formik, Form } from 'formik';
-import { LoginPayload } from './types';
-import { ERROR } from '../../../constants';
-import { useState } from 'react';
 
-interface LoginFormValues {
-  username: string;
-  password: string;
-}
+import { authenticate } from 'src/store/user/actions';
+import { useNavigate } from 'react-router-dom';
+import Button from 'src/components/button';
+import { APP_ROUTES, APP_MESSAGES, logoUri } from 'src/constants';
+import { LoginPayload } from './types';
+import Input from 'src/components/input';
+import { loginInitialValues } from './constants';
+import {
+  NotificationMessage,
+  useNotification,
+} from 'src/hooks/useNotification';
 
 const Login = () => {
-  const initialValues: LoginFormValues = { username: '', password: '' };
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { type, notification, notifyError, notifySuccess } = useNotification();
   const navigate = useNavigate();
-
-  const [notification, setNotification] = useState<string | null>(null);
-
   const dispatch = useDispatch();
 
-  const onSubmit = (values: LoginPayload) => {
-    dispatch(
-      authenticate(
-        values,
-        () => navigate('/new-chat'),
-        () => {
-          setNotification(ERROR.GENERAL_ERROR);
-        }
-      )
-    );
-  };
+  const onSubmit = useCallback(
+    (values: LoginPayload) => {
+      setIsLoading(true);
+      const successCallback = () => {
+        setIsLoading(false);
+        notifySuccess(APP_MESSAGES.LOGIN_SUCCESS);
+        setTimeout(() => {
+          navigate(APP_ROUTES.NEW_CHAT);
+        }, 200);
+      };
+      const errorCallback = () => {
+        setIsLoading(false);
+        notifyError(APP_MESSAGES.GENERAL_ERROR);
+      };
+
+      dispatch(authenticate(values, successCallback, errorCallback));
+    },
+    [dispatch, navigate, notifyError, notifySuccess]
+  );
 
   return (
     <div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-        <img
-          className='mx-auto h-10 w-auto'
-          src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-          alt='Your Company'
-        />
+        <div className='flex'>
+          <img className='mx-auto h-10 w-auto' src={logoUri} />
+        </div>
+
         <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
           Sign in
         </h2>
@@ -48,38 +55,25 @@ const Login = () => {
 
       <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
         <Formik
-          initialValues={initialValues}
+          initialValues={loginInitialValues}
           onSubmit={(values) => onSubmit(values)}
         >
           <Form className='flex flex-col gap-4'>
-            <Input id='username' label='User name' name='username' />
-            <Input
-              type='password'
-              id='password'
-              label='Password'
-              name='password'
-            />
+            <Input id='username' label='User name' />
+            <Input type='password' id='password' label='Password' />
+
             <div className='flex justify-center mt-4'>
-              <Button
-                label='Login'
-                onClick={function (): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
+              <Button loading={isLoading} label='Login' onClick={() => {}} />
             </div>
           </Form>
         </Formik>
 
-        {!!notification && (
-          <p className='mt-4 text-center text-sm text-red-500'>
-            {notification}
-          </p>
-        )}
+        <NotificationMessage notification={notification} type={type} />
 
         <p className='mt-10 text-center text-sm text-gray-500'>
           Not a member?
           <a
-            onClick={() => navigate('/sign-up')}
+            onClick={() => navigate(APP_ROUTES.SIGN_UP)}
             href='#'
             className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500 ml-1'
           >

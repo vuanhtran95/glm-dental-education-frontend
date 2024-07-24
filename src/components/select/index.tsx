@@ -1,14 +1,15 @@
 import { Field } from 'formik';
+
 import { Option } from './types';
 
 interface Props {
   options: Option[];
   label: string;
-  name: string;
   className?: string;
+  id: string;
 }
 
-const Select = ({ options, label, name, className }: Props) => {
+const Select = ({ options, label, id, className }: Props) => {
   return (
     <div className={`${!!className && className}`}>
       <label className='block text-sm font-medium leading-6 text-gray-900'>
@@ -17,12 +18,11 @@ const Select = ({ options, label, name, className }: Props) => {
       <div className='mt-2'>
         <Field
           as='select'
-          id={name}
-          name={name}
-          className={`min-w-full text-sm block py-2 h-9 px-1 w-full bg-white rounded-md border-0
-             text-black shadow-sm ring-1 ring-inset
-             ring-gray-300 focus:ring-2 focus:ring-inset
-          `}
+          id={id}
+          name={id}
+          className='block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white 
+          focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400
+           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
         >
           {options.map((option: Option) => {
             return (

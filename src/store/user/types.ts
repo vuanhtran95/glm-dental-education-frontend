@@ -34,15 +34,11 @@ export interface GetUserInfoPayload extends DataPayload {}
 
 export interface GetUserInfoAction {
   type: typeof USER_INFO_FETCH;
-  payload: {
-    successCallback: SuccessCallback;
-    errorCallback: ErrorCallback;
-  };
 }
 
 export enum UserRole {
   STUDENT = 'student',
-  ADMINISTRATOR = 'administrator',
+  SUPERVISOR = 'supervisor',
 }
 export interface UserInfo {
   _id: string;

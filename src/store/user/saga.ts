@@ -31,12 +31,10 @@ function* authenticate(action: AuthenticateAction) {
     // Get user info
     yield call(getUserInfo, {
       type: USER_INFO_FETCH,
-      payload: {
-        successCallback,
-        errorCallback,
-      },
     });
+    successCallback?.();
   } catch (err) {
+    errorCallback?.();
     yield put({ type: USER_UNAUTHORIZED });
   }
 }
@@ -53,9 +51,8 @@ function* signUp(action: SignUpAction) {
   }
 }
 
-function* getUserInfo(action: GetUserInfoAction) {
-  const { successCallback, errorCallback } = action.payload;
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function* getUserInfo(_action: GetUserInfoAction) {
   try {
     const userResponse: UserResponse = yield call(() => api.get('api/users'));
 
@@ -63,9 +60,8 @@ function* getUserInfo(action: GetUserInfoAction) {
       yield call(() =>
         localStorage.setItem('userInfo', JSON.stringify(userResponse.data.user))
       );
-    successCallback?.();
   } catch (e) {
-    errorCallback?.();
+    console.error(e);
   }
 }
 
