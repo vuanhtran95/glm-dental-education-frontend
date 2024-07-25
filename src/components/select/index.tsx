@@ -4,7 +4,7 @@ import { Option } from './types';
 
 interface Props {
   options: Option[];
-  label: string;
+  label?: string;
   className?: string;
   id: string;
 }
@@ -12,9 +12,11 @@ interface Props {
 const Select = ({ options, label, id, className }: Props) => {
   return (
     <div className={`${!!className && className}`}>
-      <label className='block text-sm font-medium leading-6 text-gray-900'>
-        {label}
-      </label>
+      {label && (
+        <label className='block text-sm font-medium leading-6 text-gray-900'>
+          {label}
+        </label>
+      )}
       <div className='mt-2'>
         <Field
           as='select'

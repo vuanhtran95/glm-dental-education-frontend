@@ -7,6 +7,4 @@ export default function* rootSaga() {
   yield fork(userSaga);
   yield fork(dialogSaga);
   yield fork(scenarioSaga);
-  // yield fork(saga3);
-  // code after fork-effect
 }

@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import { useAudioRecorder } from 'react-audio-voice-recorder';
 
 import MessageBox from '../../../components/message-box/message-box';
-import useDialogDetail from '../../../hooks/useDialogDetail';
 import { useCallback, useEffect, useState } from 'react';
 import { EMessageRole } from '../../../store/dialog/types';
 import useResponsive from '../../../hooks/useResponsive';
@@ -13,8 +12,9 @@ import useSpeechToText from '../../../hooks/useSpeechToText';
 import { makeS3Uri } from './utils';
 import useTextToSpeech from '../../../hooks/useTextToSpeech';
 import { Gender } from '../../../store/scenario/types';
+import useDialogDetail from 'src/hooks/useDialogDetail';
 
-const DialogDetail = () => {
+const ChatDetail = () => {
   const params = useParams();
 
   const dialogId = params.id;
@@ -162,4 +162,4 @@ const DialogDetail = () => {
   );
 };
 
-export default DialogDetail;
+export default ChatDetail;

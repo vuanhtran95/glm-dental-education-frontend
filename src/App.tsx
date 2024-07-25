@@ -5,15 +5,12 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import Settings from './pages/settings';
 import NotFound from './pages/404';
 import Login from './pages/authentication/login';
 import SignUp from './pages/authentication/signup';
-import DialogList from './pages/dialog/list';
-import DialogDetail from './pages/dialog/detail';
-import Scenario from './pages/scenario';
+import CreateChat from './pages/chat/create';
+import ChatDetail from './pages/chat/detail';
 import PageContainer from './components/page-container';
-import NewChat from './pages/dashboard';
 
 const App = () => {
   const ProtectedRoutes = () => {
@@ -46,24 +43,12 @@ const App = () => {
       element: <ProtectedRoutes></ProtectedRoutes>,
       children: [
         {
-          path: '/settings',
-          element: <Settings />,
-        },
-        {
           path: '/new-chat',
-          element: <NewChat />,
-        },
-        {
-          path: '/dialog',
-          element: <DialogList />,
+          element: <CreateChat />,
         },
         {
           path: '/dialog/:id',
-          element: <DialogDetail />,
-        },
-        {
-          path: '/scenario',
-          element: <Scenario />,
+          element: <ChatDetail />,
         },
       ],
     },

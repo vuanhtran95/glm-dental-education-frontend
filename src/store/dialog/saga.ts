@@ -60,14 +60,13 @@ function* getDialogDetail(action: DialogDetailFetchAction) {
 }
 
 function* createDialog(action: DialogCreateAction) {
-  const { createdUserId, scenarioId, name, successCallback, errorCallback } =
+  const { createdUserId, scenarioId, successCallback, errorCallback } =
     action.payload;
   try {
     const response: DialogDetailResponse = yield call(() =>
       api.post(`api/dialogs`, {
         createdUserId,
         scenarioId,
-        name,
       })
     );
     successCallback?.(response.data._id);

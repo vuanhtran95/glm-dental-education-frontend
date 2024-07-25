@@ -1,5 +1,4 @@
-import { SignUpPayload } from '../../pages/authentication/signup/types';
-import { DataPayload, ErrorCallback, SuccessCallback } from '../../types';
+import { DataPayload } from '../../types';
 import {
   USER_AUTHENTICATE,
   USER_INFO_FETCH,
@@ -30,8 +29,6 @@ export interface SignUpAction {
   payload: SignUpSagaPayload;
 }
 
-export interface GetUserInfoPayload extends DataPayload {}
-
 export interface GetUserInfoAction {
   type: typeof USER_INFO_FETCH;
 }
@@ -47,31 +44,7 @@ export interface UserInfo {
   fullName: string;
 }
 
-export interface UserState {
-  loading: boolean;
-}
-
-export interface UserData {}
-
-export type UserAction =
-  | {
-      type: 'USER_AUTHENTICATE';
-    }
-  | {
-      type: 'USER_AUTHENTICATED';
-      token: string;
-    }
-  | {
-      type: 'USER_UNAUTHORIZED';
-    };
-
 export interface AuthenticationResponse {
-  data: {
-    token: string;
-  };
-}
-
-export interface SignUpResponse {
   data: {
     token: string;
   };

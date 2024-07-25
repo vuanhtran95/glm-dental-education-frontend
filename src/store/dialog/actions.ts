@@ -35,14 +35,12 @@ export const fetchDialogDetailAction = (
 export const createDialogAction = (
   createdUserId: string,
   scenarioId: string,
-  name: string,
   successCallback?: (id: string) => void,
   errorCallback?: ErrorCallback
 ) =>
   action(DIALOG_CREATE, {
     createdUserId,
     scenarioId,
-    name,
     successCallback,
     errorCallback,
   });
