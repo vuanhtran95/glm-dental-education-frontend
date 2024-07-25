@@ -2,7 +2,9 @@ import { SuccessCallback, ErrorCallback } from '../../types';
 import { ScenarioDetail } from '../scenario/types';
 import {
   DIALOG_CREATE,
+  DIALOG_END,
   DIALOG_LIST_FETCH,
+  DIALOG_SUBMIT,
   MESSAGE_CREATE,
 } from './actionTypes';
 
@@ -17,7 +19,6 @@ export interface DialogDetailFetchAction {
   type: typeof DIALOG_LIST_FETCH;
   payload: {
     dialogId: string;
-    isMessageSent: boolean;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
   };
@@ -29,6 +30,24 @@ export interface DialogCreateAction {
     createdUserId: string;
     scenarioId: string;
     name: string;
+    successCallback?: SuccessCallback;
+    errorCallback?: ErrorCallback;
+  };
+}
+
+export interface DialogEndAction {
+  type: typeof DIALOG_END;
+  payload: {
+    dialogId: string;
+    successCallback?: SuccessCallback;
+    errorCallback?: ErrorCallback;
+  };
+}
+
+export interface DialogSubmitAction {
+  type: typeof DIALOG_SUBMIT;
+  payload: {
+    dialogId: string;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
   };
@@ -59,9 +78,11 @@ export interface DialogDetail {
   name: string;
   createdUserId: string;
   scenarioId: string;
-  isDeleted: boolean;
+  isEnded: boolean;
+  isSubmitted: boolean;
   createdAt: Date;
   updatedAt: Date;
+  scenario: ScenarioDetail;
 }
 
 export interface DialogDetailWithMessage {
@@ -94,7 +115,6 @@ export interface DialogState {
   loading: boolean;
   error: boolean;
   dialogDetail: DialogDetailWithMessage | null;
-  isMessageSent: boolean;
 }
 
 export type DialogAction =

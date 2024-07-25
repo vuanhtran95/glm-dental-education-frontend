@@ -5,7 +5,7 @@ const LogOut = () => {
   const navigate = useNavigate();
 
   return (
-    <p onClick={() => navigate(APP_ROUTES.LOGIN)}>
+    <p onClick={() => navigate(APP_ROUTES.LOGIN)} className='mt-8'>
       <i className='fa-solid fa-right-from-bracket' /> Log out
     </p>
   );

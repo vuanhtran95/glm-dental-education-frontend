@@ -14,6 +14,7 @@ import useMessage from 'src/hooks/useMessage';
 import useSpeechToText from 'src/hooks/useSpeechToText';
 import useTextToSpeech from 'src/hooks/useTextToSpeech';
 import { Gender } from 'src/store/scenario/types';
+import StatusGroup from './components/status-group';
 
 const ChatDetail = () => {
   const params = useParams();
@@ -34,14 +35,15 @@ const ChatDetail = () => {
     listening,
   } = useSpeechToText({});
 
-  const { scenario, messages, fetchDialogDetail } = useDialogDetail({
-    dialogId,
-  });
+  const { scenario, messages, fetchDialogDetail, dialogDetail } =
+    useDialogDetail({
+      dialogId,
+    });
 
   const { onSpeak } = useTextToSpeech(scenario?.gender === Gender.MALE);
 
   const refetch = useCallback(async () => {
-    fetchDialogDetail(true, (text: string) => {
+    fetchDialogDetail((text: string) => {
       onSpeak(text);
     });
   }, [fetchDialogDetail, onSpeak]);
@@ -73,7 +75,7 @@ const ChatDetail = () => {
   }, [resetTranscript]);
 
   useEffect(() => {
-    fetchDialogDetail(false);
+    fetchDialogDetail();
   }, [fetchDialogDetail]);
 
   return (
@@ -87,21 +89,27 @@ const ChatDetail = () => {
         />
         <div className='flex justify-center items-end	mt-8'>
           <div className='sticky md:relative w-full px-8'>
-            <VoiceInput
-              transcript={transcript}
-              listening={listening}
-              stopListening={stopListening}
-              stopRecording={stopRecording}
-              resetTranscript={resetTranscript}
-              startListening={startListening}
-              startRecording={startRecording}
-              onRemove={onClickRemove}
-              onSend={onClickSend}
-            />
+            <StatusGroup dialogDetail={dialogDetail} />
+
+            {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (
+              <VoiceInput
+                transcript={transcript}
+                listening={listening}
+                stopListening={stopListening}
+                stopRecording={stopRecording}
+                resetTranscript={resetTranscript}
+                startListening={startListening}
+                startRecording={startRecording}
+                onRemove={onClickRemove}
+                onSend={onClickSend}
+              />
+            )}
           </div>
         </div>
       </div>
-      {!isMobile && <ScenarioInformation scenario={scenario} />}
+      {!isMobile && (
+        <ScenarioInformation dialogDetail={dialogDetail} scenario={scenario} />
+      )}
     </div>
   );
 };

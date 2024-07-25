@@ -13,7 +13,7 @@ const ListDialog = ({ dialogs }: Props) => {
   const activeDialogId = useMemo(() => params.id, [params.id]);
 
   return (
-    <div className='h-[75vh]'>
+    <div className='h-[70vh] overflow-y-auto'>
       <ul className='space-y-2 font-medium'>
         {dialogs.map((dialog: DialogDetail) => {
           return (
@@ -32,7 +32,7 @@ const ListDialog = ({ dialogs }: Props) => {
               >
                 <i className='fa-regular fa-message'></i>
                 <span className='flex-1 ms-3 whitespace-nowrap text-sm'>
-                  {dialog.name}
+                  {dialog.scenario.patientName}
                 </span>
               </a>
             </li>

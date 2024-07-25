@@ -14,6 +14,8 @@ const api = axios.create({
   },
 });
 
+api.defaults.timeout = 15000;
+
 // Add a request interceptor
 api.interceptors.request.use(function (config) {
   const token = localStorage.getItem('token');

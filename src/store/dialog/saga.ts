@@ -6,9 +6,11 @@ import {
   DIALOG_DETAIL_FETCH,
   DIALOG_DETAIL_FETCHED_FAILED,
   DIALOG_DETAIL_FETCHED_SUCCESS,
+  DIALOG_END,
   DIALOG_LIST_FETCH,
   DIALOG_LIST_FETCHED_FAILED,
   DIALOG_LIST_FETCHED_SUCCESS,
+  DIALOG_SUBMIT,
   MESSAGE_CREATE,
   MESSAGE_CREATE_FAILED,
   MESSAGE_CREATE_SUCCESS,
@@ -17,6 +19,7 @@ import {
   DialogCreateAction,
   DialogDetailFetchAction,
   DialogDetailResponse,
+  DialogEndAction,
   DialogListFetchAction,
   DialogListResponse,
   MessageCreateAction,
@@ -71,8 +74,27 @@ function* createDialog(action: DialogCreateAction) {
     );
     successCallback?.(response.data._id);
   } catch (err) {
-    yield put({ type: DIALOG_CREATE_FAILED });
     errorCallback?.();
+  }
+}
+
+function* endDialog(action: DialogEndAction) {
+  const { dialogId, successCallback } = action.payload;
+  try {
+    yield call(() => api.post(`api/dialogs/${dialogId}/end`));
+    successCallback?.();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function* submitDialog(action: DialogEndAction) {
+  const { dialogId, successCallback } = action.payload;
+  try {
+    yield call(() => api.post(`api/dialogs/${dialogId}/submit`));
+    successCallback?.();
+  } catch (err) {
+    console.error(err);
   }
 }
 
@@ -108,4 +130,7 @@ export default function* dialogSaga() {
   yield takeLatest(DIALOG_DETAIL_FETCH, getDialogDetail);
   yield takeLatest(DIALOG_CREATE, createDialog);
   yield takeLatest(MESSAGE_CREATE, createMessage);
+
+  yield takeLatest(DIALOG_END, endDialog);
+  yield takeLatest(DIALOG_SUBMIT, submitDialog);
 }

@@ -6,6 +6,7 @@ interface Props {
   loading?: boolean;
   children?: React.ReactNode;
   disabled?: boolean;
+  className?: string;
 }
 
 const Button = ({
@@ -14,16 +15,20 @@ const Button = ({
   loading = false,
   children,
   disabled,
+  className,
 }: Props) => {
   return (
     <button
-      className={`bg-primary h-12 ${disabled && 'bg-slate-600'}`}
+      className={`bg-primary h-10 ${disabled && 'bg-slate-600'} ${className}`}
       disabled={!!loading || disabled}
-      onClick={onClick}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick?.();
+      }}
     >
       <div className='flex'>
         {!!loading && <ButtonLoadingIcon />}
-        <span className='text-white'>{label}</span>
+        <span className='text-white text-sm'>{label}</span>
       </div>
       {children}
     </button>
