@@ -66,6 +66,10 @@ const MessageItemText = ({ message, id, isMale }: Props) => {
         >
           {content}
         </p>
+        <p className='text-sm text-green-500'>
+          <b>Feedback:</b>{' '}
+          <span className='italic'>{message.feedback || 'Testing'}</span>
+        </p>
       </div>
     </div>
   );

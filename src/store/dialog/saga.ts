@@ -100,7 +100,6 @@ function* submitDialog(action: DialogEndAction) {
 
 function* createMessage(action: MessageCreateAction) {
   const { message, dialogId, successCallback, errorCallback } = action.payload;
-  console.log(message, 'messages');
 
   try {
     const response: DialogDetailResponse = yield call(() =>

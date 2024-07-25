@@ -106,6 +106,7 @@ export interface MessageDetail {
   createdAt: Date;
   dialogId: string;
   uri?: string;
+  feedback?: string;
 }
 
 export type MessagePayload = Pick<MessageDetail, 'content' | 'uri'>;

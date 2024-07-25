@@ -2,13 +2,14 @@ import { useCallback, useState } from 'react';
 import Button from 'src/components/button';
 import Modal, { ModalInterface } from 'src/components/modal';
 import useDialogDetail from 'src/hooks/useDialogDetail';
-import { DialogDetail } from 'src/store/dialog/types';
+import { DialogDetail, MessageDetail } from 'src/store/dialog/types';
 
 interface Props {
   dialogDetail?: DialogDetail;
+  messages?: MessageDetail[];
 }
 
-const ButtonGroup = ({ dialogDetail }: Props) => {
+const ButtonGroup = ({ dialogDetail, messages }: Props) => {
   const { endDialog, submitDialog, fetchDialogDetail } = useDialogDetail({
     dialogId: dialogDetail?._id,
   });
@@ -57,14 +58,23 @@ const ButtonGroup = ({ dialogDetail }: Props) => {
   }, [onConfirmSubmitConversation]);
 
   const onEndConversation = useCallback(() => {
-    setModal({
-      title: 'Confirm',
-      content: 'Are you sure to end this conversation?',
-      onConfirm: () => onConfirmEndConversation(),
-      onCancel: () => setIsShown(false),
-    });
-    setIsShown(true);
-  }, [onConfirmEndConversation]);
+    if (!!messages && messages?.length < 2) {
+      setModal({
+        title: 'Warning',
+        content: 'Unable to end this empty conversation',
+        onCancel: () => setIsShown(false),
+      });
+      setIsShown(true);
+    } else {
+      setModal({
+        title: 'Confirm',
+        content: 'Are you sure to end this conversation?',
+        onConfirm: () => onConfirmEndConversation(),
+        onCancel: () => setIsShown(false),
+      });
+      setIsShown(true);
+    }
+  }, [messages, onConfirmEndConversation]);
 
   return (
     <>

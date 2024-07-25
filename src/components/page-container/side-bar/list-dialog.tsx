@@ -28,11 +28,14 @@ const ListDialog = ({ dialogs }: Props) => {
                 className={`${
                   activeDialogId === dialog._id && 'bg-gray-700'
                 } flex items-center p-1 text-gray-900 rounded-lg dark:text-white 
-                hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+                hover:bg-gray-100 dark:hover:bg-gray-700 group justify-between`}
               >
                 <i className='fa-regular fa-message'></i>
                 <span className='flex-1 ms-3 whitespace-nowrap text-sm'>
-                  {dialog.scenario.patientName}
+                  {dialog.scenario.patientName}{' '}
+                  {dialog.isSubmitted && (
+                    <i className='fa-solid fa-circle-check ml-2 text-green-500' />
+                  )}
                 </span>
               </a>
             </li>

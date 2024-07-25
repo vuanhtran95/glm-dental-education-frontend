@@ -1,13 +1,14 @@
 import { ScenarioDetail } from 'src/store/scenario/types';
 import ButtonGroup from './button-group';
-import { DialogDetail } from 'src/store/dialog/types';
+import { DialogDetail, MessageDetail } from 'src/store/dialog/types';
 
 interface Props {
   scenario?: ScenarioDetail;
   dialogDetail?: DialogDetail;
+  messages?: MessageDetail[];
 }
 
-const ScenarioInformation = ({ scenario, dialogDetail }: Props) => {
+const ScenarioInformation = ({ scenario, dialogDetail, messages }: Props) => {
   if (!scenario) return <></>;
   return (
     <div className='flex flex-col justify-between border-gray-200 w-[300px] shadow dark:bg-gray-800 dark:border-gray-700'>
@@ -39,7 +40,7 @@ const ScenarioInformation = ({ scenario, dialogDetail }: Props) => {
           </div>
         </div>
 
-        <ButtonGroup dialogDetail={dialogDetail} />
+        <ButtonGroup dialogDetail={dialogDetail} messages={messages} />
       </div>
     </div>
   );

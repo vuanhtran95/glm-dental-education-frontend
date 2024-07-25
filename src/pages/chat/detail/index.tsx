@@ -108,7 +108,11 @@ const ChatDetail = () => {
         </div>
       </div>
       {!isMobile && (
-        <ScenarioInformation dialogDetail={dialogDetail} scenario={scenario} />
+        <ScenarioInformation
+          dialogDetail={dialogDetail}
+          scenario={scenario}
+          messages={messages}
+        />
       )}
     </div>
   );
