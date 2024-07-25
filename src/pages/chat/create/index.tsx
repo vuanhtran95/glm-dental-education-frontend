@@ -12,7 +12,6 @@ import Select from 'src/components/select';
 import { ScenarioGenerateForm } from './types';
 import ScenarioDetailSection from './components/scenario-detail';
 import { getButtonLabel } from './utils';
-import BackgroundColor from './components/background-color';
 import { generateScenarioAction } from 'src/store/scenario/actions';
 import { selectScenarioDetailState } from 'src/store/scenario/selectors';
 import { createDialogAction } from 'src/store/dialog/actions';
@@ -94,7 +93,6 @@ const CreateChat = () => {
           />
         </div>
       </div>
-      <BackgroundColor />
     </section>
   );
 };

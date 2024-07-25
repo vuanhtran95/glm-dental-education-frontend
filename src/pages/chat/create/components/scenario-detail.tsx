@@ -8,7 +8,7 @@ interface Props {
 const ScenarioDetailSection = ({ scenarioDetail, onStart }: Props) => {
   if (!scenarioDetail) return <></>;
   return (
-    <div className='bg-slate-700 w-208 p-4 py-8 rounded-xl mt-8 flex flex-col gap-4 align-middle'>
+    <div className='bg-slate-700 w-208 p-4 py-8 rounded-xl mt-8 flex flex-col gap-2 align-middle'>
       <p className='text-white'>
         Patient Name: {scenarioDetail?.patientName} ({scenarioDetail?.gender})
       </p>

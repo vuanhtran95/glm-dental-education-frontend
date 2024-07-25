@@ -12,10 +12,13 @@ const PageContainer = () => {
 
   return (
     <div className='md:min-h-screen'>
-      <SideBar closeSidebar={handleToggleSidebar} className={`${isActive ? 'translate-x-0' : ''}`} />
+      <SideBar
+        closeSidebar={handleToggleSidebar}
+        className={`${isActive ? 'translate-x-0' : ''}`}
+      />
       <main className='md:min-h-screen'>
         <Header openSidebar={handleToggleSidebar} />
-        <div className='sm:ml-64 md:min-h-screen'>
+        <div className='sm:ml-64 md:min-h-screen bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-900'>
           <Outlet />
         </div>
       </main>

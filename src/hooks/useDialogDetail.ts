@@ -27,7 +27,9 @@ const useDialogDetail = ({ dialogId }: Props) => {
   );
 
   return {
-    dialogDetail,
+    dialogDetail: dialogDetail?.detail.dialog,
+    messages: dialogDetail?.detail.messages,
+    scenario: dialogDetail?.detail.scenario,
     fetchDialogDetail,
   };
 };

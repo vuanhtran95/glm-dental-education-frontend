@@ -1,15 +1,14 @@
 import { Virtuoso } from 'react-virtuoso';
-import { MessageDetail } from '../../store/dialog/types';
 import MessageItemText from './message-item-text';
 import { useCallback, useEffect, useRef } from 'react';
+import { MessageDetail } from 'src/store/dialog/types';
 
 interface Props {
   messages: MessageDetail[] | [];
-  onClickProfile: () => void;
   isMale: boolean;
 }
 
-const MessageBox = ({ messages, onClickProfile, isMale }: Props) => {
+const MessageBox = ({ messages, isMale }: Props) => {
   const virtuoso = useRef(null);
 
   const onScrollBottom = useCallback(() => {
@@ -27,7 +26,7 @@ const MessageBox = ({ messages, onClickProfile, isMale }: Props) => {
   }, [messages.length, onScrollBottom]);
 
   return (
-    <div className='h-[85vh]'>
+    <div className='h-[87vh]'>
       <Virtuoso
         ref={virtuoso}
         data={messages || []}
@@ -36,7 +35,6 @@ const MessageBox = ({ messages, onClickProfile, isMale }: Props) => {
         itemContent={(index: number, message: MessageDetail) => {
           return (
             <MessageItemText
-              onClickProfile={onClickProfile}
               id={index === messages.length - 1 ? 'audio-player' : ''}
               message={message}
               index={index}

@@ -1,19 +1,18 @@
 import { EMessageRole, MessageDetail } from '../../store/dialog/types';
 import dayjs from 'dayjs';
-import avatar from '../../assets/avatar.png';
-import patient from '../../assets/patient.png';
+
 import { useCallback, useMemo } from 'react';
 import useTextToSpeech from '../../hooks/useTextToSpeech';
+import { avatarImg, displayedRole } from './utils';
 
 interface Props {
   message: MessageDetail;
   index: number;
   id: string;
-  onClickProfile: () => void;
   isMale: boolean;
 }
 
-const MessageItemText = ({ message, id, onClickProfile, isMale }: Props) => {
+const MessageItemText = ({ message, id, isMale }: Props) => {
   const { createdAt, content, role } = message;
 
   const audio = useMemo(() => {
@@ -31,22 +30,6 @@ const MessageItemText = ({ message, id, onClickProfile, isMale }: Props) => {
 
   const date = dayjs(createdAt).format('HH:mm');
 
-  const displayedRole = useMemo(() => {
-    switch (role) {
-      case EMessageRole.ASSISTANT:
-        return 'Patient';
-      case EMessageRole.USER:
-        return 'Doctor';
-      default:
-        return 'System';
-    }
-  }, [role]);
-
-  const img =
-    role === EMessageRole.USER || role === EMessageRole.SYSTEM
-      ? avatar
-      : patient;
-
   const isUserRole = role === EMessageRole.USER;
 
   return (
@@ -57,15 +40,12 @@ const MessageItemText = ({ message, id, onClickProfile, isMale }: Props) => {
     >
       <img
         className='w-8 h-8 rounded-full cursor-pointer'
-        src={img}
-        onClick={() => {
-          !isUserRole && onClickProfile();
-        }}
+        src={avatarImg(role)}
       />
       <div className='flex flex-col leading-1.5 px-4 py-2 border-gray-200 rounded-lg dark:bg-gray-700 max-w-[80%]'>
         <div className='flex items-center space-x-2 rtl:space-x-reverse'>
           <span className='text-sm font-semibold text-gray-900 dark:text-white'>
-            {displayedRole}
+            {displayedRole(role)}
           </span>
           <span className='text-sm font-normal text-gray-500 dark:text-gray-400'>
             {date}
