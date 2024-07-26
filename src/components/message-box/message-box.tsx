@@ -6,9 +6,14 @@ import { MessageDetail } from 'src/store/dialog/types';
 interface Props {
   messages: MessageDetail[] | [];
   isMale: boolean;
+  shouldShowFeedback: boolean;
 }
 
-const MessageBox = ({ messages, isMale }: Props) => {
+const MessageBox = ({
+  messages,
+  isMale,
+  shouldShowFeedback = false,
+}: Props) => {
   const virtuoso = useRef(null);
 
   const onScrollBottom = useCallback(() => {
@@ -40,6 +45,7 @@ const MessageBox = ({ messages, isMale }: Props) => {
               index={index}
               key={index}
               isMale={isMale}
+              shouldShowFeedback={shouldShowFeedback}
             />
           );
         }}

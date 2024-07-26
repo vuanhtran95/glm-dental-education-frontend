@@ -89,6 +89,7 @@ const ChatDetail = () => {
     <div className='flex flex-row min-h-screen'>
       <div className='grow bg-slate-500 w-full'>
         <MessageBox
+          shouldShowFeedback={!!dialogDetail?.isSubmitted}
           isMale={scenario?.gender === Gender.MALE}
           messages={
             messages?.filter((e) => e.role !== EMessageRole.SYSTEM) || []

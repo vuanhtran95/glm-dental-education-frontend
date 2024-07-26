@@ -11,7 +11,8 @@ import SignUp from './pages/authentication/signup';
 import CreateChat from './pages/chat/create';
 import ChatDetail from './pages/chat/detail';
 import PageContainer from './components/page-container';
-import Evaluate from './pages/evaluate';
+import EvaluateList from './pages/evaluate/list';
+import EvaluateDetail from './pages/evaluate/detail';
 
 const App = () => {
   const localStorageToken = localStorage.getItem('token');
@@ -54,8 +55,12 @@ const App = () => {
           element: <ChatDetail />,
         },
         {
-          path: '/Evaluate',
-          element: <Evaluate />,
+          path: '/evaluate',
+          element: <EvaluateList />,
+        },
+        {
+          path: '/evaluate/:id',
+          element: <EvaluateDetail />,
         },
       ],
     },

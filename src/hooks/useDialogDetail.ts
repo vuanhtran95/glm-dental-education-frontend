@@ -49,6 +49,7 @@ const useDialogDetail = ({ dialogId }: Props) => {
     dialogDetail: dialogDetail?.detail.dialog,
     messages: dialogDetail?.detail.messages,
     scenario: dialogDetail?.detail.scenario,
+    user: dialogDetail?.detail.user,
     fetchDialogDetail,
     endDialog,
     submitDialog,

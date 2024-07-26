@@ -6,9 +6,15 @@ interface Props {
   scenario?: ScenarioDetail;
   dialogDetail?: DialogDetail;
   messages?: MessageDetail[];
+  hasButtonGroup?: boolean;
 }
 
-const ScenarioInformation = ({ scenario, dialogDetail, messages }: Props) => {
+const ScenarioInformation = ({
+  scenario,
+  dialogDetail,
+  messages,
+  hasButtonGroup = true,
+}: Props) => {
   if (!scenario) return <></>;
   return (
     <div className='flex flex-col justify-between border-gray-200 w-[300px] shadow dark:bg-gray-800 dark:border-gray-700'>
@@ -40,7 +46,9 @@ const ScenarioInformation = ({ scenario, dialogDetail, messages }: Props) => {
           </div>
         </div>
 
-        <ButtonGroup dialogDetail={dialogDetail} messages={messages} />
+        {hasButtonGroup && (
+          <ButtonGroup dialogDetail={dialogDetail} messages={messages} />
+        )}
       </div>
     </div>
   );

@@ -12,8 +12,8 @@ const LogOut = () => {
   }, [navigate]);
 
   return (
-    <p onClick={() => onLogOut()} className='mt-8'>
-      <i className='fa-solid fa-right-from-bracket cursor-pointer' /> Log out
+    <p onClick={() => onLogOut()} className='mt-8 cursor-pointer'>
+      <i className='fa-solid fa-right-from-bracket' /> Log out
     </p>
   );
 };

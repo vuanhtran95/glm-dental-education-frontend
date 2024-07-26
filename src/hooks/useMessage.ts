@@ -1,7 +1,10 @@
 import { useCallback } from 'react';
 import { MessagePayload } from '../store/dialog/types';
 import { useDispatch } from 'react-redux';
-import { createMessageAction } from '../store/dialog/actions';
+import {
+  createMessageAction,
+  feedbackMessageAction,
+} from '../store/dialog/actions';
 import { SuccessCallback, ErrorCallback } from '../types';
 
 interface Props {
@@ -25,7 +28,26 @@ const useMessage = ({ dialogId }: Props) => {
     [dialogId, dispatch]
   );
 
-  return { createMessage };
+  const feedbackMessage = useCallback(
+    (
+      messageId: string,
+      feedback: string,
+      successCallback?: SuccessCallback,
+      errorCallback?: ErrorCallback
+    ) => {
+      dispatch(
+        feedbackMessageAction(
+          feedback,
+          messageId,
+          successCallback,
+          errorCallback
+        )
+      );
+    },
+    [dispatch]
+  );
+
+  return { createMessage, feedbackMessage };
 };
 
 export default useMessage;
