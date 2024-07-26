@@ -6,7 +6,7 @@ import { fetchDialogListAction } from '../store/dialog/actions';
 import { DialogDetail } from '../store/dialog/types';
 
 interface Props {
-  userId: string;
+  userId?: string;
 }
 
 const useDialogList = ({ userId }: Props) => {
@@ -15,7 +15,6 @@ const useDialogList = ({ userId }: Props) => {
   const dialogs: DialogDetail[] = useSelector(selectDialogListState);
 
   const fetchDialogList = useCallback(() => {
-    if (!userId) return;
     dispatch(fetchDialogListAction(userId));
   }, [dispatch, userId]);
 

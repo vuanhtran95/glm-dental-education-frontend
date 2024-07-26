@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 
 import { authenticate } from 'src/store/user/actions';
@@ -13,33 +13,44 @@ import {
   NotificationMessage,
   useNotification,
 } from 'src/hooks/useNotification';
+import { UserRole } from 'src/store/user/types';
+import { SuccessCallback } from 'src/types';
+import { getUserInfo } from 'src/utils';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const user = getUserInfo();
 
-  const { type, notification, notifyError, notifySuccess } = useNotification();
-  const navigate = useNavigate();
+  const { type, notification, notifyError } = useNotification();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = useCallback(
     (values: LoginPayload) => {
       setIsLoading(true);
+
       const successCallback = () => {
         setIsLoading(false);
-        notifySuccess(APP_MESSAGES.LOGIN_SUCCESS);
-        setTimeout(() => {
-          navigate(APP_ROUTES.NEW_CHAT);
-        }, 200);
       };
       const errorCallback = () => {
         setIsLoading(false);
         notifyError(APP_MESSAGES.GENERAL_ERROR);
       };
 
-      dispatch(authenticate(values, successCallback, errorCallback));
+      dispatch(
+        authenticate(values, successCallback as SuccessCallback, errorCallback)
+      );
     },
-    [dispatch, navigate, notifyError, notifySuccess]
+    [dispatch, notifyError]
   );
+
+  if (user) {
+    const route =
+      user.role === UserRole.STUDENT
+        ? APP_ROUTES.NEW_CHAT
+        : APP_ROUTES.EVALUATE;
+    navigate(route);
+  }
 
   return (
     <div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
@@ -63,7 +74,12 @@ const Login = () => {
             <Input type='password' id='password' label='Password' />
 
             <div className='flex justify-center mt-4'>
-              <Button loading={isLoading} label='Login' onClick={() => {}} />
+              <Button
+                type='submit'
+                loading={isLoading}
+                label='Login'
+                onClick={() => {}}
+              />
             </div>
           </Form>
         </Formik>

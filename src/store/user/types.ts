@@ -1,4 +1,4 @@
-import { DataPayload } from '../../types';
+import { DataPayload, SuccessCallback } from '../../types';
 import {
   USER_AUTHENTICATE,
   USER_INFO_FETCH,
@@ -31,6 +31,9 @@ export interface SignUpAction {
 
 export interface GetUserInfoAction {
   type: typeof USER_INFO_FETCH;
+  payload: {
+    successCallback: SuccessCallback;
+  };
 }
 
 export enum UserRole {

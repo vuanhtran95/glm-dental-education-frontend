@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { getUserInfo } from '../../../utils';
 import { useSelector } from 'react-redux';
 import { useCallback, useState } from 'react';
-import { Form, useNavigate } from 'react-router-dom';
+import { Form, Navigate, useNavigate } from 'react-router-dom';
 import WelcomeSection from './components/welcome-section';
 import Button from 'src/components/button';
 import { Formik } from 'formik';
@@ -16,6 +16,7 @@ import { generateScenarioAction } from 'src/store/scenario/actions';
 import { selectScenarioDetailState } from 'src/store/scenario/selectors';
 import { createDialogAction } from 'src/store/dialog/actions';
 import { ScenarioDetail } from 'src/store/scenario/types';
+import { UserRole } from 'src/store/user/types';
 
 const CreateChat = () => {
   const user = getUserInfo();
@@ -27,8 +28,6 @@ const CreateChat = () => {
   const scenarioDetail: ScenarioDetail | null = useSelector(
     selectScenarioDetailState
   );
-
-  console.log(scenarioDetail, 'scenarioDetail');
 
   const onGenerate = useCallback(
     ({ patientName, gender }: ScenarioGenerateForm) => {
@@ -61,6 +60,9 @@ const CreateChat = () => {
       createDialogAction(user?._id, scenarioDetail?._id, successCallback)
     );
   }, [dispatch, navigation, scenarioDetail, user?._id]);
+
+  if (user?.role !== UserRole.STUDENT)
+    return <Navigate to='/not-found' replace />;
 
   return (
     <section className=''>

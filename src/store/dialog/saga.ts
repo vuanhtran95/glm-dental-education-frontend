@@ -29,7 +29,7 @@ function* getDialogList(action: DialogListFetchAction) {
   const { userId } = action.payload;
   try {
     const response: DialogListResponse = yield call(() =>
-      api.get(`api/dialogs/?user_id=${userId}`)
+      api.get(`api/dialogs/${userId ? `?userId=${userId}` : ''}`)
     );
     yield put({
       type: DIALOG_LIST_FETCHED_SUCCESS,

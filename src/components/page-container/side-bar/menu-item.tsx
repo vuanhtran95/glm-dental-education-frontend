@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import LogoSection from './logo-section';
 import LogOut from './log-out';
 import ListDialog from './list-dialog';
+import { UserRole } from 'src/store/user/types';
 
 interface Props {
   className?: string;
@@ -20,8 +21,9 @@ const MenuItem = ({ className, closeSidebar }: Props) => {
   });
 
   useEffect(() => {
-    if (dialogs.length === 0) fetchDialogList();
-  }, [dialogs.length, fetchDialogList]);
+    if (dialogs.length === 0 && userInfo?.role === UserRole.STUDENT)
+      fetchDialogList();
+  }, [dialogs.length, fetchDialogList, userInfo?.role]);
 
   return (
     <aside
@@ -33,8 +35,12 @@ const MenuItem = ({ className, closeSidebar }: Props) => {
     >
       <div className='h-full flex flex-col px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
         <LogoSection closeSidebar={closeSidebar} />
-        <NewChatItem />
-        <ListDialog dialogs={dialogs} />
+        {userInfo?.role === UserRole.STUDENT && (
+          <>
+            <NewChatItem />
+            <ListDialog dialogs={dialogs} />
+          </>
+        )}
         <LogOut />
       </div>
     </aside>

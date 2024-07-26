@@ -25,17 +25,42 @@ function* authenticate(action: AuthenticateAction) {
     const response: AuthenticationResponse = yield call(() =>
       api.post('api/accounts/login', value)
     );
-    yield call(() => localStorage.setItem('token', response.data.token));
+    yield call(() => {
+      localStorage.removeItem('token');
+      localStorage.setItem('token', response.data.token);
+    });
     yield put({ type: USER_AUTHENTICATED });
 
-    // Get user info
     yield call(getUserInfo, {
       type: USER_INFO_FETCH,
+      payload: {
+        successCallback,
+      },
     });
-    successCallback?.();
   } catch (err) {
     errorCallback?.();
     yield put({ type: USER_UNAUTHORIZED });
+  }
+}
+
+function* getUserInfo(action: GetUserInfoAction) {
+  const { successCallback } = action.payload;
+
+  try {
+    const userResponse: UserResponse = yield call(() => api.get('api/users'));
+
+    if (userResponse.data.user) {
+      yield call(() => {
+        localStorage.removeItem('userInfo');
+        localStorage.setItem(
+          'userInfo',
+          JSON.stringify(userResponse.data.user)
+        );
+      });
+      successCallback?.(userResponse.data.user.role);
+    }
+  } catch (e) {
+    console.error(e);
   }
 }
 
@@ -48,20 +73,6 @@ function* signUp(action: SignUpAction) {
   } catch (err) {
     yield put({ type: USER_SIGNED_UP_FAILED });
     errorCallback?.();
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function* getUserInfo(_action: GetUserInfoAction) {
-  try {
-    const userResponse: UserResponse = yield call(() => api.get('api/users'));
-
-    if (userResponse.data.user)
-      yield call(() =>
-        localStorage.setItem('userInfo', JSON.stringify(userResponse.data.user))
-      );
-  } catch (e) {
-    console.error(e);
   }
 }
 

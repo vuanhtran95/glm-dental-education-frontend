@@ -9,6 +9,7 @@ export enum APP_ROUTES {
   NEW_CHAT = '/new-chat',
   SIGN_UP = '/sign-up',
   LOGIN = '/login',
+  EVALUATE = '/evaluate',
 }
 
 export const logoUri =

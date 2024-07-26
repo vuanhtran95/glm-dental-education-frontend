@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useAudioRecorder } from 'react-audio-voice-recorder';
 
 import MessageBox from '../../../components/message-box/message-box';
@@ -15,6 +15,8 @@ import useSpeechToText from 'src/hooks/useSpeechToText';
 import useTextToSpeech from 'src/hooks/useTextToSpeech';
 import { Gender } from 'src/store/scenario/types';
 import StatusGroup from './components/status-group';
+import { UserRole } from 'src/store/user/types';
+import { getUserInfo } from 'src/utils';
 
 const ChatDetail = () => {
   const params = useParams();
@@ -24,6 +26,8 @@ const ChatDetail = () => {
   const { isMobile } = useResponsive();
   const { uploadBlob } = useAmazonS3();
   const { createMessage } = useMessage({ dialogId });
+
+  const user = getUserInfo();
 
   const { recordingBlob, startRecording, stopRecording } = useAudioRecorder();
 
@@ -77,6 +81,9 @@ const ChatDetail = () => {
   useEffect(() => {
     fetchDialogDetail();
   }, [fetchDialogDetail]);
+
+  if (user?.role !== UserRole.STUDENT)
+    return <Navigate to='/not-found' replace />;
 
   return (
     <div className='flex flex-row min-h-screen'>

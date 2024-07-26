@@ -58,7 +58,7 @@ const SignUp = () => {
             <Input id='fullName' label='Full name' />
             <Select options={roleOptions} label={'Role'} id='role' />
             <div className='flex justify-center mt-4'>
-              <Button label='Sign up' onClick={() => {}} />
+              <Button type='submit' label='Sign up' onClick={() => {}} />
             </div>
           </Form>
         </Formik>

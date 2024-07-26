@@ -11,7 +11,7 @@ import { SuccessCallback, ErrorCallback } from '../../types';
 import { MessagePayload } from './types';
 
 export const fetchDialogListAction = (
-  userId: string,
+  userId?: string,
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback
 ) =>

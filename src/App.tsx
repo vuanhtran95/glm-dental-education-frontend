@@ -11,11 +11,14 @@ import SignUp from './pages/authentication/signup';
 import CreateChat from './pages/chat/create';
 import ChatDetail from './pages/chat/detail';
 import PageContainer from './components/page-container';
+import Evaluate from './pages/evaluate';
 
 const App = () => {
+  const localStorageToken = localStorage.getItem('token');
+  const userInfo = localStorage.getItem('userInfo');
+
   const ProtectedRoutes = () => {
-    const localStorageToken = localStorage.getItem('token');
-    return localStorageToken ? (
+    return localStorageToken && userInfo ? (
       <PageContainer />
     ) : (
       <Navigate to='/login' replace />
@@ -23,10 +26,6 @@ const App = () => {
   };
 
   const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <Login />,
-    },
     {
       path: '/login',
       element: <Login />,
@@ -43,12 +42,20 @@ const App = () => {
       element: <ProtectedRoutes></ProtectedRoutes>,
       children: [
         {
+          path: '/',
+          element: <Login />,
+        },
+        {
           path: '/new-chat',
           element: <CreateChat />,
         },
         {
           path: '/dialog/:id',
           element: <ChatDetail />,
+        },
+        {
+          path: '/Evaluate',
+          element: <Evaluate />,
         },
       ],
     },

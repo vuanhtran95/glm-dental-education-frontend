@@ -1,5 +1,7 @@
 import ButtonLoadingIcon from './loading-icon';
 
+export type ButtonType = 'submit' | 'reset' | 'button' | undefined;
+
 interface Props {
   label: string;
   onClick?: () => void;
@@ -7,6 +9,7 @@ interface Props {
   children?: React.ReactNode;
   disabled?: boolean;
   className?: string;
+  type?: ButtonType;
 }
 
 const Button = ({
@@ -16,13 +19,14 @@ const Button = ({
   children,
   disabled,
   className,
+  type = 'button',
 }: Props) => {
   return (
     <button
+      type={type}
       className={`bg-primary h-10 ${disabled && 'bg-slate-600'} ${className}`}
       disabled={!!loading || disabled}
-      onClick={(e) => {
-        e.preventDefault();
+      onClick={() => {
         onClick?.();
       }}
     >

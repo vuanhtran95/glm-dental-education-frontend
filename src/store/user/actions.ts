@@ -1,9 +1,5 @@
 import { action } from 'typesafe-actions';
-import {
-  USER_AUTHENTICATE,
-  USER_INFO_FETCH,
-  USER_SIGN_UP,
-} from './actionTypes';
+import { USER_AUTHENTICATE, USER_SIGN_UP } from './actionTypes';
 import { SuccessCallback } from '../../types';
 import { LoginPayload } from '../../pages/authentication/login/types';
 import { SignUpPayload } from '../../pages/authentication/signup/types';
@@ -19,8 +15,3 @@ export const signUp = (
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback
 ) => action(USER_SIGN_UP, { value, successCallback, errorCallback });
-
-export const getUserInfo = (
-  successCallback: SuccessCallback,
-  errorCallback: ErrorCallback
-) => action(USER_INFO_FETCH, { successCallback, errorCallback });
