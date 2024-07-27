@@ -1,11 +1,13 @@
 import { SuccessCallback, ErrorCallback } from '../../types';
 import { ScenarioDetail } from '../scenario/types';
+import { UserInfo } from '../user/types';
 import {
   DIALOG_CREATE,
   DIALOG_END,
   DIALOG_LIST_FETCH,
   DIALOG_SUBMIT,
   MESSAGE_CREATE,
+  MESSAGE_FEEDBACK,
 } from './actionTypes';
 
 export interface DialogListFetchAction {
@@ -63,6 +65,16 @@ export interface MessageCreateAction {
   };
 }
 
+export interface MessageFeedbackAction {
+  type: typeof MESSAGE_FEEDBACK;
+  payload: {
+    messageId: string;
+    feedback: string;
+    successCallback?: SuccessCallback;
+    errorCallback?: ErrorCallback;
+  };
+}
+
 export interface AudioMessageCreateAction {
   type: typeof MESSAGE_CREATE;
   payload: {
@@ -75,7 +87,6 @@ export interface AudioMessageCreateAction {
 
 export interface DialogDetail {
   _id: string;
-  name: string;
   createdUserId: string;
   scenarioId: string;
   isEnded: boolean;
@@ -83,6 +94,7 @@ export interface DialogDetail {
   createdAt: Date;
   updatedAt: Date;
   scenario: ScenarioDetail;
+  user: UserInfo;
 }
 
 export interface DialogDetailWithMessage {
@@ -90,6 +102,7 @@ export interface DialogDetailWithMessage {
     dialog: DialogDetail;
     messages: MessageDetail[];
     scenario: ScenarioDetail;
+    user: UserInfo;
   };
 }
 

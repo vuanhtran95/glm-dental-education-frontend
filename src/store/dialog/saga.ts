@@ -14,6 +14,7 @@ import {
   MESSAGE_CREATE,
   MESSAGE_CREATE_FAILED,
   MESSAGE_CREATE_SUCCESS,
+  MESSAGE_FEEDBACK,
 } from './actionTypes';
 import {
   DialogCreateAction,
@@ -23,6 +24,7 @@ import {
   DialogListFetchAction,
   DialogListResponse,
   MessageCreateAction,
+  MessageFeedbackAction,
 } from './types';
 
 function* getDialogList(action: DialogListFetchAction) {
@@ -48,6 +50,7 @@ function* getDialogDetail(action: DialogDetailFetchAction) {
     );
 
     const data = response.data;
+
     yield put({
       type: DIALOG_DETAIL_FETCHED_SUCCESS,
       data: data,
@@ -124,6 +127,28 @@ function* createMessage(action: MessageCreateAction) {
   }
 }
 
+function* feedbackMessage(action: MessageFeedbackAction) {
+  const { messageId, feedback, successCallback, errorCallback } =
+    action.payload;
+
+  try {
+    yield call(() =>
+      api.post(
+        `api/messages/${messageId}/feedback`,
+        {
+          feedback,
+        },
+        { timeout: 15000 }
+      )
+    );
+
+    successCallback?.();
+  } catch (err) {
+    yield put({ type: MESSAGE_CREATE_FAILED });
+    errorCallback?.();
+  }
+}
+
 export default function* dialogSaga() {
   yield takeLatest(DIALOG_LIST_FETCH, getDialogList);
   yield takeLatest(DIALOG_DETAIL_FETCH, getDialogDetail);
@@ -132,4 +157,6 @@ export default function* dialogSaga() {
 
   yield takeLatest(DIALOG_END, endDialog);
   yield takeLatest(DIALOG_SUBMIT, submitDialog);
+
+  yield takeLatest(MESSAGE_FEEDBACK, feedbackMessage);
 }

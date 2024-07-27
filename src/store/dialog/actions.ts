@@ -6,6 +6,7 @@ import {
   DIALOG_LIST_FETCH,
   DIALOG_SUBMIT,
   MESSAGE_CREATE,
+  MESSAGE_FEEDBACK,
 } from './actionTypes';
 import { SuccessCallback, ErrorCallback } from '../../types';
 import { MessagePayload } from './types';
@@ -54,6 +55,19 @@ export const createMessageAction = (
   action(MESSAGE_CREATE, {
     message,
     dialogId,
+    successCallback,
+    errorCallback,
+  });
+
+export const feedbackMessageAction = (
+  feedback: string,
+  messageId: string,
+  successCallback?: SuccessCallback,
+  errorCallback?: ErrorCallback
+) =>
+  action(MESSAGE_FEEDBACK, {
+    feedback,
+    messageId,
     successCallback,
     errorCallback,
   });
