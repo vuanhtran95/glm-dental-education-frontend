@@ -94,6 +94,7 @@ const ChatDetail = () => {
           messages={
             messages?.filter((e) => e.role !== EMessageRole.SYSTEM) || []
           }
+          shouldShowGuideline={!listening && !transcript}
         />
         <div className='flex justify-center items-end	mt-8'>
           <div className='sticky md:relative w-full px-8'>

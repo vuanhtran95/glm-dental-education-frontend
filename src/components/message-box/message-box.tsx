@@ -2,17 +2,20 @@ import { Virtuoso } from 'react-virtuoso';
 import MessageItemText from './message-item-text';
 import { useCallback, useEffect, useRef } from 'react';
 import { MessageDetail } from 'src/store/dialog/types';
+import GuideLine from './guideline';
 
 interface Props {
   messages: MessageDetail[] | [];
   isMale: boolean;
   shouldShowFeedback: boolean;
+  shouldShowGuideline?: boolean;
 }
 
 const MessageBox = ({
   messages,
   isMale,
   shouldShowFeedback = false,
+  shouldShowGuideline,
 }: Props) => {
   const virtuoso = useRef(null);
 
@@ -32,24 +35,28 @@ const MessageBox = ({
 
   return (
     <div className='h-[87vh]'>
-      <Virtuoso
-        ref={virtuoso}
-        data={messages || []}
-        style={{ paddingRight: '10px' }}
-        totalCount={200}
-        itemContent={(index: number, message: MessageDetail) => {
-          return (
-            <MessageItemText
-              id={index === messages.length - 1 ? 'audio-player' : ''}
-              message={message}
-              index={index}
-              key={index}
-              isMale={isMale}
-              shouldShowFeedback={shouldShowFeedback}
-            />
-          );
-        }}
-      />
+      {messages.length > 0 ? (
+        <Virtuoso
+          ref={virtuoso}
+          data={messages || []}
+          style={{ paddingRight: '10px' }}
+          totalCount={200}
+          itemContent={(index: number, message: MessageDetail) => {
+            return (
+              <MessageItemText
+                id={index === messages.length - 1 ? 'audio-player' : ''}
+                message={message}
+                index={index}
+                key={index}
+                isMale={isMale}
+                shouldShowFeedback={shouldShowFeedback}
+              />
+            );
+          }}
+        />
+      ) : (
+        <>{shouldShowGuideline && <GuideLine />}</>
+      )}
     </div>
   );
 };
