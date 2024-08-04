@@ -2,7 +2,6 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import api from '../../services/api';
 import {
   DIALOG_CREATE,
-  DIALOG_CREATE_FAILED,
   DIALOG_DETAIL_FETCH,
   DIALOG_DETAIL_FETCHED_FAILED,
   DIALOG_DETAIL_FETCHED_SUCCESS,
