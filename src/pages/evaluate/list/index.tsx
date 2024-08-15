@@ -1,27 +1,63 @@
-import { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useEffect, useMemo } from 'react';
 import useDialogList from 'src/hooks/useDialogList';
 import { UserRole } from 'src/store/user/types';
 import { getUserInfo } from 'src/utils';
-import DataTable from './data-table';
+import { Button, Table } from 'antd';
+import useAllowedRoles from 'src/hooks/useUserRole';
+import { ColumnsType } from 'antd/es/table';
+import { useNavigate } from 'react-router-dom';
 
 const EvaluateList = () => {
   const userInfo = getUserInfo();
 
-  const { dialogs, fetchDialogList } = useDialogList({});
+  const navigate = useNavigate();
+
+  const { dialogData, fetchDialogList } = useDialogList({});
+
+  const columns: ColumnsType = useMemo(() => {
+    return [
+      {
+        title: 'Patient Name',
+        dataIndex: 'patientName',
+        key: 'patientName',
+      },
+      {
+        title: 'Symptoms',
+        dataIndex: 'symptoms',
+        key: 'symptoms',
+      },
+      {
+        title: 'Student Id',
+        dataIndex: 'studentId',
+        key: 'studentId',
+      },
+      {
+        title: 'Action',
+        dataIndex: 'action',
+        key: 'action',
+        render: (item) => (
+          <Button onClick={() => navigate(`/evaluate/${item.id}`)}>
+            Evaluate
+          </Button>
+        ),
+      },
+    ];
+  }, [navigate]);
+
+  useAllowedRoles([UserRole.SUPERVISOR]);
 
   useEffect(() => {
-    if (dialogs.length === 0 && userInfo?.role === UserRole.SUPERVISOR)
-      fetchDialogList();
-  }, [dialogs.length, fetchDialogList, userInfo?.role]);
+    if (dialogData.length === 0) fetchDialogList();
+  }, [dialogData.length, fetchDialogList, userInfo?.role]);
 
-  if (userInfo?.role !== UserRole.SUPERVISOR)
-    return <Navigate to='/not-found' replace />;
+  console.log(dialogData, ' dialogs');
 
   return (
     <>
       <h3 className='text-white px-10 pt-10'>List Dialog</h3>
-      <DataTable dialogs={dialogs} />
+      <div className='m-8'>
+        <Table dataSource={dialogData} columns={columns} />
+      </div>
     </>
   );
 };

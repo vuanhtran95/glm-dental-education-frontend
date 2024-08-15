@@ -9,12 +9,18 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   const onHomeClick = useCallback(() => {
-    const route = !user
-      ? APP_ROUTES.LOGIN
-      : user?.role === UserRole.STUDENT
-      ? APP_ROUTES.NEW_CHAT
-      : APP_ROUTES.EVALUATE;
+    let route;
 
+    switch (user?.role) {
+      case UserRole.STUDENT:
+        route = APP_ROUTES.NEW_CHAT;
+        break;
+      case UserRole.SUPERVISOR:
+        route = APP_ROUTES.EVALUATE;
+        break;
+      default:
+        route = APP_ROUTES.LOGIN;
+    }
     navigate(route);
   }, [navigate, user]);
 

@@ -28,6 +28,10 @@ const App = () => {
 
   const router = createBrowserRouter([
     {
+      path: '/',
+      element: <Login />,
+    },
+    {
       path: '/login',
       element: <Login />,
     },
@@ -42,10 +46,6 @@ const App = () => {
     {
       element: <ProtectedRoutes></ProtectedRoutes>,
       children: [
-        {
-          path: '/',
-          element: <Login />,
-        },
         {
           path: '/new-chat',
           element: <CreateChat />,

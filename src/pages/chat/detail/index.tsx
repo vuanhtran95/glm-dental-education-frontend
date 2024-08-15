@@ -2,7 +2,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { useAudioRecorder } from 'react-audio-voice-recorder';
 
 import MessageBox from '../../../components/message-box/message-box';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { EMessageRole } from '../../../store/dialog/types';
 import ScenarioInformation from './components/scenario-information';
 import { makeS3Uri } from './utils';
@@ -16,7 +16,7 @@ import useTextToSpeech from 'src/hooks/useTextToSpeech';
 import { Gender } from 'src/store/scenario/types';
 import StatusGroup from './components/status-group';
 import { UserRole } from 'src/store/user/types';
-import { getUserInfo } from 'src/utils';
+import useAllowedRoles from 'src/hooks/useUserRole';
 
 const ChatDetail = () => {
   const params = useParams();
@@ -26,8 +26,6 @@ const ChatDetail = () => {
   const { isMobile } = useResponsive();
   const { uploadBlob } = useAmazonS3();
   const { createMessage } = useMessage({ dialogId });
-
-  const user = getUserInfo();
 
   const { recordingBlob, startRecording, stopRecording } = useAudioRecorder();
 
@@ -78,12 +76,15 @@ const ChatDetail = () => {
     resetTranscript();
   }, [resetTranscript]);
 
+  const displayedMessages = useMemo(() => {
+    return messages?.filter((e) => e.role !== EMessageRole.SYSTEM) || [];
+  }, [messages]);
+
+  useAllowedRoles([UserRole.STUDENT]);
+
   useEffect(() => {
     fetchDialogDetail();
   }, [fetchDialogDetail]);
-
-  if (user?.role !== UserRole.STUDENT)
-    return <Navigate to='/not-found' replace />;
 
   return (
     <div className='flex flex-row min-h-screen'>
@@ -91,9 +92,7 @@ const ChatDetail = () => {
         <MessageBox
           shouldShowFeedback={!!dialogDetail?.isSubmitted}
           isMale={scenario?.gender === Gender.MALE}
-          messages={
-            messages?.filter((e) => e.role !== EMessageRole.SYSTEM) || []
-          }
+          messages={displayedMessages}
           shouldShowGuideline={!listening && !transcript}
         />
         <div className='flex justify-center items-end	mt-8'>

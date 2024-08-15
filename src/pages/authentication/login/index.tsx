@@ -15,13 +15,15 @@ import {
 } from 'src/hooks/useNotification';
 import { UserRole } from 'src/store/user/types';
 import { SuccessCallback } from 'src/types';
-import { getUserInfo } from 'src/utils';
+import { getToken, getUserInfo } from 'src/utils';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const user = getUserInfo();
-
+  const token = getToken();
+  const [isNavigated, setIsNavigated] = useState<boolean>(false);
   const { type, notification, notifyError } = useNotification();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -44,13 +46,22 @@ const Login = () => {
     [dispatch, notifyError]
   );
 
-  if (user) {
-    const route =
-      user.role === UserRole.STUDENT
-        ? APP_ROUTES.NEW_CHAT
-        : APP_ROUTES.EVALUATE;
-    navigate(route);
-  }
+  useEffect(() => {
+    if (token && user && !isNavigated) {
+      switch (user.role) {
+        case UserRole.STUDENT:
+          setIsNavigated(true);
+          navigate(APP_ROUTES.NEW_CHAT);
+          break;
+        case UserRole.SUPERVISOR:
+          setIsNavigated(true);
+          navigate(APP_ROUTES.EVALUATE);
+          break;
+        default:
+          return;
+      }
+    }
+  }, [isNavigated, navigate, token, user]);
 
   return (
     <div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>

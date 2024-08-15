@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { selectDialogListState } from '../store/dialog/selectors';
@@ -14,12 +14,22 @@ const useDialogList = ({ userId }: Props) => {
 
   const dialogs: DialogDetail[] = useSelector(selectDialogListState);
 
+  const dialogData = useMemo(() => {
+    return dialogs.map((dialog: DialogDetail) => ({
+      patientName: dialog.scenario.patientName,
+      symptoms: dialog.scenario.symptoms,
+      studentId: dialog.createdUserId,
+      id: dialog._id,
+      isSubmitted: dialog.isSubmitted,
+    }));
+  }, [dialogs]);
+
   const fetchDialogList = useCallback(() => {
     dispatch(fetchDialogListAction(userId));
   }, [dispatch, userId]);
 
   return {
-    dialogs,
+    dialogData,
     fetchDialogList,
   };
 };

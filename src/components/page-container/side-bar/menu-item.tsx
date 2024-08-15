@@ -2,11 +2,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import NewChatItem from './new-chat-item';
 import useDialogList from '../../../hooks/useDialogList';
 import { getUserInfo } from '../../../utils';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import LogoSection from './logo-section';
 import LogOut from './log-out';
 import ListDialog from './list-dialog';
 import { UserRole } from 'src/store/user/types';
+import useAllowedRoles from 'src/hooks/useUserRole';
 
 interface Props {
   className?: string;
@@ -16,14 +17,18 @@ interface Props {
 const MenuItem = ({ className, closeSidebar }: Props) => {
   const userInfo = getUserInfo();
 
-  const { dialogs, fetchDialogList } = useDialogList({
+  const { dialogData, fetchDialogList } = useDialogList({
     userId: userInfo?._id || '',
   });
 
+  const { isStudent } = useAllowedRoles([
+    UserRole.STUDENT,
+    UserRole.SUPERVISOR,
+  ]);
+
   useEffect(() => {
-    if (dialogs.length === 0 && userInfo?.role === UserRole.STUDENT)
-      fetchDialogList();
-  }, [dialogs.length, fetchDialogList, userInfo?.role]);
+    if (dialogData.length === 0 && isStudent) fetchDialogList();
+  }, [dialogData.length, fetchDialogList, isStudent]);
 
   return (
     <aside
@@ -35,10 +40,10 @@ const MenuItem = ({ className, closeSidebar }: Props) => {
     >
       <div className='h-full flex flex-col px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
         <LogoSection closeSidebar={closeSidebar} />
-        {userInfo?.role === UserRole.STUDENT && (
+        {isStudent && (
           <>
             <NewChatItem />
-            <ListDialog dialogs={dialogs} />
+            <ListDialog dialogs={dialogData} />
           </>
         )}
         <LogOut />
