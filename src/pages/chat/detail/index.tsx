@@ -1,4 +1,4 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAudioRecorder } from 'react-audio-voice-recorder';
 
 import MessageBox from '../../../components/message-box/message-box';

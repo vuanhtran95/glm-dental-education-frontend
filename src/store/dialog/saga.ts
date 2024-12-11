@@ -19,6 +19,7 @@ import {
   DialogCreateAction,
   DialogDetailFetchAction,
   DialogDetailResponse,
+  DialogDetailWithMessageResponse,
   DialogEndAction,
   DialogListFetchAction,
   DialogListResponse,
@@ -44,11 +45,11 @@ function* getDialogList(action: DialogListFetchAction) {
 function* getDialogDetail(action: DialogDetailFetchAction) {
   const { dialogId, successCallback, errorCallback } = action.payload;
   try {
-    const response: DialogDetailResponse = yield call(() =>
+    const response: DialogDetailWithMessageResponse = yield call(() =>
       api.get(`api/dialogs/${dialogId}`)
     );
 
-    const data = response.data;
+    const { data } = response;
 
     yield put({
       type: DIALOG_DETAIL_FETCHED_SUCCESS,
@@ -74,6 +75,9 @@ function* createDialog(action: DialogCreateAction) {
         scenarioId,
       })
     );
+
+    console.log(response, 'response');
+    
     successCallback?.(response.data._id);
   } catch (err) {
     errorCallback?.();

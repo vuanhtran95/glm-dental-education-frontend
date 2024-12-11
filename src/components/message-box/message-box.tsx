@@ -1,4 +1,4 @@
-import { Virtuoso } from 'react-virtuoso';
+import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import MessageItemText from './message-item-text';
 import { useCallback, useEffect, useRef } from 'react';
 import { MessageDetail } from 'src/store/dialog/types';
@@ -17,7 +17,7 @@ const MessageBox = ({
   shouldShowFeedback = false,
   shouldShowGuideline,
 }: Props) => {
-  const virtuoso = useRef(null);
+  const virtuoso = useRef<VirtuosoHandle>(null);
 
   const onScrollBottom = useCallback(() => {
     setTimeout(() => {

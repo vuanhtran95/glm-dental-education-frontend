@@ -2,7 +2,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import NewChatItem from './new-chat-item';
 import useDialogList from '../../../hooks/useDialogList';
 import { getUserInfo } from '../../../utils';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import LogoSection from './logo-section';
 import LogOut from './log-out';
 import ListDialog from './list-dialog';

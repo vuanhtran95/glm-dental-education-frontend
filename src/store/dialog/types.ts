@@ -165,3 +165,7 @@ export interface DialogListResponse {
 export interface DialogDetailResponse {
   data: DialogDetail;
 }
+
+export interface DialogDetailWithMessageResponse {
+  data: DialogDetailWithMessage;
+}
