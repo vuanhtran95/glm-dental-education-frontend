@@ -25,10 +25,10 @@ function* authenticate(action: AuthenticateAction) {
     const response: AuthenticationResponse = yield call(() =>
       api.post('api/accounts/login', value)
     );
-    yield call(() => {
-      localStorage.removeItem('token');
-      localStorage.setItem('token', response.data.token);
-    });
+
+    localStorage.removeItem('token');
+    localStorage.setItem('token', response.data.token);
+
     yield put({ type: USER_AUTHENTICATED });
 
     yield call(getUserInfo, {
@@ -37,6 +37,8 @@ function* authenticate(action: AuthenticateAction) {
         successCallback,
       },
     });
+
+    successCallback?.(response.data.token)
   } catch (err) {
     errorCallback?.();
     yield put({ type: USER_UNAUTHORIZED });

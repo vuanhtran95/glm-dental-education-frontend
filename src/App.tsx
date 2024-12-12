@@ -13,27 +13,32 @@ import ChatDetail from './pages/chat/detail';
 import PageContainer from './components/page-container';
 import EvaluateList from './pages/evaluate/list';
 import EvaluateDetail from './pages/evaluate/detail';
+import { useToken } from './hooks/useToken';
+
+interface ProtectedRoutesProps {
+  token: string | null;
+}
+
+const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ token }) => {
+  return token ? (
+      <PageContainer />
+  ) : (
+    <Navigate to="/login" replace />
+  );
+};
 
 const App = () => {
-  const localStorageToken = localStorage.getItem('token');
-  const userInfo = localStorage.getItem('userInfo');
 
-  const ProtectedRoutes = () => {
-    return localStorageToken && userInfo ? (
-      <PageContainer />
-    ) : (
-      <Navigate to='/login' replace />
-    );
-  };
+  const { token, updateToken } = useToken();
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Login />,
+      element: <Login updateToken={updateToken} />,
     },
     {
       path: '/login',
-      element: <Login />,
+      element: <Login updateToken={updateToken} />,
     },
     {
       path: '/sign-up',
@@ -44,7 +49,7 @@ const App = () => {
       element: <NotFound />,
     },
     {
-      element: <ProtectedRoutes></ProtectedRoutes>,
+      element: <ProtectedRoutes token={token} />,
       children: [
         {
           path: '/new-chat',
