@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
-import Button from 'src/components/button';
-import Modal, { ModalInterface } from 'src/components/modal';
-import useDialogDetail from 'src/hooks/useDialogDetail';
-import { DialogDetail, MessageDetail } from 'src/store/dialog/types';
+import { useCallback, useState } from "react";
+import Button from "src/components/button";
+import Modal, { ModalInterface } from "src/components/modal";
+import useDialogDetail from "src/hooks/useDialogDetail";
+import { DialogDetail, MessageDetail } from "src/store/dialog/types";
 
 interface Props {
   dialogDetail?: DialogDetail;
@@ -14,9 +14,9 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
     dialogId: dialogDetail?._id,
   });
 
-  const [modal, setModal] = useState<Omit<ModalInterface, 'isShown'>>({
-    title: '',
-    content: '',
+  const [modal, setModal] = useState<Omit<ModalInterface, "isShown">>({
+    title: "",
+    content: "",
     onConfirm: () => {},
     onCancel: () => {},
   });
@@ -27,11 +27,11 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
     endDialog(() =>
       fetchDialogDetail(() => {
         setModal({
-          title: '',
-          content: 'Success!',
+          title: "",
+          content: "Success!",
         });
         setTimeout(() => setIsShown(false), 1000);
-      })
+      }),
     );
   }, [endDialog, fetchDialogDetail]);
 
@@ -39,18 +39,18 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
     submitDialog(() =>
       fetchDialogDetail(() => {
         setModal({
-          title: '',
-          content: 'Success!',
+          title: "",
+          content: "Success!",
         });
         setTimeout(() => setIsShown(false), 1000);
-      })
+      }),
     );
   }, [fetchDialogDetail, submitDialog]);
 
   const onSubmitConversation = useCallback(() => {
     setModal({
-      title: 'Confirm',
-      content: 'Are you sure to submit this conversation?',
+      title: "Confirm",
+      content: "Are you sure to submit this conversation?",
       onConfirm: () => onConfirmSubmitConversation(),
       onCancel: () => setIsShown(false),
     });
@@ -60,15 +60,15 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
   const onEndConversation = useCallback(() => {
     if (!!messages && messages?.length < 2) {
       setModal({
-        title: 'Warning',
-        content: 'Unable to end this empty conversation',
+        title: "Warning",
+        content: "Unable to end this empty conversation",
         onCancel: () => setIsShown(false),
       });
       setIsShown(true);
     } else {
       setModal({
-        title: 'Confirm',
-        content: 'Are you sure to end this conversation?',
+        title: "Confirm",
+        content: "Are you sure to end this conversation?",
         onConfirm: () => onConfirmEndConversation(),
         onCancel: () => setIsShown(false),
       });
@@ -81,15 +81,15 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
       {!dialogDetail?.isEnded ? (
         <Button
           onClick={onEndConversation}
-          className='bg-red-500'
-          label={'End Dialog'}
+          className="bg-red-500"
+          label={"End Dialog"}
         />
       ) : (
         !dialogDetail?.isSubmitted && (
           <Button
             onClick={onSubmitConversation}
-            className='bg-green-500'
-            label={'Submit Dialog'}
+            className="bg-green-500"
+            label={"Submit Dialog"}
           />
         )
       )}

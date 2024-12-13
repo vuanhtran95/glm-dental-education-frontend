@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import { authenticate } from "src/store/user/actions";
 import { useNavigate } from "react-router-dom";
 import Button from "src/components/button";
-import { APP_ROUTES, APP_MESSAGES, logoUri } from "src/constants";
+import { APP_ROUTES, APP_MESSAGES } from "src/constants";
 import { LoginPayload } from "./types";
 import Input from "src/components/input";
 import { loginInitialValues } from "./constants";
@@ -33,7 +33,7 @@ const Login: React.FC<LoginProps> = ({ updateToken }) => {
       const successCallback = (token: string) => {
         setIsLoading(false);
         updateToken(token);
-        navigate(APP_ROUTES.NEW_CHAT, {replace: true})
+        navigate(APP_ROUTES.NEW_CHAT, { replace: true });
       };
       const errorCallback = () => {
         setIsLoading(false);
@@ -41,19 +41,15 @@ const Login: React.FC<LoginProps> = ({ updateToken }) => {
       };
 
       dispatch(
-        authenticate(values, successCallback as SuccessCallback, errorCallback)
+        authenticate(values, successCallback as SuccessCallback, errorCallback),
       );
     },
-    [dispatch, notifyError]
+    [dispatch, notifyError],
   );
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className="flex">
-          <img className="mx-auto h-10 w-auto" src={logoUri} />
-        </div>
-
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in
         </h2>

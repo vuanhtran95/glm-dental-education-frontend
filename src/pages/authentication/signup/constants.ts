@@ -1,14 +1,14 @@
-import { UserRole } from 'src/store/user/types';
-import { SignUpPayload } from './types';
+import { UserRole } from "src/store/user/types";
+import { SignUpPayload } from "./types";
 
 export const signUpInitialValues: SignUpPayload = {
-  username: '',
-  password: '',
+  username: "",
+  password: "",
   role: UserRole.STUDENT,
-  fullName: '',
+  fullName: "",
 };
 
 export const roleOptions = [
-  { label: 'Student', key: UserRole.STUDENT },
-  { label: 'Supervisor', key: UserRole.SUPERVISOR },
+  { label: "Student", key: UserRole.STUDENT },
+  { label: "Supervisor", key: UserRole.SUPERVISOR },
 ];

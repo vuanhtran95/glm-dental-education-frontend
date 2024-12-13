@@ -1,13 +1,13 @@
-import { ErrorCallback, SuccessCallback } from '../../types';
-import { SCENARIO_GENERATE } from './actionTypes';
+import { ErrorCallback, SuccessCallback } from "../../types";
+import { SCENARIO_GENERATE } from "./actionTypes";
 
 export interface ScenarioState {
   scenarioDetail: ScenarioDetail | null;
 }
 
 export enum Gender {
-  MALE = 'Male',
-  FEMALE = 'Female',
+  MALE = "Male",
+  FEMALE = "Female",
 }
 
 export interface ScenarioDetail {
@@ -30,7 +30,7 @@ export interface ScenarioDetailGenerateAction {
   type: typeof SCENARIO_GENERATE;
   payload: {
     createdUserId: string;
-    patientInfo: Pick<ScenarioDetail, 'patientName' | 'gender'>;
+    patientInfo: Pick<ScenarioDetail, "patientName" | "gender">;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
   };
@@ -44,9 +44,9 @@ export interface ScenarioDetailResponse {
 
 export type ScenarioAction =
   | {
-      type: 'SCENARIO_GENERATE_SUCCESS';
+      type: "SCENARIO_GENERATE_SUCCESS";
       data: ScenarioDetail;
     }
   | {
-      type: 'SCENARIO_GENERATE';
+      type: "SCENARIO_GENERATE";
     };

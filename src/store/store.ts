@@ -1,10 +1,10 @@
 // ...
-import { combineReducers } from 'redux';
-import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
-import rootSaga from './saga';
-import dialogReducer from './dialog/reducers';
-import scenarioReducer from './scenario/reducers';
+import { combineReducers } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./saga";
+import dialogReducer from "./dialog/reducers";
+import scenarioReducer from "./scenario/reducers";
 const rootReducer = combineReducers({
   dialog: dialogReducer,
   scenario: scenarioReducer,
@@ -18,7 +18,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat(sagaMiddleware),
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.NODE_ENV !== "production",
 });
 sagaMiddleware.run(rootSaga);
 

@@ -1,22 +1,22 @@
-import { useDispatch } from 'react-redux';
-import { getUserInfo } from '../../../utils';
-import { useSelector } from 'react-redux';
-import { useCallback, useState } from 'react';
-import { Form, Navigate, useNavigate } from 'react-router-dom';
-import WelcomeSection from './components/welcome-section';
-import Button from 'src/components/button';
-import { Formik } from 'formik';
-import { genderOptions, generateScenarioInitialValues } from './constants';
-import Input from 'src/components/input';
-import Select from 'src/components/select';
-import { ScenarioGenerateForm } from './types';
-import ScenarioDetailSection from './components/scenario-detail';
-import { getButtonLabel } from './utils';
-import { generateScenarioAction } from 'src/store/scenario/actions';
-import { selectScenarioDetailState } from 'src/store/scenario/selectors';
-import { createDialogAction } from 'src/store/dialog/actions';
-import { ScenarioDetail } from 'src/store/scenario/types';
-import { UserRole } from 'src/store/user/types';
+import { useDispatch } from "react-redux";
+import { getUserInfo } from "../../../utils";
+import { useSelector } from "react-redux";
+import { useCallback, useState } from "react";
+import { Form, Navigate, useNavigate } from "react-router-dom";
+import WelcomeSection from "./components/welcome-section";
+import Button from "src/components/button";
+import { Formik } from "formik";
+import { genderOptions, generateScenarioInitialValues } from "./constants";
+import Input from "src/components/input";
+import Select from "src/components/select";
+import { ScenarioGenerateForm } from "./types";
+import ScenarioDetailSection from "./components/scenario-detail";
+import { getButtonLabel } from "./utils";
+import { generateScenarioAction } from "src/store/scenario/actions";
+import { selectScenarioDetailState } from "src/store/scenario/selectors";
+import { createDialogAction } from "src/store/dialog/actions";
+import { ScenarioDetail } from "src/store/scenario/types";
+import { UserRole } from "src/store/user/types";
 
 const CreateChat = () => {
   const user = getUserInfo();
@@ -26,7 +26,7 @@ const CreateChat = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const scenarioDetail: ScenarioDetail | null = useSelector(
-    selectScenarioDetailState
+    selectScenarioDetailState,
   );
 
   const onGenerate = useCallback(
@@ -43,11 +43,11 @@ const CreateChat = () => {
         generateScenarioAction(
           { patientName, gender },
           successCallback,
-          errorCallback
-        )
+          errorCallback,
+        ),
       );
     },
-    [dispatch]
+    [dispatch],
   );
 
   const onStart = useCallback(() => {
@@ -57,28 +57,28 @@ const CreateChat = () => {
       return;
     };
     dispatch(
-      createDialogAction(user?._id, scenarioDetail?._id, successCallback)
+      createDialogAction(user?._id, scenarioDetail?._id, successCallback),
     );
   }, [dispatch, navigation, scenarioDetail, user?._id]);
 
   if (user?.role !== UserRole.STUDENT)
-    return <Navigate to='/not-found' replace />;
+    return <Navigate to="/not-found" replace />;
 
   return (
-    <section className=''>
-      <div className='py-8 px-2 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative'>
+    <section className="">
+      <div className="py-8 px-2 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
         <WelcomeSection />
-        <div className='w-full max-w-md mx-auto'>
+        <div className="w-full max-w-md mx-auto">
           <Formik
             initialValues={generateScenarioInitialValues}
             onSubmit={(values) => onGenerate(values)}
           >
             {({ values }) => (
-              <Form className='flex flex-col gap-4'>
-                <Input id='patientName' placeholder='Patient Name' />
-                <Select id='gender' options={genderOptions} />
+              <Form className="flex flex-col gap-4">
+                <Input id="patientName" placeholder="Patient Name" />
+                <Select id="gender" options={genderOptions} />
 
-                <div className='flex justify-center mt-4'>
+                <div className="flex justify-center mt-4">
                   <Button
                     loading={isLoading}
                     label={getButtonLabel(isLoading)}

@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from "redux-saga/effects";
 import {
   USER_AUTHENTICATE,
   USER_AUTHENTICATED,
@@ -7,15 +7,15 @@ import {
   USER_SIGNED_UP_SUCCESS,
   USER_SIGN_UP,
   USER_UNAUTHORIZED,
-} from './actionTypes';
-import api from '../../services/api';
+} from "./actionTypes";
+import api from "../../services/api";
 import {
   AuthenticateAction,
   AuthenticationResponse,
   GetUserInfoAction,
   SignUpAction,
   UserResponse,
-} from './types';
+} from "./types";
 
 export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
@@ -23,11 +23,11 @@ function* authenticate(action: AuthenticateAction) {
   const { value, successCallback, errorCallback } = action.payload;
   try {
     const response: AuthenticationResponse = yield call(() =>
-      api.post('api/accounts/login', value)
+      api.post("api/accounts/login", value),
     );
 
-    localStorage.removeItem('token');
-    localStorage.setItem('token', response.data.token);
+    localStorage.removeItem("token");
+    localStorage.setItem("token", response.data.token);
 
     yield put({ type: USER_AUTHENTICATED });
 
@@ -38,7 +38,7 @@ function* authenticate(action: AuthenticateAction) {
       },
     });
 
-    successCallback?.(response.data.token)
+    successCallback?.(response.data.token);
   } catch (err) {
     errorCallback?.();
     yield put({ type: USER_UNAUTHORIZED });
@@ -49,14 +49,14 @@ function* getUserInfo(action: GetUserInfoAction) {
   const { successCallback } = action.payload;
 
   try {
-    const userResponse: UserResponse = yield call(() => api.get('api/users'));
+    const userResponse: UserResponse = yield call(() => api.get("api/users"));
 
     if (userResponse.data.user) {
       yield call(() => {
-        localStorage.removeItem('userInfo');
+        localStorage.removeItem("userInfo");
         localStorage.setItem(
-          'userInfo',
-          JSON.stringify(userResponse.data.user)
+          "userInfo",
+          JSON.stringify(userResponse.data.user),
         );
       });
       successCallback?.(userResponse.data.user.role);
@@ -69,7 +69,7 @@ function* getUserInfo(action: GetUserInfoAction) {
 function* signUp(action: SignUpAction) {
   const { value, successCallback, errorCallback } = action.payload;
   try {
-    yield call(() => api.post('api/accounts/register', value));
+    yield call(() => api.post("api/accounts/register", value));
     yield put({ type: USER_SIGNED_UP_SUCCESS });
     successCallback?.();
   } catch (err) {

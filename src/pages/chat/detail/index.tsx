@@ -1,22 +1,22 @@
-import { useParams } from 'react-router-dom';
-import { useAudioRecorder } from 'react-audio-voice-recorder';
+import { useParams } from "react-router-dom";
+import { useAudioRecorder } from "react-audio-voice-recorder";
 
-import MessageBox from '../../../components/message-box/message-box';
-import { useCallback, useEffect, useMemo } from 'react';
-import { EMessageRole } from '../../../store/dialog/types';
-import ScenarioInformation from './components/scenario-information';
-import { makeS3Uri } from './utils';
-import useDialogDetail from 'src/hooks/useDialogDetail';
-import VoiceInput from './components/voice-input';
-import useResponsive from 'src/hooks/useResponsive';
-import useAmazonS3 from 'src/hooks/useAmazonS3';
-import useMessage from 'src/hooks/useMessage';
-import useSpeechToText from 'src/hooks/useSpeechToText';
-import useTextToSpeech from 'src/hooks/useTextToSpeech';
-import { Gender } from 'src/store/scenario/types';
-import StatusGroup from './components/status-group';
-import { UserRole } from 'src/store/user/types';
-import useAllowedRoles from 'src/hooks/useUserRole';
+import MessageBox from "../../../components/message-box/message-box";
+import { useCallback, useEffect, useMemo } from "react";
+import { EMessageRole } from "../../../store/dialog/types";
+import ScenarioInformation from "./components/scenario-information";
+import { makeS3Uri } from "./utils";
+import useDialogDetail from "src/hooks/useDialogDetail";
+import VoiceInput from "./components/voice-input";
+import useResponsive from "src/hooks/useResponsive";
+import useAmazonS3 from "src/hooks/useAmazonS3";
+import useMessage from "src/hooks/useMessage";
+import useSpeechToText from "src/hooks/useSpeechToText";
+import useTextToSpeech from "src/hooks/useTextToSpeech";
+import { Gender } from "src/store/scenario/types";
+import StatusGroup from "./components/status-group";
+import { UserRole } from "src/store/user/types";
+import useAllowedRoles from "src/hooks/useUserRole";
 
 const ChatDetail = () => {
   const params = useParams();
@@ -60,7 +60,7 @@ const ChatDetail = () => {
         console.error(e);
       }
     },
-    [createMessage, dialogId, refetch]
+    [createMessage, dialogId, refetch],
   );
 
   const onClickSend = useCallback(async () => {
@@ -87,16 +87,16 @@ const ChatDetail = () => {
   }, [fetchDialogDetail]);
 
   return (
-    <div className='flex flex-row min-h-screen'>
-      <div className='grow bg-slate-500 w-full'>
+    <div className="flex flex-row min-h-screen">
+      <div className="grow bg-slate-500 w-full">
         <MessageBox
           shouldShowFeedback={!!dialogDetail?.isSubmitted}
           isMale={scenario?.gender === Gender.MALE}
           messages={displayedMessages}
           shouldShowGuideline={!listening && !transcript}
         />
-        <div className='flex justify-center items-end	mt-8'>
-          <div className='sticky md:relative w-full px-8'>
+        <div className="flex justify-center items-end	mt-8">
+          <div className="sticky md:relative w-full px-8">
             <StatusGroup dialogDetail={dialogDetail} />
 
             {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (

@@ -1,13 +1,13 @@
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import NewChatItem from './new-chat-item';
-import useDialogList from '../../../hooks/useDialogList';
-import { getUserInfo } from '../../../utils';
-import { useEffect } from 'react';
-import LogoSection from './logo-section';
-import LogOut from './log-out';
-import ListDialog from './list-dialog';
-import { UserRole } from 'src/store/user/types';
-import useAllowedRoles from 'src/hooks/useUserRole';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import NewChatItem from "./new-chat-item";
+import useDialogList from "../../../hooks/useDialogList";
+import { getUserInfo } from "../../../utils";
+import { useEffect } from "react";
+import LogoSection from "./logo-section";
+import LogOut from "./log-out";
+import ListDialog from "./list-dialog";
+import { UserRole } from "src/store/user/types";
+import useAllowedRoles from "src/hooks/useUserRole";
 
 interface Props {
   className?: string;
@@ -18,7 +18,7 @@ const MenuItem = ({ className, closeSidebar }: Props) => {
   const userInfo = getUserInfo();
 
   const { dialogData, fetchDialogList } = useDialogList({
-    userId: userInfo?._id || '',
+    userId: userInfo?._id || "",
   });
 
   const { isStudent } = useAllowedRoles([
@@ -32,13 +32,13 @@ const MenuItem = ({ className, closeSidebar }: Props) => {
 
   return (
     <aside
-      id='logo-sidebar'
+      id="logo-sidebar"
       className={`fixed text-white top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 ${
-        className ?? ''
+        className ?? ""
       }`}
-      aria-label='Sidebar'
+      aria-label="Sidebar"
     >
-      <div className='h-full flex flex-col px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
+      <div className="h-full flex flex-col px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
         <LogoSection closeSidebar={closeSidebar} />
         {isStudent && (
           <>

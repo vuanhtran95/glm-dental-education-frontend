@@ -1,8 +1,8 @@
-import 'regenerator-runtime/runtime';
+import "regenerator-runtime/runtime";
 import SpeechRecognition, {
   SpeechRecognitionOptions,
   useSpeechRecognition,
-} from 'react-speech-recognition';
+} from "react-speech-recognition";
 
 const useSpeechToText = (options?: SpeechRecognitionOptions) => {
   const {

@@ -1,4 +1,4 @@
-import Button from '../button';
+import Button from "../button";
 
 interface Props {
   onSubmit: () => void;
@@ -8,10 +8,10 @@ interface Props {
 
 const FeedbackInput = ({ onSubmit, feedback, setFeedback }: Props) => {
   return (
-    <div className='flex gap-3 flex-row-reverse'>
-      <Button onClick={onSubmit} label={'Submit'} />
+    <div className="flex gap-3 flex-row-reverse">
+      <Button onClick={onSubmit} label={"Submit"} />
       <textarea
-        className='text-white bg-slate-800 w-[375px] text-sm rounded-md p-2'
+        className="text-white bg-slate-800 w-[375px] text-sm rounded-md p-2"
         value={feedback}
         onChange={(e) => setFeedback(e.target.value)}
       />

@@ -1,9 +1,9 @@
-import { useCallback, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { selectDialogListState } from '../store/dialog/selectors';
-import { fetchDialogListAction } from '../store/dialog/actions';
-import { DialogDetail } from '../store/dialog/types';
+import { useCallback, useMemo } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { selectDialogListState } from "../store/dialog/selectors";
+import { fetchDialogListAction } from "../store/dialog/actions";
+import { DialogDetail } from "../store/dialog/types";
 
 interface Props {
   userId?: string;

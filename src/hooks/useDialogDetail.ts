@@ -1,14 +1,14 @@
-import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import {
   endDialogAction,
   fetchDialogDetailAction,
   submitDialogAction,
-} from '../store/dialog/actions';
-import { DialogDetailWithMessage } from '../store/dialog/types';
-import { useSelector } from 'react-redux';
-import { selectDialogDetailState } from '../store/dialog/selectors';
-import { SuccessCallback } from 'src/types';
+} from "../store/dialog/actions";
+import { DialogDetailWithMessage } from "../store/dialog/types";
+import { useSelector } from "react-redux";
+import { selectDialogDetailState } from "../store/dialog/selectors";
+import { SuccessCallback } from "src/types";
 
 interface Props {
   dialogId?: string;
@@ -18,7 +18,7 @@ const useDialogDetail = ({ dialogId }: Props) => {
   const dispatch = useDispatch();
 
   const dialogDetail: DialogDetailWithMessage | null = useSelector(
-    selectDialogDetailState
+    selectDialogDetailState,
   );
 
   const fetchDialogDetail = useCallback(
@@ -26,7 +26,7 @@ const useDialogDetail = ({ dialogId }: Props) => {
       if (!dialogId) return;
       dispatch(fetchDialogDetailAction(dialogId, successCallback));
     },
-    [dispatch, dialogId]
+    [dispatch, dialogId],
   );
 
   const endDialog = useCallback(
@@ -34,7 +34,7 @@ const useDialogDetail = ({ dialogId }: Props) => {
       if (!dialogId) return;
       dispatch(endDialogAction(dialogId, successCallback));
     },
-    [dialogId, dispatch]
+    [dialogId, dispatch],
   );
 
   const submitDialog = useCallback(
@@ -42,7 +42,7 @@ const useDialogDetail = ({ dialogId }: Props) => {
       if (!dialogId) return;
       dispatch(submitDialogAction(dialogId, successCallback));
     },
-    [dialogId, dispatch]
+    [dialogId, dispatch],
   );
 
   return {

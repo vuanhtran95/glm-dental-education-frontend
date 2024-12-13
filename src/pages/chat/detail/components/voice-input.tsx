@@ -1,10 +1,10 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from "react";
 import {
   recordButtonCss,
   removeButtonCss,
   sendButtonCss,
   transcriptInputCss,
-} from '../constants';
+} from "../constants";
 
 interface Props {
   transcript: string;
@@ -49,7 +49,7 @@ const VoiceInput = ({
 
   const shouldShowRecordButton = useMemo(
     () => !transcript || listening,
-    [listening, transcript]
+    [listening, transcript],
   );
 
   return (
@@ -58,21 +58,21 @@ const VoiceInput = ({
       {shouldShowRecordButton && (
         <button
           onClick={() => onClickRecordButton()}
-          type='submit'
+          type="submit"
           className={recordButtonCss(listening)}
         >
-          {listening ? 'Stop' : 'Record'}
-          <i className='fa-solid fa-microphone'></i>
+          {listening ? "Stop" : "Record"}
+          <i className="fa-solid fa-microphone"></i>
         </button>
       )}
 
       {!shouldShowRecordButton && (
         <>
           <button onClick={() => onRemove()} className={removeButtonCss}>
-            <i className='fa-solid fa-xmark'></i>
+            <i className="fa-solid fa-xmark"></i>
           </button>
           <button onClick={() => onSend()} className={sendButtonCss}>
-            <i className='fa-solid fa-paper-plane'></i>
+            <i className="fa-solid fa-paper-plane"></i>
           </button>
         </>
       )}

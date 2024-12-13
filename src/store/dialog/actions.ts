@@ -1,4 +1,4 @@
-import { action } from 'typesafe-actions';
+import { action } from "typesafe-actions";
 import {
   DIALOG_CREATE,
   DIALOG_DETAIL_FETCH,
@@ -7,14 +7,14 @@ import {
   DIALOG_SUBMIT,
   MESSAGE_CREATE,
   MESSAGE_FEEDBACK,
-} from './actionTypes';
-import { SuccessCallback, ErrorCallback } from '../../types';
-import { MessagePayload } from './types';
+} from "./actionTypes";
+import { SuccessCallback, ErrorCallback } from "../../types";
+import { MessagePayload } from "./types";
 
 export const fetchDialogListAction = (
   userId?: string,
   successCallback?: SuccessCallback,
-  errorCallback?: ErrorCallback
+  errorCallback?: ErrorCallback,
 ) =>
   action(DIALOG_LIST_FETCH, {
     userId,
@@ -25,7 +25,7 @@ export const fetchDialogListAction = (
 export const fetchDialogDetailAction = (
   dialogId: string,
   successCallback?: (text: string) => void,
-  errorCallback?: ErrorCallback
+  errorCallback?: ErrorCallback,
 ) =>
   action(DIALOG_DETAIL_FETCH, {
     dialogId,
@@ -37,7 +37,7 @@ export const createDialogAction = (
   createdUserId: string,
   scenarioId: string,
   successCallback?: (id: string) => void,
-  errorCallback?: ErrorCallback
+  errorCallback?: ErrorCallback,
 ) =>
   action(DIALOG_CREATE, {
     createdUserId,
@@ -50,7 +50,7 @@ export const createMessageAction = (
   message: MessagePayload,
   dialogId: string,
   successCallback?: SuccessCallback,
-  errorCallback?: ErrorCallback
+  errorCallback?: ErrorCallback,
 ) =>
   action(MESSAGE_CREATE, {
     message,
@@ -63,7 +63,7 @@ export const feedbackMessageAction = (
   feedback: string,
   messageId: string,
   successCallback?: SuccessCallback,
-  errorCallback?: ErrorCallback
+  errorCallback?: ErrorCallback,
 ) =>
   action(MESSAGE_FEEDBACK, {
     feedback,
@@ -74,7 +74,7 @@ export const feedbackMessageAction = (
 
 export const endDialogAction = (
   dialogId: string,
-  successCallback?: SuccessCallback
+  successCallback?: SuccessCallback,
 ) =>
   action(DIALOG_END, {
     dialogId,
@@ -83,7 +83,7 @@ export const endDialogAction = (
 
 export const submitDialogAction = (
   dialogId: string,
-  successCallback?: SuccessCallback
+  successCallback?: SuccessCallback,
 ) =>
   action(DIALOG_SUBMIT, {
     dialogId,

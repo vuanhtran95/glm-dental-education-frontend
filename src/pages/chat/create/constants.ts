@@ -1,8 +1,8 @@
-import { Gender } from 'src/store/scenario/types';
-import { ScenarioGenerateForm } from './types';
+import { Gender } from "src/store/scenario/types";
+import { ScenarioGenerateForm } from "./types";
 
 export const generateScenarioInitialValues: ScenarioGenerateForm = {
-  patientName: '',
+  patientName: "",
   gender: Gender.MALE,
 };
 

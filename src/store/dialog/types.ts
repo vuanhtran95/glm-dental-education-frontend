@@ -1,6 +1,6 @@
-import { SuccessCallback, ErrorCallback } from '../../types';
-import { ScenarioDetail } from '../scenario/types';
-import { UserInfo } from '../user/types';
+import { SuccessCallback, ErrorCallback } from "../../types";
+import { ScenarioDetail } from "../scenario/types";
+import { UserInfo } from "../user/types";
 import {
   DIALOG_CREATE,
   DIALOG_END,
@@ -8,7 +8,7 @@ import {
   DIALOG_SUBMIT,
   MESSAGE_CREATE,
   MESSAGE_FEEDBACK,
-} from './actionTypes';
+} from "./actionTypes";
 
 export interface DialogListFetchAction {
   type: typeof DIALOG_LIST_FETCH;
@@ -107,9 +107,9 @@ export interface DialogDetailWithMessage {
 }
 
 export enum EMessageRole {
-  SYSTEM = 'system',
-  USER = 'user',
-  ASSISTANT = 'assistant',
+  SYSTEM = "system",
+  USER = "user",
+  ASSISTANT = "assistant",
 }
 
 export interface MessageDetail {
@@ -122,7 +122,7 @@ export interface MessageDetail {
   feedback?: string;
 }
 
-export type MessagePayload = Pick<MessageDetail, 'content' | 'uri'>;
+export type MessagePayload = Pick<MessageDetail, "content" | "uri">;
 
 export interface DialogState {
   dialogs: DialogDetail[];
@@ -133,27 +133,27 @@ export interface DialogState {
 
 export type DialogAction =
   | {
-      type: 'DIALOG_LIST_FETCHED_SUCCESS';
+      type: "DIALOG_LIST_FETCHED_SUCCESS";
       data: DialogDetail[];
     }
   | {
-      type: 'DIALOG_DETAIL_FETCHED_SUCCESS';
+      type: "DIALOG_DETAIL_FETCHED_SUCCESS";
       data: DialogDetailWithMessage;
     }
   | {
-      type: 'DIALOG_LIST_FETCHED_FAILED';
+      type: "DIALOG_LIST_FETCHED_FAILED";
     }
   | {
-      type: 'DIALOG_DETAIL_FETCHED_FAILED';
+      type: "DIALOG_DETAIL_FETCHED_FAILED";
     }
   | {
-      type: 'DIALOG_LIST_FETCH';
+      type: "DIALOG_LIST_FETCH";
     }
   | {
-      type: 'DIALOG_DETAIL_FETCH';
+      type: "DIALOG_DETAIL_FETCH";
     }
   | {
-      type: 'DIALOG_DETAIL_FETCHED_SUCCESS_SENT_MESSAGE';
+      type: "DIALOG_DETAIL_FETCHED_SUCCESS_SENT_MESSAGE";
     };
 
 export interface DialogListResponse {

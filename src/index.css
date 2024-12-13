@@ -65,8 +65,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -80,7 +78,12 @@ button:focus-visible {
   }
 }
 
-label, a, span, input[type="text"], textarea, div {
+label,
+a,
+span,
+input[type="text"],
+textarea,
+div {
   font-family: "Domine", serif !important;
 }
 
@@ -89,7 +92,10 @@ label, a, span, input[type="text"], textarea, div {
   border-color: #15803d !important;
 }
 
-input:focus, select:hover, textarea:focus, .ant-select-selector {
+input:focus,
+select:hover,
+textarea:focus,
+.ant-select-selector {
   border-color: #15803d !important;
 }
 
@@ -105,11 +111,19 @@ input:focus, select:hover, textarea:focus, .ant-select-selector {
 
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

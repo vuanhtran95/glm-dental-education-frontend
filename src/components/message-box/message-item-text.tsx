@@ -1,13 +1,13 @@
-import { EMessageRole, MessageDetail } from '../../store/dialog/types';
-import dayjs from 'dayjs';
+import { EMessageRole, MessageDetail } from "../../store/dialog/types";
+import dayjs from "dayjs";
 
-import { useCallback, useMemo, useState } from 'react';
-import useTextToSpeech from '../../hooks/useTextToSpeech';
-import { avatarImg, displayedRole } from './utils';
-import FeedbackInput from './feedback-input';
-import useMessage from 'src/hooks/useMessage';
-import { getUserInfo } from 'src/utils';
-import { UserRole } from 'src/store/user/types';
+import { useCallback, useMemo, useState } from "react";
+import useTextToSpeech from "../../hooks/useTextToSpeech";
+import { avatarImg, displayedRole } from "./utils";
+import FeedbackInput from "./feedback-input";
+import useMessage from "src/hooks/useMessage";
+import { getUserInfo } from "src/utils";
+import { UserRole } from "src/store/user/types";
 
 interface Props {
   message: MessageDetail;
@@ -28,12 +28,12 @@ const MessageItemText = ({
   const userInfo = getUserInfo();
 
   const [showFeedbackInput, setShowFeedbackInput] = useState<boolean>(false);
-  const [feedback, setFeedback] = useState<string>(message.feedback || '');
+  const [feedback, setFeedback] = useState<string>(message.feedback || "");
 
   const audio = useMemo(() => {
     const newAudio = new Audio(message.uri);
-    newAudio.preload = 'none';
-    newAudio.setAttribute('type', 'audio/mpeg');
+    newAudio.preload = "none";
+    newAudio.setAttribute("type", "audio/mpeg");
     return newAudio;
   }, [message.uri]);
 
@@ -45,7 +45,7 @@ const MessageItemText = ({
     audio.play();
   }, [audio]);
 
-  const date = dayjs(createdAt).format('HH:mm');
+  const date = dayjs(createdAt).format("HH:mm");
 
   const isUserRole = role === EMessageRole.USER;
 
@@ -64,22 +64,22 @@ const MessageItemText = ({
     <div>
       <div
         className={`flex items-center gap-2.5 my-4 px-2 md:px-8 ${
-          isUserRole && 'flex-row-reverse'
+          isUserRole && "flex-row-reverse"
         }`}
       >
         <img
-          className='w-8 h-8 rounded-full cursor-pointer'
+          className="w-8 h-8 rounded-full cursor-pointer"
           src={avatarImg(role)}
         />
-        <div className='flex flex-col leading-1.5 px-4 py-2 border-gray-200 rounded-lg dark:bg-gray-700 max-w-[80%]'>
-          <div className='flex items-center space-x-2 rtl:space-x-reverse'>
-            <span className='text-sm font-semibold text-gray-900 dark:text-white'>
+        <div className="flex flex-col leading-1.5 px-4 py-2 border-gray-200 rounded-lg dark:bg-gray-700 max-w-[80%]">
+          <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            <span className="text-sm font-semibold text-gray-900 dark:text-white">
               {displayedRole(role)}
             </span>
-            <span className='text-sm font-normal text-gray-500 dark:text-gray-400'>
+            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
               {date}
               <i
-                className='fa-regular fa-circle-play ml-2 cursor-pointer'
+                className="fa-regular fa-circle-play ml-2 cursor-pointer"
                 onClick={() => {
                   if (isUserRole) onPlay();
                   else {
@@ -92,7 +92,7 @@ const MessageItemText = ({
           <p
             onClick={onClickFeedback}
             id={id}
-            className='text-sm font-normal py-2.5 text-gray-900 dark:text-white cursor-pointer'
+            className="text-sm font-normal py-2.5 text-gray-900 dark:text-white cursor-pointer"
           >
             {content}
           </p>
@@ -101,11 +101,11 @@ const MessageItemText = ({
             shouldShowFeedback &&
             (!!feedback || !!message.feedback) && (
               <p
-                className='text-sm text-green-500 cursor-pointer'
+                className="text-sm text-green-500 cursor-pointer"
                 onClick={onClickFeedback}
               >
                 <b>Feedback: </b>
-                <span className='italic'>{feedback || message.feedback}</span>
+                <span className="italic">{feedback || message.feedback}</span>
               </p>
             )}
         </div>

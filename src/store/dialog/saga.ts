@@ -1,5 +1,5 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import api from '../../services/api';
+import { call, put, takeLatest } from "redux-saga/effects";
+import api from "../../services/api";
 import {
   DIALOG_CREATE,
   DIALOG_DETAIL_FETCH,
@@ -14,7 +14,7 @@ import {
   MESSAGE_CREATE_FAILED,
   MESSAGE_CREATE_SUCCESS,
   MESSAGE_FEEDBACK,
-} from './actionTypes';
+} from "./actionTypes";
 import {
   DialogCreateAction,
   DialogDetailFetchAction,
@@ -25,13 +25,13 @@ import {
   DialogListResponse,
   MessageCreateAction,
   MessageFeedbackAction,
-} from './types';
+} from "./types";
 
 function* getDialogList(action: DialogListFetchAction) {
   const { userId } = action.payload;
   try {
     const response: DialogListResponse = yield call(() =>
-      api.get(`api/dialogs/${userId ? `?userId=${userId}` : ''}`)
+      api.get(`api/dialogs/${userId ? `?userId=${userId}` : ""}`),
     );
     yield put({
       type: DIALOG_LIST_FETCHED_SUCCESS,
@@ -46,7 +46,7 @@ function* getDialogDetail(action: DialogDetailFetchAction) {
   const { dialogId, successCallback, errorCallback } = action.payload;
   try {
     const response: DialogDetailWithMessageResponse = yield call(() =>
-      api.get(`api/dialogs/${dialogId}`)
+      api.get(`api/dialogs/${dialogId}`),
     );
 
     const { data } = response;
@@ -57,7 +57,7 @@ function* getDialogDetail(action: DialogDetailFetchAction) {
     });
 
     successCallback?.(
-      data.detail.messages[data.detail.messages.length - 1].content
+      data.detail.messages[data.detail.messages.length - 1].content,
     );
   } catch (err) {
     yield put({ type: DIALOG_DETAIL_FETCHED_FAILED });
@@ -73,11 +73,11 @@ function* createDialog(action: DialogCreateAction) {
       api.post(`api/dialogs`, {
         createdUserId,
         scenarioId,
-      })
+      }),
     );
 
-    console.log(response, 'response');
-    
+    console.log(response, "response");
+
     successCallback?.(response.data._id);
   } catch (err) {
     errorCallback?.();
@@ -115,8 +115,8 @@ function* createMessage(action: MessageCreateAction) {
           message,
           dialogId,
         },
-        { timeout: 15000 }
-      )
+        { timeout: 15000 },
+      ),
     );
     yield put({
       type: MESSAGE_CREATE_SUCCESS,
@@ -141,8 +141,8 @@ function* feedbackMessage(action: MessageFeedbackAction) {
         {
           feedback,
         },
-        { timeout: 15000 }
-      )
+        { timeout: 15000 },
+      ),
     );
 
     successCallback?.();

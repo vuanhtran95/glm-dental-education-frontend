@@ -1,6 +1,6 @@
-import ButtonLoadingIcon from './loading-icon';
+import ButtonLoadingIcon from "./loading-icon";
 
-export type ButtonType = 'submit' | 'reset' | 'button' | undefined;
+export type ButtonType = "submit" | "reset" | "button" | undefined;
 
 interface Props {
   label: string;
@@ -19,20 +19,20 @@ const Button = ({
   children,
   disabled,
   className,
-  type = 'button',
+  type = "button",
 }: Props) => {
   return (
     <button
       type={type}
-      className={`bg-primary h-10 ${disabled && 'bg-slate-600'} ${className}`}
+      className={`bg-primary h-10 ${disabled && "bg-slate-600"} ${className}`}
       disabled={!!loading || disabled}
       onClick={() => {
         onClick?.();
       }}
     >
-      <div className='flex'>
+      <div className="flex">
         {!!loading && <ButtonLoadingIcon />}
-        <span className='text-white text-sm'>{label}</span>
+        <span className="text-white text-sm">{label}</span>
       </div>
       {children}
     </button>

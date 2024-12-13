@@ -1,6 +1,6 @@
-import { PutObjectCommand } from '@aws-sdk/client-s3';
-import s3Client from './s3-client';
-import { v4 as uuidv4 } from 'uuid';
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import s3Client from "./s3-client";
+import { v4 as uuidv4 } from "uuid";
 
 const bucketName = import.meta.env.VITE_S3_BUCKET_NAME;
 
@@ -20,7 +20,7 @@ const useAmazonS3 = () => {
 
       return key;
     } catch (err) {
-      console.error('Error uploading blob:', err);
+      console.error("Error uploading blob:", err);
       throw err;
     }
   };

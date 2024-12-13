@@ -1,5 +1,5 @@
-import { SCENARIO_GENERATE, SCENARIO_GENERATE_SUCCESS } from './actionTypes';
-import { ScenarioAction, ScenarioState } from './types';
+import { SCENARIO_GENERATE, SCENARIO_GENERATE_SUCCESS } from "./actionTypes";
+import { ScenarioAction, ScenarioState } from "./types";
 
 const initialState: ScenarioState = {
   scenarioDetail: null,
@@ -7,7 +7,7 @@ const initialState: ScenarioState = {
 
 function scenarioReducer(
   state = initialState,
-  action: ScenarioAction
+  action: ScenarioAction,
 ): ScenarioState {
   switch (action.type) {
     case SCENARIO_GENERATE:

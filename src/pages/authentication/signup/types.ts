@@ -1,4 +1,4 @@
-import { UserRole } from 'src/store/user/types';
+import { UserRole } from "src/store/user/types";
 
 export interface SignUpPayload {
   username: string;

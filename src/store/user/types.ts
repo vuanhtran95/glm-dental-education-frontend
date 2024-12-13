@@ -1,9 +1,9 @@
-import { DataPayload, SuccessCallback } from '../../types';
+import { DataPayload, SuccessCallback } from "../../types";
 import {
   USER_AUTHENTICATE,
   USER_INFO_FETCH,
   USER_SIGN_UP,
-} from './actionTypes';
+} from "./actionTypes";
 
 export interface AuthenticatePayload extends DataPayload {
   value: {
@@ -37,8 +37,8 @@ export interface GetUserInfoAction {
 }
 
 export enum UserRole {
-  STUDENT = 'student',
-  SUPERVISOR = 'supervisor',
+  STUDENT = "student",
+  SUPERVISOR = "supervisor",
 }
 export interface UserInfo {
   _id: string;

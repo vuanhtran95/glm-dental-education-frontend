@@ -6,8 +6,8 @@ import {
   DIALOG_LIST_FETCH,
   DIALOG_LIST_FETCHED_FAILED,
   DIALOG_LIST_FETCHED_SUCCESS,
-} from './actionTypes';
-import { DialogAction, DialogState } from './types';
+} from "./actionTypes";
+import { DialogAction, DialogState } from "./types";
 
 const initialState: DialogState = {
   loading: false,
@@ -18,7 +18,7 @@ const initialState: DialogState = {
 
 function dialogReducer(
   state = initialState,
-  action: DialogAction
+  action: DialogAction,
 ): DialogState {
   switch (action.type) {
     case DIALOG_LIST_FETCH:
