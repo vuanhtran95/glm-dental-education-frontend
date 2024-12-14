@@ -2,20 +2,17 @@ import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import MessageItemText from "./message-item-text";
 import { useCallback, useEffect, useRef } from "react";
 import { MessageDetail } from "src/store/dialog/types";
-import GuideLine from "./guideline";
 
 interface Props {
   messages: MessageDetail[] | [];
   isMale: boolean;
   shouldShowFeedback: boolean;
-  shouldShowGuideline?: boolean;
 }
 
 const MessageBox = ({
   messages,
   isMale,
   shouldShowFeedback = false,
-  shouldShowGuideline,
 }: Props) => {
   const virtuoso = useRef<VirtuosoHandle>(null);
 
@@ -55,7 +52,7 @@ const MessageBox = ({
           }}
         />
       ) : (
-        <>{shouldShowGuideline && <GuideLine />}</>
+        <></>
       )}
     </div>
   );

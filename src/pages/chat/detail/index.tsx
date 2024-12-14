@@ -93,7 +93,6 @@ const ChatDetail = () => {
           shouldShowFeedback={!!dialogDetail?.isSubmitted}
           isMale={scenario?.gender === Gender.MALE}
           messages={displayedMessages}
-          shouldShowGuideline={!listening && !transcript}
         />
         <div className="flex justify-center items-end	mt-8">
           <div className="sticky md:relative w-full px-8">
