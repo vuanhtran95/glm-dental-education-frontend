@@ -54,14 +54,16 @@ const VoiceInput = ({
 
   return (
     <>
-      <input className={transcriptInputCss} value={transcript} disabled />
+      <div className="relative">
+        <textarea className={transcriptInputCss} value={transcript} disabled />
+      </div>
       {shouldShowRecordButton && (
         <button
           onClick={() => onClickRecordButton()}
           type="submit"
           className={recordButtonCss(listening)}
         >
-          {listening ? "Stop" : "Record"}
+          {/* {listening ? "Stop" : "Record"} */}
           <i className="fa-solid fa-microphone"></i>
         </button>
       )}

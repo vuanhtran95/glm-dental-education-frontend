@@ -94,7 +94,7 @@ const ChatDetail = () => {
           isMale={scenario?.gender === Gender.MALE}
           messages={displayedMessages}
         />
-        <div className="flex justify-center items-end	mt-8">
+        <div className="flex justify-center items-end	mt-4">
           <div className="sticky md:relative w-full px-8">
             <StatusGroup dialogDetail={dialogDetail} />
 

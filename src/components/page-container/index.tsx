@@ -18,7 +18,7 @@ const PageContainer = () => {
       />
       <main className="md:min-h-screen">
         <Header openSidebar={handleToggleSidebar} />
-        <div className="sm:ml-64 md:min-h-screen bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-900">
+        <div className="md:pt-0 sm:ml-64 md:min-h-screen bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-900">
           <Outlet />
         </div>
       </main>

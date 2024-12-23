@@ -31,7 +31,7 @@ const MessageBox = ({
   }, [messages.length, onScrollBottom]);
 
   return (
-    <div className="h-[87vh]">
+    <div className="h-[90vh] pt-[50px] md:pt-2">
       {messages.length > 0 ? (
         <Virtuoso
           ref={virtuoso}

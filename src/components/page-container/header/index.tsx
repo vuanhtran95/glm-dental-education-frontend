@@ -10,7 +10,7 @@ const Header = ({ openSidebar }: Props) => {
   if (!isMobile) return null;
 
   return (
-    <header>
+    <header className="fixed w-full z-50">
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-700 h-14">
         <div className="flex flex-wrap justify-end items-center mx-auto">
           <button

@@ -66,7 +66,7 @@ const CreateChat = () => {
 
   return (
     <section className="">
-      <div className="py-8 px-2 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
+      <div className="py-8 pt-[80px] px-2 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
         <WelcomeSection />
         <div className="w-full max-w-md mx-auto">
           <Formik
