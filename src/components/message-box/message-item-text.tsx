@@ -71,12 +71,12 @@ const MessageItemText = ({
           className="w-8 h-8 rounded-full cursor-pointer"
           src={avatarImg(role)}
         />
-        <div className="flex flex-col leading-1.5 px-4 py-2 border-gray-200 rounded-lg dark:bg-gray-700 max-w-[80%]">
+        <div className="flex flex-col leading-1.5 px-4 py-2 border-gray-200 rounded-lg bg-gray-700 max-w-[80%]">
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <span className="text-sm font-semibold text-gray-900 dark:text-white">
+            <span className="text-sm font-semibold text-gray-900 text-white">
               {displayedRole(role)}
             </span>
-            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+            <span className="text-sm font-normal text-gray-500 text-gray-400">
               {date}
               <i
                 className="fa-regular fa-circle-play ml-2 cursor-pointer"
@@ -92,7 +92,7 @@ const MessageItemText = ({
           <p
             onClick={onClickFeedback}
             id={id}
-            className="text-sm font-normal py-2.5 text-gray-900 dark:text-white cursor-pointer"
+            className="text-sm font-normal py-2.5 text-gray-900 text-white cursor-pointer"
           >
             {content}
           </p>

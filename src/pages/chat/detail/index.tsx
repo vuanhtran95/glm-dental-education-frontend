@@ -87,15 +87,14 @@ const ChatDetail = () => {
   }, [fetchDialogDetail]);
 
   return (
-    <div className="flex flex-row min-h-screen">
-      <div className="grow bg-slate-500 w-full">
+    <div className="">
         <MessageBox
           shouldShowFeedback={!!dialogDetail?.isSubmitted}
           isMale={scenario?.gender === Gender.MALE}
           messages={displayedMessages}
         />
-        <div className="flex justify-center items-end	mt-4">
-          <div className="sticky md:relative w-full px-8">
+        <div className="justify-center items-end">
+          <div className="fixed md:relative w-full px-8">
             <StatusGroup dialogDetail={dialogDetail} />
 
             {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (
@@ -113,7 +112,6 @@ const ChatDetail = () => {
             )}
           </div>
         </div>
-      </div>
       {!isMobile && (
         <ScenarioInformation
           dialogDetail={dialogDetail}

@@ -13,7 +13,7 @@ const ListDialog = ({ dialogs }: Props) => {
   const activeDialogId = useMemo(() => params.id, [params.id]);
 
   return (
-    <div className="h-[70vh] overflow-y-auto">
+    <div className="h-[50vh] overflow-y-auto">
       <ul className="space-y-2 font-medium">
         {dialogs.map((dialog) => {
           return (
@@ -27,8 +27,8 @@ const ListDialog = ({ dialogs }: Props) => {
                 href="#"
                 className={`${
                   activeDialogId === dialog.id && "bg-gray-700"
-                } flex items-center p-1 text-gray-900 rounded-lg dark:text-white 
-                hover:bg-gray-100 dark:hover:bg-gray-700 group justify-between`}
+                } flex items-center p-1 text-gray-900 rounded-lg text-white 
+                hover:bg-gray-100 hover:bg-gray-700 group justify-between`}
               >
                 <i className="fa-regular fa-message"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap text-sm">

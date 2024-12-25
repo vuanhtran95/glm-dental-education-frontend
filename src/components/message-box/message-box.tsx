@@ -31,8 +31,8 @@ const MessageBox = ({
   }, [messages.length, onScrollBottom]);
 
   return (
-    <div className="h-[90vh] pt-[50px] md:pt-2">
-      {messages.length > 0 ? (
+    <div className="pt-[50px] md:pt-2" style={{ height: "calc(100vh - 136px)" }}>
+      <div className="h-full">{messages.length > 0 ? (
         <Virtuoso
           ref={virtuoso}
           data={messages || []}
@@ -53,7 +53,7 @@ const MessageBox = ({
         />
       ) : (
         <></>
-      )}
+      )}</div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ const WelcomeSection = () => {
     <>
       <a
         href="#"
-        className="inline-flex justify-between items-center py-1 px-1 pe-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800"
+        className="inline-flex justify-between items-center p-2 pe-4 mb-4 text-sm text-blue-200 bg-blue-100 rounded-full bg-blue-900 text-blue-300 hover:bg-blue-200 hover:bg-blue-800"
       >
         <span className="text-xs bg-blue-600 rounded-full text-white px-4 py-1.5 me-3">
           New
@@ -27,10 +27,10 @@ const WelcomeSection = () => {
           />
         </svg>
       </a>
-      <h1 className="m-6 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+      <h1 className="m-6 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl text-white">
         Welcome!
       </h1>
-      <p className="mb-4 text-sm font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-200">
+      <p className="mb-4 text-sm font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 text-gray-200">
         Please enter patient name and generate the patient information to start
         a new conversation
       </p>

@@ -22,8 +22,8 @@ const Select = ({ options, label, id, className }: Props) => {
           as="select"
           id={id}
           name={id}
-          className="appearance-none block w-full p-4 h-[52px] ps-10 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 dark:bg-gray-800
-           dark:text-white"
+          className="appearance-none block w-full p-4 h-[52px] ps-10 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 bg-gray-800
+           text-white"
         >
           {options.map((option: Option) => {
             return (

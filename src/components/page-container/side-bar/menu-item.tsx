@@ -11,10 +11,9 @@ import useAllowedRoles from "src/hooks/useUserRole";
 
 interface Props {
   className?: string;
-  closeSidebar: () => void;
 }
 
-const MenuItem = ({ className, closeSidebar }: Props) => {
+const MenuItem = ({ className }: Props) => {
   const userInfo = getUserInfo();
 
   const { dialogData, fetchDialogList } = useDialogList({
@@ -38,8 +37,8 @@ const MenuItem = ({ className, closeSidebar }: Props) => {
       }`}
       aria-label="Sidebar"
     >
-      <div className="h-full flex flex-col px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-        <LogoSection closeSidebar={closeSidebar} />
+      <div className="h-full flex flex-col px-3 py-4 overflow-y-auto bg-gray-50 bg-gray-800">
+        <LogoSection />
         {isStudent && (
           <>
             <NewChatItem />

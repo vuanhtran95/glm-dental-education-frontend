@@ -52,10 +52,15 @@ const VoiceInput = ({
     [listening, transcript],
   );
 
+  const numberOfRow = useMemo(() => {
+    const count = transcript.split("\n").length;
+    return count > 1 ? count : 1;
+  }, [transcript])
+
   return (
     <>
       <div className="relative">
-        <textarea className={transcriptInputCss} value={transcript} disabled />
+        <textarea rows={numberOfRow} className={transcriptInputCss} value={transcript} disabled />
       </div>
       {shouldShowRecordButton && (
         <button

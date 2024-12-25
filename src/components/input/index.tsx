@@ -32,7 +32,7 @@ const Input = ({
           value={value}
           id={id}
           name={name}
-          className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg dark:bg-gray-800 border-gray-700 dark:text-white"
+          className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-800 border-gray-700 text-white"
         />
       </div>
     </div>
