@@ -4,9 +4,10 @@ import { useMemo } from "react";
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dialogs: Array<any>;
+  setSidebar: (state: boolean) => void;
 }
 
-const ListDialog = ({ dialogs }: Props) => {
+const ListDialog = ({ dialogs, setSidebar }: Props) => {
   const navigate = useNavigate();
   const params = useParams();
 
@@ -20,6 +21,7 @@ const ListDialog = ({ dialogs }: Props) => {
             <li
               key={dialog.id}
               onClick={() => {
+                setSidebar(false);
                 navigate(`/dialog/${dialog.id}`);
               }}
             >

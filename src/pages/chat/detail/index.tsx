@@ -93,7 +93,7 @@ const ChatDetail = () => {
         isMale={scenario?.gender === Gender.MALE}
         messages={displayedMessages}
       />
-      <div className="w-full px-2 relative">
+      <div id="record-input" className="w-full px-2 pb-1 relative">
         <StatusGroup dialogDetail={dialogDetail} />
 
         {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (

@@ -1,15 +1,15 @@
 export const removeButtonCss =
-  "mr-4 bg-red-700 hover:bg-red-700 focus:ring-red-800 hover:bg-red-800 focus:ring-red-300 absolute text-white end-20 bottom-2.5 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2";
+  "bg-red-700 text-white rounded-lg text-sm";
 
 export const sendButtonCss =
-  "bg-green-700 hover:bg-green-700 focus:ring-green-800 hover:bg-green-800 focus:ring-green-300 absolute text-white end-10 bottom-2.5 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2";
+  "bg-green-700 text-white rounded-lg text-sm ml-2";
 
 export const transcriptInputCss =
-  "p-4 pr-12 w-full text-sm text-gray-900 border rounded-lg bg-gray-800 border-gray-700 text-white";
+  "p-3 w-full text-sm bg-gray-500 rounded-2xl";
 
 export const recordButtonCss = (listening: boolean) =>
-  `text-white absolute end-10 bottom-2.5 ${
+  `text-white ${
     listening
-      ? "bg-red-700 hover:bg-red-700 focus:ring-red-800 hover:bg-red-800 focus:ring-red-300"
-      : "bg-blue-700  hover:bg-blue-700 focus:ring-blue-800 hover:bg-blue-800 focus:ring-blue-300"
-  } focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2`;
+      ? "bg-red-700"
+      : "bg-blue-700"
+  } font-medium rounded-lg text-sm`;

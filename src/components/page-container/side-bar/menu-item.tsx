@@ -11,9 +11,10 @@ import useAllowedRoles from "src/hooks/useUserRole";
 
 interface Props {
   className?: string;
+  setSidebar: (state: boolean) => void;
 }
 
-const MenuItem = ({ className }: Props) => {
+const MenuItem = ({ className, setSidebar }: Props) => {
   const userInfo = getUserInfo();
 
   const { dialogData, fetchDialogList } = useDialogList({
@@ -41,8 +42,8 @@ const MenuItem = ({ className }: Props) => {
         <LogoSection />
         {isStudent && (
           <>
-            <NewChatItem />
-            <ListDialog dialogs={dialogData} />
+            <NewChatItem setSidebar={setSidebar} />
+            <ListDialog setSidebar={setSidebar} dialogs={dialogData} />
           </>
         )}
         <LogOut />
