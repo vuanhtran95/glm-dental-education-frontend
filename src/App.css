@@ -5,6 +5,7 @@
 
 #root {
   width: 100%;
+  height: 100%; /* Ensure the root takes full viewport height */
   font-family: "Domine", serif;
   line-height: 1.5;
   font-weight: 400;
@@ -16,7 +17,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
+  overflow: auto;
 }
 
 html {
@@ -34,6 +35,11 @@ body {
     background-color: rgba(254, 254, 254, 1);
     overscroll-behavior: none; /* Prevent bounce on the viewport */
     overflow: hidden; /* Prevent scrolling entirely */
+    height: 100%; /* Ensure the root takes full viewport height */
+}
+
+html, body {
+    overscroll-behavior: none; /* Prevent overscroll */
 }
 
 a {

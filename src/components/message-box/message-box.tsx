@@ -31,29 +31,25 @@ const MessageBox = ({
   }, [messages.length, onScrollBottom]);
 
   return (
-    <div className="pt-[50px] md:pt-2" style={{ height: "calc(100vh - 136px)" }}>
-      <div className="h-full">{messages.length > 0 ? (
-        <Virtuoso
-          ref={virtuoso}
-          data={messages || []}
-          style={{ paddingRight: "10px" }}
-          totalCount={200}
-          itemContent={(index: number, message: MessageDetail) => {
-            return (
-              <MessageItemText
-                id={index === messages.length - 1 ? "audio-player" : ""}
-                message={message}
-                index={index}
-                key={index}
-                isMale={isMale}
-                shouldShowFeedback={shouldShowFeedback}
-              />
-            );
-          }}
-        />
-      ) : (
-        <></>
-      )}</div>
+    <div className="pt-[50px] pb-2 flex-1">
+      <Virtuoso
+        ref={virtuoso}
+        data={messages || []}
+        style={{ paddingRight: "10px" }}
+        totalCount={200}
+        itemContent={(index: number, message: MessageDetail) => {
+          return (
+            <MessageItemText
+              id={index === messages.length - 1 ? "audio-player" : ""}
+              message={message}
+              index={index}
+              key={index}
+              isMale={isMale}
+              shouldShowFeedback={shouldShowFeedback}
+            />
+          );
+        }}
+      />
     </div>
   );
 };

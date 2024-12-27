@@ -87,32 +87,30 @@ const ChatDetail = () => {
   }, [fetchDialogDetail]);
 
   return (
-    <div className="">
-        <MessageBox
-          shouldShowFeedback={!!dialogDetail?.isSubmitted}
-          isMale={scenario?.gender === Gender.MALE}
-          messages={displayedMessages}
-        />
-        <div className="justify-center items-end">
-          <div className="fixed md:relative w-full px-8">
-            <StatusGroup dialogDetail={dialogDetail} />
+    <div className="detail-container flex flex-col h-full">
+      <MessageBox
+        shouldShowFeedback={!!dialogDetail?.isSubmitted}
+        isMale={scenario?.gender === Gender.MALE}
+        messages={displayedMessages}
+      />
+      <div className="w-full px-2 relative">
+        <StatusGroup dialogDetail={dialogDetail} />
 
-            {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (
-              <VoiceInput
-                transcript={transcript}
-                listening={listening}
-                stopListening={stopListening}
-                stopRecording={stopRecording}
-                resetTranscript={resetTranscript}
-                startListening={startListening}
-                startRecording={startRecording}
-                onRemove={onClickRemove}
-                onSend={onClickSend}
-              />
-            )}
-          </div>
-        </div>
-      {!isMobile && (
+        {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (
+          <VoiceInput
+            transcript={transcript}
+            listening={listening}
+            stopListening={stopListening}
+            stopRecording={stopRecording}
+            resetTranscript={resetTranscript}
+            startListening={startListening}
+            startRecording={startRecording}
+            onRemove={onClickRemove}
+            onSend={onClickSend}
+          />
+        )}
+      </div>
+      {false && (
         <ScenarioInformation
           dialogDetail={dialogDetail}
           scenario={scenario}

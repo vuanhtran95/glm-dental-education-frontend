@@ -11,15 +11,13 @@ const PageContainer = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <main className="h-full">
       <SideBar
         className={`${isActive ? "translate-x-0" : ""}`}
       />
-      <main className="min-h-screen">
-        <Header openSidebar={handleToggleSidebar} />
-          <Outlet />
-      </main>
-    </div>
+      <Header openSidebar={handleToggleSidebar} />
+      <Outlet />
+    </main>
   );
 };
 
