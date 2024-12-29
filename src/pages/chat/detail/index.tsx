@@ -1,4 +1,10 @@
 import { useParams } from "react-router-dom";
+
+declare global {
+  interface Window {
+    responsiveVoice: any;
+  }
+}
 import { useAudioRecorder } from "react-audio-voice-recorder";
 
 import MessageBox from "../../../components/message-box/message-box";
@@ -44,7 +50,9 @@ const ChatDetail = () => {
 
   const refetch = useCallback(async () => {
     fetchDialogDetail((text: string) => {
-      responsiveVoice.speak(text);
+      if (window.responsiveVoice) {
+        window.responsiveVoice.speak(text);
+      }
     });
   }, [fetchDialogDetail, onSpeak]);
 
