@@ -8,7 +8,6 @@ import ScenarioInformation from "./components/scenario-information";
 import { makeS3Uri } from "./utils";
 import useDialogDetail from "src/hooks/useDialogDetail";
 import VoiceInput from "./components/voice-input";
-import useResponsive from "src/hooks/useResponsive";
 import useAmazonS3 from "src/hooks/useAmazonS3";
 import useMessage from "src/hooks/useMessage";
 import useSpeechToText from "src/hooks/useSpeechToText";
@@ -23,7 +22,6 @@ const ChatDetail = () => {
 
   const dialogId = params.id;
 
-  const { isMobile } = useResponsive();
   const { uploadBlob } = useAmazonS3();
   const { createMessage } = useMessage({ dialogId });
 
@@ -46,14 +44,14 @@ const ChatDetail = () => {
 
   const refetch = useCallback(async () => {
     fetchDialogDetail((text: string) => {
-      onSpeak(text);
+      responsiveVoice.speak(text);
     });
   }, [fetchDialogDetail, onSpeak]);
 
   const onCreateMessage = useCallback(
     async (newMessage: string, uri?: string) => {
       if (!dialogId) return;
-
+      
       try {
         createMessage({ content: newMessage, uri }, refetch);
       } catch (e) {
