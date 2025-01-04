@@ -50,8 +50,6 @@ const EvaluateList = () => {
     if (dialogData.length === 0) fetchDialogList();
   }, [dialogData.length, fetchDialogList, userInfo?.role]);
 
-  console.log(dialogData, " dialogs");
-
   return (
     <>
       <h3 className="text-white px-10 pt-10">List Dialog</h3>

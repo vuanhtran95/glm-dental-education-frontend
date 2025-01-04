@@ -76,8 +76,6 @@ function* createDialog(action: DialogCreateAction) {
       }),
     );
 
-    console.log(response, "response");
-
     successCallback?.(response.data._id);
   } catch (err) {
     errorCallback?.();
