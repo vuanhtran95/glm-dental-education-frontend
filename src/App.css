@@ -96,6 +96,9 @@ textarea:focus,
     border-color: #15803d !important;
 }
   
+textarea {
+    -webkit-text-fill-color: white
+}
 
   
 
