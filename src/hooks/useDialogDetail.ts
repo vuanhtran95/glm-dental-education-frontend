@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   endDialogAction,
@@ -17,14 +17,21 @@ interface Props {
 const useDialogDetail = ({ dialogId }: Props) => {
   const dispatch = useDispatch();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const dialogDetail: DialogDetailWithMessage | null = useSelector(
     selectDialogDetailState,
   );
 
   const fetchDialogDetail = useCallback(
-    (successCallback?: (value: string) => void) => {
+    (successCallback?: (value: string) => void, firstLoad: boolean = false) => {
+      const innerCallback = (text: string) => {
+        setIsLoading(false);
+        successCallback?.(text);
+      };
       if (!dialogId) return;
-      dispatch(fetchDialogDetailAction(dialogId, successCallback));
+      !!firstLoad && setIsLoading(true);
+      dispatch(fetchDialogDetailAction(dialogId, innerCallback));
     },
     [dispatch, dialogId],
   );
@@ -53,6 +60,7 @@ const useDialogDetail = ({ dialogId }: Props) => {
     fetchDialogDetail,
     endDialog,
     submitDialog,
+    isLoading,
   };
 };
 

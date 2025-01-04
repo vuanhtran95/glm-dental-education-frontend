@@ -8,7 +8,7 @@ declare global {
 import { useAudioRecorder } from "react-audio-voice-recorder";
 
 import MessageBox from "../../../components/message-box/message-box";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { EMessageRole } from "../../../store/dialog/types";
 import ScenarioInformation from "./components/scenario-information";
 import { makeS3Uri } from "./utils";
@@ -28,10 +28,6 @@ const ChatDetail = () => {
 
   const dialogId = params.id;
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  console.log(isLoading, 'isLoading');
-
   const { uploadBlob } = useAmazonS3();
   const { createMessage } = useMessage({ dialogId });
 
@@ -45,7 +41,7 @@ const ChatDetail = () => {
     listening,
   } = useSpeechToText({});
 
-  const { scenario, messages, fetchDialogDetail, dialogDetail } =
+  const { scenario, messages, fetchDialogDetail, dialogDetail, isLoading } =
     useDialogDetail({
       dialogId,
     });
@@ -54,14 +50,14 @@ const ChatDetail = () => {
 
   const refetch = useCallback(async () => {
     fetchDialogDetail((text: string) => {
-      onSpeak(text)
+      onSpeak(text);
     });
   }, [fetchDialogDetail, onSpeak]);
 
   const onCreateMessage = useCallback(
     async (newMessage: string, uri?: string) => {
       if (!dialogId) return;
-      
+
       try {
         createMessage({ content: newMessage, uri }, refetch);
       } catch (e) {
@@ -74,13 +70,10 @@ const ChatDetail = () => {
   const onClickSend = useCallback(async () => {
     if (!recordingBlob) return;
 
-    setIsLoading(true);
-
     const s3Id = await uploadBlob(recordingBlob);
     const uri = makeS3Uri(s3Id);
 
     await onCreateMessage(transcript, uri);
-    setIsLoading(false);
 
     resetTranscript();
   }, [uploadBlob, recordingBlob, onCreateMessage, transcript, resetTranscript]);
@@ -92,12 +85,12 @@ const ChatDetail = () => {
   useAllowedRoles([UserRole.STUDENT]);
 
   useEffect(() => {
-    fetchDialogDetail();
+    fetchDialogDetail(() => {}, true);
   }, [fetchDialogDetail]);
 
   return (
     <div className="detail-container flex flex-col h-full md:ml-[260px]">
-      <MessageBox messages={displayedMessages} />
+      <MessageBox messages={displayedMessages} isLoading={isLoading} />
       <div id="record-input" className="w-full px-2 pb-1 relative">
         <StatusGroup dialogDetail={dialogDetail} />
         {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (
