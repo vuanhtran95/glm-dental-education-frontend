@@ -5,3 +5,10 @@ export interface DataPayload {
   successCallback: SuccessCallback;
   errorCallback: ErrorCallback;
 }
+
+export enum MicrophoneMode {
+  IDLE = "idle",
+  RECORDING = "recording",
+  READY = "saving",
+  SENDING = "sending",
+}

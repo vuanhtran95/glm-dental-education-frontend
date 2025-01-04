@@ -10,5 +10,4 @@ export const signUpInitialValues: SignUpPayload = {
 
 export const roleOptions = [
   { label: "Student", key: UserRole.STUDENT },
-  { label: "Supervisor", key: UserRole.SUPERVISOR },
 ];

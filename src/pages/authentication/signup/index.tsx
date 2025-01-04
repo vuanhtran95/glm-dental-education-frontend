@@ -40,7 +40,7 @@ const SignUp = () => {
   );
 
   return (
-    <div id="sign-up" className="flex flex-col justify-center px-6 py-16 lg:px-8">
+    <div id="sign-up" className="flex flex-col justify-center px-6 py-16 lg:px-8 md:m-auto md:w-[30%]">
       <h2 className="text-center text-2xl font-bold text-gray-900">
         Sign up to your account
       </h2>

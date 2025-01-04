@@ -20,15 +20,19 @@ const useMessage = ({ dialogId }: Props) => {
       successCallback?: SuccessCallback,
       errorCallback?: ErrorCallback,
     ) => {
-      if (dialogId)
+      if (!!dialogId) {
+        const successFn = () => {
+          successCallback?.()
+        }
         dispatch(
           createMessageAction(
             message,
             dialogId,
-            successCallback,
+            successFn,
             errorCallback,
           ),
         );
+      }
     },
     [dialogId, dispatch],
   );

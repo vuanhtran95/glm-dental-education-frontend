@@ -5,14 +5,10 @@ import { MessageDetail } from "src/store/dialog/types";
 
 interface Props {
   messages: MessageDetail[] | [];
-  isMale: boolean;
-  shouldShowFeedback: boolean;
 }
 
 const MessageBox = ({
   messages,
-  isMale,
-  shouldShowFeedback = false,
 }: Props) => {
   const virtuoso = useRef<VirtuosoHandle>(null);
 
@@ -31,7 +27,7 @@ const MessageBox = ({
   }, [messages.length, onScrollBottom]);
 
   return (
-    <div className="pt-[50px] pb-2 flex-1">
+    <div className="pt-[50px] md:pt-0 pb-2 flex-1">
       <Virtuoso
         ref={virtuoso}
         data={messages || []}
@@ -40,12 +36,8 @@ const MessageBox = ({
         itemContent={(index: number, message: MessageDetail) => {
           return (
             <MessageItemText
-              id={index === messages.length - 1 ? "audio-player" : ""}
-              message={message}
               index={index}
-              key={index}
-              isMale={isMale}
-              shouldShowFeedback={shouldShowFeedback}
+              message={message}
             />
           );
         }}

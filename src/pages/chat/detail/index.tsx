@@ -8,7 +8,7 @@ declare global {
 import { useAudioRecorder } from "react-audio-voice-recorder";
 
 import MessageBox from "../../../components/message-box/message-box";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { EMessageRole } from "../../../store/dialog/types";
 import ScenarioInformation from "./components/scenario-information";
 import { makeS3Uri } from "./utils";
@@ -27,6 +27,10 @@ const ChatDetail = () => {
   const params = useParams();
 
   const dialogId = params.id;
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log(isLoading, 'isLoading');
 
   const { uploadBlob } = useAmazonS3();
   const { createMessage } = useMessage({ dialogId });
@@ -50,9 +54,7 @@ const ChatDetail = () => {
 
   const refetch = useCallback(async () => {
     fetchDialogDetail((text: string) => {
-      if (window.responsiveVoice) {
-        window.responsiveVoice.speak(text);
-      }
+      onSpeak(text)
     });
   }, [fetchDialogDetail, onSpeak]);
 
@@ -71,16 +73,17 @@ const ChatDetail = () => {
 
   const onClickSend = useCallback(async () => {
     if (!recordingBlob) return;
+
+    setIsLoading(true);
+
     const s3Id = await uploadBlob(recordingBlob);
     const uri = makeS3Uri(s3Id);
 
-    onCreateMessage(transcript, uri);
+    await onCreateMessage(transcript, uri);
+    setIsLoading(false);
+
     resetTranscript();
   }, [uploadBlob, recordingBlob, onCreateMessage, transcript, resetTranscript]);
-
-  const onClickRemove = useCallback(() => {
-    resetTranscript();
-  }, [resetTranscript]);
 
   const displayedMessages = useMemo(() => {
     return messages?.filter((e) => e.role !== EMessageRole.SYSTEM) || [];
@@ -93,15 +96,10 @@ const ChatDetail = () => {
   }, [fetchDialogDetail]);
 
   return (
-    <div className="detail-container flex flex-col h-full">
-      <MessageBox
-        shouldShowFeedback={!!dialogDetail?.isSubmitted}
-        isMale={scenario?.gender === Gender.MALE}
-        messages={displayedMessages}
-      />
+    <div className="detail-container flex flex-col h-full md:ml-[260px]">
+      <MessageBox messages={displayedMessages} />
       <div id="record-input" className="w-full px-2 pb-1 relative">
         <StatusGroup dialogDetail={dialogDetail} />
-
         {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (
           <VoiceInput
             transcript={transcript}
@@ -111,8 +109,8 @@ const ChatDetail = () => {
             resetTranscript={resetTranscript}
             startListening={startListening}
             startRecording={startRecording}
-            onRemove={onClickRemove}
             onSend={onClickSend}
+            isLoading={isLoading}
           />
         )}
       </div>

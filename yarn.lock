@@ -4532,6 +4532,11 @@ resolve@^1.1.7, resolve@^1.22.2:
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 
+responsivevoice@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.npmjs.org/responsivevoice/-/responsivevoice-0.4.1.tgz"
+  integrity sha512-OQZ4vxfqwiYKdIKCA3TW+F6wY9cJDZJpUU+RKBzL1iAuJEp4KSJ+pyrKXajI62UThfGH95Gj4dA+wh4jDYlISw==
+
 retry@^0.12.0:
   version "0.12.0"
   resolved "https://registry.npmjs.org/retry/-/retry-0.12.0.tgz"

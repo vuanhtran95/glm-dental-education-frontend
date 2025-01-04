@@ -1,15 +1,21 @@
-const synth = window.speechSynthesis;
+import useSpeechToText from "./useSpeechToText";
+
+export enum VoiceTypes {
+  MALE = 'UK English Male',
+  FEMALE = 'UK English Female',
+}
 
 const useTextToSpeech = (isMale: boolean) => {
+
+  const {
+    stopListening,
+  } = useSpeechToText({});
+
   const onSpeak = (text: string) => {
-    return new Promise((resolve) => {
-      const utterThis = new SpeechSynthesisUtterance(text);
-      utterThis.voice = synth.getVoices()[isMale ? 1 : 159];
-      utterThis.pitch = 1;
-      utterThis.rate = 1;
-      synth.speak(utterThis);
-      utterThis.onend = resolve;
-    });
+    if (window.responsiveVoice) {
+      stopListening();
+      window.responsiveVoice.speak(text, isMale ? VoiceTypes.MALE : VoiceTypes.FEMALE);
+    }
   };
 
   return {

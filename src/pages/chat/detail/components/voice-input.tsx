@@ -1,11 +1,9 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
-  recordButtonCss,
-  removeButtonCss,
-  sendButtonCss,
   transcriptInputCss,
 } from "../constants";
 import useResponsive from "src/hooks/useResponsive";
+import { MicrophoneMode } from "src/types";
 
 interface Props {
   transcript: string;
@@ -15,8 +13,8 @@ interface Props {
   resetTranscript: () => void;
   startListening: (params: any) => void;
   startRecording: () => void;
-  onRemove: () => void;
-  onSend: () => void;
+  onSend: () => Promise<void>;
+  isLoading: boolean;
 }
 
 const VoiceInput = ({
@@ -27,34 +25,53 @@ const VoiceInput = ({
   resetTranscript,
   startListening,
   startRecording,
-  onRemove,
   onSend,
+  // isLoading
 }: Props) => {
 
   const { isMobile } = useResponsive();
 
-  const onClickRecordButton = useCallback(() => {
-    if (listening) {
-      stopListening();
-      stopRecording();
-    } else {
-      resetTranscript();
-      startListening({ continuous: true });
-      startRecording();
-    }
+  const [mode, setMode] = useState<MicrophoneMode>(MicrophoneMode.IDLE);
+
+  const onClickRecord = useCallback(() => {
+    // if (listening) {
+    //   stopListening();
+    //   stopRecording();
+    //   setMode(MicrophoneMode.IDLE);
+    // } else {
+    resetTranscript();
+    startListening({ continuous: true });
+    startRecording();
+    setMode(MicrophoneMode.RECORDING);
+    // }
   }, [
     listening,
     resetTranscript,
     startListening,
     startRecording,
-    stopListening,
-    stopRecording,
   ]);
 
-  const shouldShowRecordButton = useMemo(
-    () => !transcript || listening,
-    [listening, transcript],
-  );
+  const onClickStop = useCallback(() => {
+    setMode(MicrophoneMode.READY);
+    stopListening();
+    stopRecording();
+  }, [stopListening, stopRecording]);
+
+  const onClickClear = useCallback(() => {
+    setMode(MicrophoneMode.IDLE);
+    resetTranscript();
+  }, [resetTranscript]);
+
+  const onClickSend = useCallback(async () => {
+    stopListening();
+    stopRecording();
+    setMode(MicrophoneMode.IDLE);
+    setMode(MicrophoneMode.SENDING);
+    onSend().then(() => {
+      resetTranscript();
+      setMode(MicrophoneMode.IDLE);
+    });
+  }, [onSend, setMode]);
 
   const numberOfRow = useMemo(() => {
     // Desktop
@@ -63,43 +80,56 @@ const VoiceInput = ({
     }
 
     // Mobile
-    const count = transcript.split("\n").length;
-    return count > 1 ? count : 1;
+    return Math.round(transcript.length / 48) + 1;
   }, [transcript, isMobile]);
 
-  console.log(transcript, 'transcript');
-
   return (
-    <div id="voice-input" className="bg-gray-500 rounded-2xl" onClick={() => onClickRecordButton()}>
+    <div id="voice-input" className="bg-gray-500 rounded-2xl">
       <textarea 
         rows={numberOfRow}
         className={transcriptInputCss} 
         value={transcript}
         disabled
       />
-      <div className="flex justify-end pb-1 pr-1">
-        {shouldShowRecordButton && (
+      <div className="flex justify-end pb-1 pr-1 text-white text-xs">
+        {mode === MicrophoneMode.IDLE && (
           <button
-            onClick={() => onClickRecordButton()}
+            onClick={() => onClickRecord()}
             type="submit"
-            className={recordButtonCss(listening)}
+            className="bg-blue-600 rounded-2xl"
           >
-            {/* {listening ? "Stop" : "Record"} */}
             <i className="fa-solid fa-microphone"></i>
           </button>
         )}
-        {!shouldShowRecordButton && (
+        {mode === MicrophoneMode.RECORDING && (
           <>
-            <button onClick={() => onRemove()} className={removeButtonCss}>
+            <button onClick={() => onClickClear()} className="bg-red-700 rounded-2xl">
               <i className="fa-solid fa-xmark"></i>
             </button>
-            <button onClick={() => onSend()} className={sendButtonCss}>
+            <button onClick={() => onClickStop()} className="bg-black-700 rounded-2xl ml-2">
+              <i className="fa-solid fa-stop"></i>
+            </button>
+          </>
+        )}
+        {mode === MicrophoneMode.READY && (
+          <>
+            <button onClick={() => onClickClear()} className="bg-red-700 rounded-2xl">
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+            <button onClick={() => onClickSend()} className="bg-green-700 rounded-2xl ml-2">
               <i className="fa-solid fa-paper-plane"></i>
             </button>
           </>
         )}
+
+        {mode === MicrophoneMode.SENDING && (
+          <>
+            <button onClick={() => onClickSend()} className="bg-green-700 rounded-2xl ml-2">
+            <i className="fas fa-spinner fa-spin"></i>
+            </button>
+          </>
+        )}
       </div>
-      
     </div>
   );
 };

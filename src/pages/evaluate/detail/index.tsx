@@ -7,7 +7,6 @@ import useDialogDetail from "src/hooks/useDialogDetail";
 import useAllowedRoles from "src/hooks/useUserRole";
 import ScenarioInformation from "src/pages/chat/detail/components/scenario-information";
 import { EMessageRole } from "src/store/dialog/types";
-import { Gender } from "src/store/scenario/types";
 import { UserRole } from "src/store/user/types";
 
 const EvaluateDetail = () => {
@@ -39,11 +38,9 @@ const EvaluateDetail = () => {
         </div>
         <div className="mt-4">Messages:</div>
         <MessageBox
-          shouldShowFeedback
           messages={
             messages?.filter((e) => e.role !== EMessageRole.SYSTEM) || []
           }
-          isMale={scenario?.gender === Gender.MALE}
         />
       </div>
       <ScenarioInformation hasButtonGroup={false} scenario={scenario} />

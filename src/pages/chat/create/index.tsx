@@ -65,7 +65,7 @@ const CreateChat = () => {
     return <Navigate to="/not-found" replace />;
 
   return (
-    <section className="">
+    <section id="create-chat-container" className="md:pl-[255px] md:mx-auto">
       <div className="py-8 pt-[80px] px-2 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
         <WelcomeSection />
         <div className="w-full max-w-md mx-auto">
