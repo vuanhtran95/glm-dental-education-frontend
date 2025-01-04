@@ -3,7 +3,7 @@ import { ScenarioGenerateForm } from "./types";
 
 export const generateScenarioInitialValues: ScenarioGenerateForm = {
   patientName: "",
-  gender: Gender.MALE,
+  gender: Gender.FEMALE,
 };
 
 export const genderOptions = [

@@ -73,10 +73,18 @@ const CreateChat = () => {
             initialValues={generateScenarioInitialValues}
             onSubmit={(values) => onGenerate(values)}
           >
-            {({ values }) => (
+            {({ values, handleChange }) => (
               <Form className="flex flex-col gap-4">
-                <Input id="patientName" placeholder="Patient Name" />
-                <Select id="gender" options={genderOptions} />
+                <Input
+                  id="patientName"
+                  name="patientName"
+                  placeholder="Patient Name"
+                />
+                <Select
+                  id="gender"
+                  handleChange={handleChange}
+                  options={genderOptions}
+                />
 
                 <div className="flex justify-center mt-4">
                   <Button

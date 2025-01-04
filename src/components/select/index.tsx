@@ -7,9 +7,10 @@ interface Props {
   label?: string;
   className?: string;
   id: string;
+  handleChange?: (e: React.ChangeEvent<any>) => void;
 }
 
-const Select = ({ options, label, id, className }: Props) => {
+const Select = ({ options, label, id, className, handleChange }: Props) => {
   return (
     <div className={`${!!className && className}`}>
       {label && (
@@ -21,6 +22,7 @@ const Select = ({ options, label, id, className }: Props) => {
         <Field
           as="select"
           id={id}
+          onChange={handleChange}
           name={id}
           className="appearance-none block w-full p-4 h-[52px] ps-10 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 bg-gray-800
            text-white"
