@@ -11,12 +11,12 @@ const Header = ({ openSidebar }: Props) => {
 
   return (
     <header className="fixed w-full z-50">
-      <nav className="border-gray-200 px-4 lg:px-6 py-2.5 bg-gray-700 h-14">
+      <nav className="px-3 lg:px-6 py-2 bg-gray-800 h-14 border-b border-white">
         <div className="flex flex-wrap justify-end items-center mx-auto">
           <button
             onClick={openSidebar}
             type="button"
-            className="sm:hidden py-2.5 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 focus:ring-gray-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 mr-auto"
+            className="py-2.5 px-5 text-xs font-small text-gray-900 bg-white rounded-lg border border-gray-200 bg-gray-800 text-gray-400 border-gray-600 mr-auto"
           >
             <i className="fa-solid fa-bars"></i>
           </button>

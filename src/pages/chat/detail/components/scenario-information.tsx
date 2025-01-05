@@ -17,7 +17,7 @@ const ScenarioInformation = ({
 }: Props) => {
   if (!scenario) return <></>;
   return (
-    <div className="flex flex-col justify-between border-gray-200 w-[300px] shadow bg-gray-800 border-gray-700">
+    <div className="flex flex-col justify-between border-gray-200 w-[500px] shadow bg-gray-800 border-gray-700">
       <div className="flex items-start flex-col py-10 pl-6 pr-4">
         <div className="rounded-xl p-4 bg-gray-700 w-full">
           <h5 className="mb-1 text-xl font-medium text-gray-900 text-white">

@@ -22,6 +22,7 @@ import { Gender } from "src/store/scenario/types";
 import StatusGroup from "./components/status-group";
 import { UserRole } from "src/store/user/types";
 import useAllowedRoles from "src/hooks/useUserRole";
+import useResponsive from "src/hooks/useResponsive";
 
 const ChatDetail = () => {
   const params = useParams();
@@ -30,6 +31,7 @@ const ChatDetail = () => {
 
   const { uploadBlob } = useAmazonS3();
   const { createMessage } = useMessage({ dialogId });
+  const { isMobile } = useResponsive();
 
   const { recordingBlob, startRecording, stopRecording } = useAudioRecorder();
 
@@ -89,25 +91,27 @@ const ChatDetail = () => {
   }, [fetchDialogDetail]);
 
   return (
-    <div className="detail-container flex flex-col h-full md:ml-[260px]">
-      <MessageBox messages={displayedMessages} isLoading={isLoading} />
-      <div id="record-input" className="w-full px-2 pb-1 relative">
-        <StatusGroup dialogDetail={dialogDetail} />
-        {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (
-          <VoiceInput
-            transcript={transcript}
-            listening={listening}
-            stopListening={stopListening}
-            stopRecording={stopRecording}
-            resetTranscript={resetTranscript}
-            startListening={startListening}
-            startRecording={startRecording}
-            onSend={onClickSend}
-            isLoading={isLoading}
-          />
-        )}
+    <div className="flex flex-col md:flex-row h-full w-full">
+      <div className="detail-container flex flex-col h-full md:ml-[260px] w-full">
+        <MessageBox messages={displayedMessages} isLoading={isLoading} />
+        <div id="record-input" className="w-full px-2 pb-1 relative">
+          <StatusGroup dialogDetail={dialogDetail} />
+          {!dialogDetail?.isEnded && !dialogDetail?.isSubmitted && (
+            <VoiceInput
+              transcript={transcript}
+              listening={listening}
+              stopListening={stopListening}
+              stopRecording={stopRecording}
+              resetTranscript={resetTranscript}
+              startListening={startListening}
+              startRecording={startRecording}
+              onSend={onClickSend}
+              isLoading={isLoading}
+            />
+          )}
+        </div>
       </div>
-      {false && (
+      {!isMobile && (
         <ScenarioInformation
           dialogDetail={dialogDetail}
           scenario={scenario}

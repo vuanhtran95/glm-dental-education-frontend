@@ -71,7 +71,7 @@ const VoiceInput = ({
   }, [transcript, isMobile]);
 
   return (
-    <div id="voice-input" className="bg-gray-500 rounded-2xl">
+    <div id="voice-input" className="bg-gray-700 rounded-2xl">
       <textarea
         rows={numberOfRow}
         className={transcriptInputCss}
