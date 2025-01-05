@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import Button from "src/components/button";
 import Modal, { ModalInterface } from "src/components/modal";
 import useDialogDetail from "src/hooks/useDialogDetail";
+import useResponsive from "src/hooks/useResponsive";
 import { DialogDetail, MessageDetail } from "src/store/dialog/types";
 
 interface Props {
@@ -13,6 +14,8 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
   const { endDialog, submitDialog, fetchDialogDetail } = useDialogDetail({
     dialogId: dialogDetail?._id,
   });
+
+  const { isMobile } = useResponsive();
 
   const [modal, setModal] = useState<Omit<ModalInterface, "isShown">>({
     title: "",
@@ -81,15 +84,23 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
       {!dialogDetail?.isEnded ? (
         <Button
           onClick={onEndConversation}
-          className="bg-red-500"
-          label={"End Dialog"}
+          className="bg-green-500 text-sm"
+          label={
+            isMobile ? <i className="fa-solid fa-check"></i> : "End Dialog"
+          }
         />
       ) : (
         !dialogDetail?.isSubmitted && (
           <Button
             onClick={onSubmitConversation}
             className="bg-green-500"
-            label={"Submit Dialog"}
+            label={
+              isMobile ? (
+                <i className="fa-solid fa-file-import"></i>
+              ) : (
+                "Submit Dialog"
+              )
+            }
           />
         )
       )}

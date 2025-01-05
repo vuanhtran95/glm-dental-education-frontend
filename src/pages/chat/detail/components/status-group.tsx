@@ -7,7 +7,7 @@ interface Props {
 const StatusGroup = ({ dialogDetail }: Props) => {
   if (!dialogDetail?.isEnded) return <></>;
   return (
-    <div className="bg-gray-800 p-3 rounded-xl flex justify-end">
+    <div className="bg-gray-800 p-3 rounded-xl flex justify-end text-sm md:text-md">
       {dialogDetail?.isSubmitted ? (
         <div className="text-green-500">
           <span>Conversation Submitted</span>
