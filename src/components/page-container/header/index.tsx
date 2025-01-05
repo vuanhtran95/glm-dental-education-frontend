@@ -33,12 +33,18 @@ const Header = ({ openSidebar }: Props) => {
               <i className="fa-solid fa-bars"></i>
             </button>
           </div>
-          <div className="self-center">
-            <ClickableTooltip children={<PatientDetail detail={scenario} />} />
-          </div>
-          <div>
-            <ButtonGroup dialogDetail={dialogDetail} messages={messages} />
-          </div>
+          {!!id && (
+            <>
+              <div className="self-center">
+                <ClickableTooltip
+                  children={<PatientDetail detail={scenario} />}
+                />
+              </div>
+              <div>
+                <ButtonGroup dialogDetail={dialogDetail} messages={messages} />
+              </div>
+            </>
+          )}
         </div>
       </nav>
     </header>

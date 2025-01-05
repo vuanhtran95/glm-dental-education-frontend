@@ -89,20 +89,23 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
             isMobile ? <i className="fa-solid fa-check"></i> : "End Dialog"
           }
         />
+      ) : !dialogDetail?.isSubmitted ? (
+        <Button
+          onClick={onSubmitConversation}
+          className="bg-green-500"
+          label={
+            isMobile ? (
+              <i className="fa-solid fa-file-import"></i>
+            ) : (
+              "Submit Dialog"
+            )
+          }
+        />
       ) : (
-        !dialogDetail?.isSubmitted && (
-          <Button
-            onClick={onSubmitConversation}
-            className="bg-green-500"
-            label={
-              isMobile ? (
-                <i className="fa-solid fa-file-import"></i>
-              ) : (
-                "Submit Dialog"
-              )
-            }
-          />
-        )
+        <Button
+          className="bg-green-500"
+          label={<i className="fa-regular fa-circle-check"></i>}
+        />
       )}
       <Modal
         title={modal.title}
