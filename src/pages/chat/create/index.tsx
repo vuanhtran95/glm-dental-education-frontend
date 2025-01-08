@@ -30,7 +30,7 @@ const CreateChat = () => {
   );
 
   const onGenerate = useCallback(
-    ({ patientName, gender }: ScenarioGenerateForm) => {
+    (values: ScenarioGenerateForm) => {
       setIsLoading(true);
 
       const successCallback = () => {
@@ -39,13 +39,7 @@ const CreateChat = () => {
       const errorCallback = () => {
         setIsLoading(false);
       };
-      dispatch(
-        generateScenarioAction(
-          { patientName, gender },
-          successCallback,
-          errorCallback,
-        ),
-      );
+      dispatch(generateScenarioAction(values, successCallback, errorCallback));
     },
     [dispatch],
   );
@@ -60,6 +54,10 @@ const CreateChat = () => {
       createDialogAction(user?._id, scenarioDetail?._id, successCallback),
     );
   }, [dispatch, navigation, scenarioDetail, user?._id]);
+
+  const isButtonDisabled = useCallback((values: ScenarioGenerateForm) => {
+    return !values.patientName || !values.clinicalContext;
+  }, []);
 
   if (user?.role !== UserRole.STUDENT)
     return <Navigate to="/not-found" replace />;
@@ -78,19 +76,40 @@ const CreateChat = () => {
                 <Input
                   id="patientName"
                   name="patientName"
-                  placeholder="Patient Name"
+                  placeholder="Please input"
+                  label="Patient Name *"
                 />
                 <Select
                   id="gender"
                   handleChange={handleChange}
                   options={genderOptions}
+                  label="Gender *"
+                />
+
+                <Input
+                  id="clinicalContext"
+                  name="clinicalContext"
+                  placeholder="Please input"
+                  label="Clinical Context (Reason for visit) *"
+                />
+                <Input
+                  id="medicalHistory"
+                  name="medicalHistory"
+                  placeholder="Please input"
+                  label="Medical History (Optional)"
+                />
+                <Input
+                  id="mentalState"
+                  name="mentalState"
+                  placeholder="Please input"
+                  label="Mental State (Optional)"
                 />
 
                 <div className="flex justify-center mt-4">
                   <Button
                     loading={isLoading}
                     label={getButtonLabel(isLoading)}
-                    disabled={!values.patientName}
+                    disabled={isButtonDisabled(values)}
                     onClick={() => onGenerate(values)}
                   />
                 </div>

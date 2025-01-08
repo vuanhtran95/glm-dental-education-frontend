@@ -27,7 +27,7 @@ const WelcomeSection = () => {
           />
         </svg>
       </a>
-      <h1 className="m-6 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl text-white">
+      <h1 className="m-6 text-3xl font-extrabold tracking-tight leading-none md:text-3xl lg:text-4xl text-gray-600">
         Welcome!
       </h1>
       <p className="mb-4 text-sm font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 text-gray-200">

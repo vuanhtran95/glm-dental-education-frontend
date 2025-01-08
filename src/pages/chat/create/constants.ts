@@ -4,6 +4,9 @@ import { ScenarioGenerateForm } from "./types";
 export const generateScenarioInitialValues: ScenarioGenerateForm = {
   patientName: "",
   gender: Gender.FEMALE,
+  clinicalContext: "",
+  medicalHistory: "",
+  mentalState: "",
 };
 
 export const genderOptions = [

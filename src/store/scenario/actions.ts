@@ -4,7 +4,14 @@ import { ScenarioDetail } from "./types";
 import { ErrorCallback, SuccessCallback } from "src/types";
 
 export const generateScenarioAction = (
-  patientInfo: Pick<ScenarioDetail, "patientName" | "gender">,
+  patientInfo: Pick<
+    ScenarioDetail,
+    | "patientName"
+    | "gender"
+    | "clinicalContext"
+    | "medicalHistory"
+    | "mentalState"
+  >,
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback,
 ) =>

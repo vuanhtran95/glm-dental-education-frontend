@@ -14,7 +14,7 @@ const Select = ({ options, label, id, className, handleChange }: Props) => {
   return (
     <div className={`${!!className && className}`}>
       {label && (
-        <label className="block text-sm font-medium leading-6 text-gray-900">
+        <label className="block text-sm leading-6 text-gray-700 text-left">
           {label}
         </label>
       )}

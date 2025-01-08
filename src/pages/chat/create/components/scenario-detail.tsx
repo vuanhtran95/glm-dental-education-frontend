@@ -13,6 +13,9 @@ const ScenarioDetailSection = ({ scenarioDetail, onStart }: Props) => {
         Patient Name: {scenarioDetail?.patientName} ({scenarioDetail?.gender})
       </p>
       <p className="text-white">Date of birth: {scenarioDetail?.dateOfBirth}</p>
+      <p className="text-white">
+        Reason for visit: {scenarioDetail?.clinicalContext}
+      </p>
       <p className="text-white">Symptoms: {scenarioDetail?.symptoms}</p>
       <p className="text-white">
         Medical history: {scenarioDetail?.medicalHistory}

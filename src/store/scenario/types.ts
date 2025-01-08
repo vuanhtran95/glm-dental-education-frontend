@@ -16,6 +16,8 @@ export interface ScenarioDetail {
   patientName: string;
   dateOfBirth: string;
   gender: Gender;
+  clinicalContext: string;
+  mentalState: string;
   symptoms: string;
   medicalHistory: string;
   communicationStyle: string;
