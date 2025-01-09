@@ -60,8 +60,10 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
     setIsShown(true);
   }, [onConfirmSubmitConversation]);
 
+  const isDialogEmpty = !!messages && messages?.length < 2;
+
   const onEndConversation = useCallback(() => {
-    if (!!messages && messages?.length < 2) {
+    if (isDialogEmpty) {
       setModal({
         title: "Warning",
         content: "Unable to end this empty conversation",
@@ -113,6 +115,7 @@ const ButtonGroup = ({ dialogDetail, messages }: Props) => {
         onConfirm={modal.onConfirm}
         onCancel={modal.onCancel}
         isShown={isShown}
+        hasCTA={!isDialogEmpty}
       />
     </>
   );
