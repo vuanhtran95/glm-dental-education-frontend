@@ -12,11 +12,15 @@ import Select from "src/components/select";
 import { ScenarioGenerateForm } from "./types";
 import ScenarioDetailSection from "./components/scenario-detail";
 import { getButtonLabel } from "./utils";
-import { generateScenarioAction } from "src/store/scenario/actions";
+import {
+  generateScenarioAction,
+  resetScenarioAction,
+} from "src/store/scenario/actions";
 import { selectScenarioDetailState } from "src/store/scenario/selectors";
 import { createDialogAction } from "src/store/dialog/actions";
 import { ScenarioDetail } from "src/store/scenario/types";
 import { UserRole } from "src/store/user/types";
+import Textarea from "src/components/textarea";
 
 const CreateChat = () => {
   const user = getUserInfo();
@@ -47,6 +51,7 @@ const CreateChat = () => {
   const onStart = useCallback(() => {
     if (!user?._id || !scenarioDetail?._id) return;
     const successCallback = (id: string) => {
+      dispatch(resetScenarioAction());
       navigation(`/dialog/${id}`);
       return;
     };
@@ -56,7 +61,7 @@ const CreateChat = () => {
   }, [dispatch, navigation, scenarioDetail, user?._id]);
 
   const isButtonDisabled = useCallback((values: ScenarioGenerateForm) => {
-    return !values.patientName || !values.clinicalContext;
+    return !values.patientName || !values.presentingComplaint;
   }, []);
 
   if (user?.role !== UserRole.STUDENT)
@@ -73,38 +78,78 @@ const CreateChat = () => {
           >
             {({ values, handleChange }) => (
               <Form className="flex flex-col gap-4">
-                <Input
-                  id="patientName"
-                  name="patientName"
+                <div className="flex flex-row gap-2 justify-center">
+                  <Input
+                    id="patientName"
+                    name="patientName"
+                    placeholder="Please input"
+                    label="Patient Name *"
+                    className="grow"
+                  />
+                  <Select
+                    id="gender"
+                    handleChange={handleChange}
+                    options={genderOptions}
+                    label="Gender *"
+                  />
+                </div>
+                <div className="flex flex-row gap-2 justify-center">
+                  <Input
+                    id="occupation"
+                    name="occupation"
+                    placeholder="Please input"
+                    label="Occupation (optional)"
+                    className="grow"
+                  />
+                </div>
+                <Textarea
+                  id="presentingComplaint"
+                  name="presentingComplaint"
                   placeholder="Please input"
-                  label="Patient Name *"
-                />
-                <Select
-                  id="gender"
-                  handleChange={handleChange}
-                  options={genderOptions}
-                  label="Gender *"
+                  label="Presenting Complaint (Reason for visit) *"
                 />
 
-                <Input
-                  id="clinicalContext"
-                  name="clinicalContext"
-                  placeholder="Please input"
-                  label="Clinical Context (Reason for visit) *"
-                />
                 <Input
                   id="medicalHistory"
                   name="medicalHistory"
                   placeholder="Please input"
-                  label="Medical History (Optional)"
-                />
-                <Input
-                  id="mentalState"
-                  name="mentalState"
-                  placeholder="Please input"
-                  label="Mental State (Optional)"
+                  label="Medical History (optional)"
                 />
 
+                <Input
+                  id="lifeStyle"
+                  name="lifeStyle"
+                  placeholder="Please input"
+                  label="Life Style (optional)"
+                />
+
+                <Input
+                  id="emotionalState"
+                  name="emotionalState"
+                  placeholder="Please input"
+                  label="Emotional State (Optional)"
+                />
+
+                <Input
+                  id="personalTraits"
+                  name="personalTraits"
+                  placeholder="Please input"
+                  label="Personal Traits (Optional)"
+                />
+
+                <Input
+                  id="communicationStyle"
+                  name="communicationStyle"
+                  placeholder="Please input"
+                  label="Communication Style (Optional)"
+                />
+
+                <Textarea
+                  id="clinicalContext"
+                  name="clinicalContext"
+                  placeholder="Please input"
+                  label="Clinical Context (Optional)"
+                />
                 <div className="flex justify-center mt-4">
                   <Button
                     loading={isLoading}

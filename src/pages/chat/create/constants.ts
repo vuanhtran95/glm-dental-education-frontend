@@ -6,7 +6,14 @@ export const generateScenarioInitialValues: ScenarioGenerateForm = {
   gender: Gender.FEMALE,
   clinicalContext: "",
   medicalHistory: "",
-  mentalState: "",
+  dateOfBirth: "",
+  occupation: "",
+  presentingComplaint: "",
+  lifeStyle: "",
+  emotionalState: "",
+  personalTraits: "",
+  communicationStyle: "",
+  objectiveForStudent: "",
 };
 
 export const genderOptions = [

@@ -1,16 +1,12 @@
 import { action } from "typesafe-actions";
-import { SCENARIO_GENERATE } from "./actionTypes";
+import { SCENARIO_GENERATE, SCENARIO_RESET } from "./actionTypes";
 import { ScenarioDetail } from "./types";
 import { ErrorCallback, SuccessCallback } from "src/types";
 
 export const generateScenarioAction = (
   patientInfo: Pick<
     ScenarioDetail,
-    | "patientName"
-    | "gender"
-    | "clinicalContext"
-    | "medicalHistory"
-    | "mentalState"
+    "patientName" | "gender" | "clinicalContext" | "medicalHistory"
   >,
   successCallback?: SuccessCallback,
   errorCallback?: ErrorCallback,
@@ -20,3 +16,5 @@ export const generateScenarioAction = (
     successCallback,
     errorCallback,
   });
+
+export const resetScenarioAction = () => action(SCENARIO_RESET);

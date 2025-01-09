@@ -11,10 +11,13 @@ const PatientDetail = ({ detail }: Props) => {
         Patient Name: {detail?.patientName} ({detail?.gender})
       </div>
       <div>DOB: {detail?.dateOfBirth}</div>
-      <div>Reason for visit: {detail?.clinicalContext}</div>
-      <div>Symptoms: {detail?.symptoms}</div>
+      <div>Occupation: {detail?.occupation}</div>
+
+      <div>Reason for visit: {detail?.presentingComplaint}</div>
       <div>Medical history: {detail?.medicalHistory}</div>
       <div>Life styles: {detail?.lifeStyle}</div>
+
+      <div>Clinical context: {detail?.clinicalContext}</div>
     </div>
   );
 };

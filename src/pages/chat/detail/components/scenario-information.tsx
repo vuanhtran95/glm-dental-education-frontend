@@ -26,6 +26,9 @@ const ScenarioInformation = ({
           <p className="text-gray-400 text-sm mt-1">
             Date of birth: {scenario.dateOfBirth}
           </p>
+          <p className="text-gray-400 text-sm mt-1">
+            Occupation: {scenario.occupation}
+          </p>
         </div>
 
         <div
@@ -34,14 +37,13 @@ const ScenarioInformation = ({
         >
           <div>
             <p className="text-gray-200 text-sm mb-5">
-              <b>Symptoms:</b> {scenario.symptoms}
+              <b>Reason for visit:</b> {scenario.presentingComplaint}
+            </p>
+            <p className="text-gray-200 text-sm mb-5">
+              <b>Medical History: </b> {scenario.medicalHistory}
             </p>
             <p className="text-gray-200 text-sm mb-5">
               <b>Life style:</b> {scenario.lifeStyle}
-            </p>
-
-            <p className="text-gray-200 text-sm mb-5">
-              <b>Medical History: </b> {scenario.medicalHistory}
             </p>
           </div>
         </div>

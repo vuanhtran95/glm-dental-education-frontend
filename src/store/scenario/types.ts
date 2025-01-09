@@ -12,17 +12,24 @@ export enum Gender {
 
 export interface ScenarioDetail {
   _id: string;
-  name: string;
+  // general
   patientName: string;
   dateOfBirth: string;
   gender: Gender;
-  clinicalContext: string;
-  mentalState: string;
-  symptoms: string;
+  occupation: string;
+
+  // clinical context
+  presentingComplaint: string;
   medicalHistory: string;
-  communicationStyle: string;
   lifeStyle?: string;
-  additionalInformation?: string;
+
+  // Personal
+  mentalState: string;
+  personalTraits: string;
+  communicationStyle: string;
+
+  // Additional
+  clinicalContext: string;
   createdAt: string;
   updatedAt: string;
   isDeleted: boolean;
@@ -51,4 +58,7 @@ export type ScenarioAction =
     }
   | {
       type: "SCENARIO_GENERATE";
+    }
+  | {
+      type: "SCENARIO_RESET";
     };

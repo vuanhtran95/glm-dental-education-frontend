@@ -8,19 +8,31 @@ interface Props {
 const ScenarioDetailSection = ({ scenarioDetail, onStart }: Props) => {
   if (!scenarioDetail) return <></>;
   return (
-    <div className="bg-slate-700 w-208 p-4 py-8 rounded-xl mt-8 flex flex-col gap-2 align-middle">
-      <p className="text-white">
+    <div className="bg-slate-700 w-208 p-4 py-8 rounded-xl mt-8 flex flex-col gap-2 items-start">
+      <p className="text-white text-left">
         Patient Name: {scenarioDetail?.patientName} ({scenarioDetail?.gender})
       </p>
-      <p className="text-white">Date of birth: {scenarioDetail?.dateOfBirth}</p>
-      <p className="text-white">
-        Reason for visit: {scenarioDetail?.clinicalContext}
+      <p className="text-white text-left">
+        Date of birth: {scenarioDetail?.dateOfBirth}
       </p>
-      <p className="text-white">Symptoms: {scenarioDetail?.symptoms}</p>
-      <p className="text-white">
+      <p className="text-white mb-4 text-left">
+        Occupation: {scenarioDetail?.occupation}
+      </p>
+
+      <p className="text-white text-left">
+        Reason for visit: {scenarioDetail?.presentingComplaint}
+      </p>
+      <p className="text-white text-left">
         Medical history: {scenarioDetail?.medicalHistory}
       </p>
-      <p className="text-white">Life style: {scenarioDetail?.lifeStyle}</p>
+      <p className="text-white mb-4 text-left">
+        Life style: {scenarioDetail?.lifeStyle}
+      </p>
+
+      <p className="text-white mb-4 text-left">
+        Additional: {scenarioDetail?.clinicalContext}
+      </p>
+
       <button
         onClick={() => onStart()}
         type="submit"
