@@ -17,7 +17,6 @@ const useDialogList = ({ userId }: Props) => {
   const dialogData = useMemo(() => {
     return dialogs.map((dialog: DialogDetail) => ({
       patientName: dialog.scenario.patientName,
-      symptoms: dialog.scenario.symptoms,
       studentId: dialog.createdUserId,
       id: dialog._id,
       isSubmitted: dialog.isSubmitted,
