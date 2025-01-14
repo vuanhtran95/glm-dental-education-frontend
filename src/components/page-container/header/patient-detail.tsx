@@ -18,6 +18,9 @@ const PatientDetail = ({ detail }: Props) => {
       <div>Life styles: {detail?.lifeStyle}</div>
 
       <div>Clinical context: {detail?.clinicalContext}</div>
+
+      <div>Emotional state: {detail?.emotionalState}</div>
+      <div>Communication style: {detail?.communicationStyle}</div>
     </div>
   );
 };

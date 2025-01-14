@@ -28,6 +28,7 @@ const CreateChat = () => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isAdvanced, setIsAdvanced] = useState<boolean>(false);
 
   const scenarioDetail: ScenarioDetail | null = useSelector(
     selectScenarioDetailState,
@@ -93,15 +94,7 @@ const CreateChat = () => {
                     label="Gender *"
                   />
                 </div>
-                <div className="flex flex-row gap-2 justify-center">
-                  <Input
-                    id="occupation"
-                    name="occupation"
-                    placeholder="Please input"
-                    label="Occupation (optional)"
-                    className="grow"
-                  />
-                </div>
+
                 <Textarea
                   id="presentingComplaint"
                   name="presentingComplaint"
@@ -109,47 +102,66 @@ const CreateChat = () => {
                   label="Presenting Complaint (Reason for visit) *"
                 />
 
-                <Input
-                  id="medicalHistory"
-                  name="medicalHistory"
-                  placeholder="Please input"
-                  label="Medical History (optional)"
-                />
+                <a
+                  className="text-left text-sm mb-0"
+                  onClick={() => setIsAdvanced(!isAdvanced)}
+                >
+                  Advanced settings
+                </a>
+                {isAdvanced && (
+                  <>
+                    <Input
+                      id="occupation"
+                      name="occupation"
+                      placeholder="Please input"
+                      label="Occupation (optional)"
+                      className="grow"
+                    />
 
-                <Input
-                  id="lifeStyle"
-                  name="lifeStyle"
-                  placeholder="Please input"
-                  label="Life Style (optional)"
-                />
+                    <Input
+                      id="medicalHistory"
+                      name="medicalHistory"
+                      placeholder="Please input"
+                      label="Medical History (optional)"
+                    />
 
-                <Input
-                  id="emotionalState"
-                  name="emotionalState"
-                  placeholder="Please input"
-                  label="Emotional State (Optional)"
-                />
+                    <Input
+                      id="lifeStyle"
+                      name="lifeStyle"
+                      placeholder="Please input"
+                      label="Life Style (optional)"
+                    />
 
-                <Input
-                  id="personalTraits"
-                  name="personalTraits"
-                  placeholder="Please input"
-                  label="Personal Traits (Optional)"
-                />
+                    <Input
+                      id="emotionalState"
+                      name="emotionalState"
+                      placeholder="Please input"
+                      label="Emotional State (Optional)"
+                    />
 
-                <Input
-                  id="communicationStyle"
-                  name="communicationStyle"
-                  placeholder="Please input"
-                  label="Communication Style (Optional)"
-                />
+                    <Input
+                      id="personalTraits"
+                      name="personalTraits"
+                      placeholder="Please input"
+                      label="Personal Traits (Optional)"
+                    />
 
-                <Textarea
-                  id="clinicalContext"
-                  name="clinicalContext"
-                  placeholder="Please input"
-                  label="Clinical Context (Optional)"
-                />
+                    <Input
+                      id="communicationStyle"
+                      name="communicationStyle"
+                      placeholder="Please input"
+                      label="Communication Style (Optional)"
+                    />
+
+                    <Textarea
+                      id="clinicalContext"
+                      name="clinicalContext"
+                      placeholder="Please input"
+                      label="Clinical Context (Optional)"
+                    />
+                  </>
+                )}
+
                 <div className="flex justify-center mt-4">
                   <Button
                     loading={isLoading}

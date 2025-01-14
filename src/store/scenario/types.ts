@@ -24,7 +24,7 @@ export interface ScenarioDetail {
   lifeStyle?: string;
 
   // Personal
-  mentalState: string;
+  emotionalState: string;
   personalTraits: string;
   communicationStyle: string;
 
