@@ -8,7 +8,7 @@ declare global {
 import { useAudioRecorder } from "react-audio-voice-recorder";
 
 import MessageBox from "../../../components/message-box/message-box";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { EMessageRole } from "../../../store/dialog/types";
 import ScenarioInformation from "./components/scenario-information";
 import { makeS3Uri } from "./utils";
@@ -32,6 +32,8 @@ const ChatDetail = () => {
   const { uploadBlob } = useAmazonS3();
   const { isMobile } = useResponsive();
 
+  const [isRefetching, setIsRefetching] = useState(false);
+
   const { recordingBlob, startRecording, stopRecording } = useAudioRecorder();
 
   const {
@@ -54,8 +56,10 @@ const ChatDetail = () => {
   const { onSpeak } = useTextToSpeech(scenario?.gender === Gender.MALE);
 
   const refetch = useCallback(async () => {
+    setIsRefetching(true);
     fetchDialogDetail((text: string) => {
       onSpeak(text);
+      setIsRefetching(false);
     });
   }, [fetchDialogDetail, onSpeak]);
 
@@ -90,7 +94,10 @@ const ChatDetail = () => {
   useAllowedRoles([UserRole.STUDENT]);
 
   useEffect(() => {
-    fetchDialogDetail(() => {}, true);
+    setIsRefetching(true);
+    fetchDialogDetail(() => {
+      setIsRefetching(false);
+    }, true);
   }, [fetchDialogDetail]);
 
   return (
@@ -109,7 +116,7 @@ const ChatDetail = () => {
               startListening={startListening}
               startRecording={startRecording}
               onSend={onClickSend}
-              isLoading={isLoading}
+              isLoading={isLoading && isRefetching}
             />
           )}
         </div>
