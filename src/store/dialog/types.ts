@@ -60,6 +60,7 @@ export interface MessageCreateAction {
   payload: {
     message: MessagePayload;
     dialogId: string;
+    verbosityLevel: number;
     successCallback?: SuccessCallback;
     errorCallback?: ErrorCallback;
   };

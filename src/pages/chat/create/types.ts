@@ -15,7 +15,7 @@ export interface ScenarioGenerateForm {
   // Personality and communication
   emotionalState: string;
   personalTraits: string;
-  communicationStyle: string;
+  verbosityLevel: number;
 
   // Clinical context
   clinicalContext: string;

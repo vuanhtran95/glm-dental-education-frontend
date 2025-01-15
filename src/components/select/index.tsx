@@ -6,11 +6,19 @@ interface Props {
   options: Option[];
   label?: string;
   className?: string;
+  innerClassName?: string;
   id: string;
   handleChange?: (e: React.ChangeEvent<any>) => void;
 }
 
-const Select = ({ options, label, id, className, handleChange }: Props) => {
+const Select = ({
+  options,
+  label,
+  id,
+  className,
+  handleChange,
+  innerClassName,
+}: Props) => {
   return (
     <div className={`${!!className && className}`}>
       {label && (
@@ -24,7 +32,8 @@ const Select = ({ options, label, id, className, handleChange }: Props) => {
           id={id}
           onChange={handleChange}
           name={id}
-          className="appearance-none block w-full p-4 h-[54px] text-sm border border-gray-300 rounded-lg bg-gray-800 text-white"
+          className={`appearance-none block w-full p-4 pl-10 ${innerClassName ?? ""} h-[54px] text-sm border 
+          border-gray-300 rounded-lg bg-gray-800 text-white`}
         >
           {options.map((option: Option) => {
             return (

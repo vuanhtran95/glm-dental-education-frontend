@@ -37,10 +37,6 @@ const ScenarioDetailSection = ({ scenarioDetail, onStart }: Props) => {
         Emotional State: {scenarioDetail?.emotionalState}
       </p>
 
-      <p className="text-white mb-4 text-left">
-        Communication Style: {scenarioDetail?.communicationStyle}
-      </p>
-
       <button
         onClick={() => onStart()}
         type="submit"

@@ -22,15 +22,10 @@ const useMessage = ({ dialogId }: Props) => {
     ) => {
       if (!!dialogId) {
         const successFn = () => {
-          successCallback?.()
-        }
+          successCallback?.();
+        };
         dispatch(
-          createMessageAction(
-            message,
-            dialogId,
-            successFn,
-            errorCallback,
-          ),
+          createMessageAction(message, dialogId, successFn, errorCallback),
         );
       }
     },

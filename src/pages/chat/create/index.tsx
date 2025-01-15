@@ -6,7 +6,12 @@ import { Form, Navigate, useNavigate } from "react-router-dom";
 import WelcomeSection from "./components/welcome-section";
 import Button from "src/components/button";
 import { Formik } from "formik";
-import { genderOptions, generateScenarioInitialValues } from "./constants";
+import {
+  emotionalStateOptions,
+  genderOptions,
+  generateScenarioInitialValues,
+  verbosityLevelOptions,
+} from "./constants";
 import Input from "src/components/input";
 import Select from "src/components/select";
 import { ScenarioGenerateForm } from "./types";
@@ -92,6 +97,7 @@ const CreateChat = () => {
                     handleChange={handleChange}
                     options={genderOptions}
                     label="Gender *"
+                    innerClassName="pl-4"
                   />
                 </div>
 
@@ -110,49 +116,19 @@ const CreateChat = () => {
                 </a>
                 {isAdvanced && (
                   <>
-                    <Input
-                      id="occupation"
-                      name="occupation"
-                      placeholder="Please input"
-                      label="Occupation (optional)"
-                      className="grow"
-                    />
-
-                    <Input
-                      id="medicalHistory"
-                      name="medicalHistory"
-                      placeholder="Please input"
-                      label="Medical History (optional)"
-                    />
-
-                    <Input
-                      id="lifeStyle"
-                      name="lifeStyle"
-                      placeholder="Please input"
-                      label="Life Style (optional)"
-                    />
-
-                    <Input
+                    <Select
                       id="emotionalState"
-                      name="emotionalState"
-                      placeholder="Please input"
+                      handleChange={handleChange}
+                      options={emotionalStateOptions}
                       label="Emotional State (Optional)"
                     />
 
-                    <Input
-                      id="personalTraits"
-                      name="personalTraits"
-                      placeholder="Please input"
-                      label="Personal Traits (Optional)"
+                    <Select
+                      id="verbosityLevel"
+                      handleChange={handleChange}
+                      options={verbosityLevelOptions}
+                      label="Verbosity Level"
                     />
-
-                    <Input
-                      id="communicationStyle"
-                      name="communicationStyle"
-                      placeholder="Please input"
-                      label="Communication Style (Optional)"
-                    />
-
                     <Textarea
                       id="clinicalContext"
                       name="clinicalContext"

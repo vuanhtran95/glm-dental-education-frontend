@@ -30,7 +30,6 @@ const ChatDetail = () => {
   const dialogId = params.id;
 
   const { uploadBlob } = useAmazonS3();
-  const { createMessage } = useMessage({ dialogId });
   const { isMobile } = useResponsive();
 
   const { recordingBlob, startRecording, stopRecording } = useAudioRecorder();
@@ -47,6 +46,10 @@ const ChatDetail = () => {
     useDialogDetail({
       dialogId,
     });
+
+  const { createMessage } = useMessage({
+    dialogId,
+  });
 
   const { onSpeak } = useTextToSpeech(scenario?.gender === Gender.MALE);
 

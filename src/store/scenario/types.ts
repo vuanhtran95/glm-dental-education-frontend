@@ -26,7 +26,7 @@ export interface ScenarioDetail {
   // Personal
   emotionalState: string;
   personalTraits: string;
-  communicationStyle: string;
+  verbosityLevel: number;
 
   // Additional
   clinicalContext: string;
