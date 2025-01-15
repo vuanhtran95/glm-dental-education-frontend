@@ -116,7 +116,7 @@ const ChatDetail = () => {
               startListening={startListening}
               startRecording={startRecording}
               onSend={onClickSend}
-              isLoading={isLoading && isRefetching}
+              isLoading={isLoading || isRefetching}
             />
           )}
         </div>
