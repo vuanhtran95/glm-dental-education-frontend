@@ -2,14 +2,15 @@ const WelcomeSection = () => {
   return (
     <>
       <a
-        href="#"
-        className="inline-flex justify-between items-center p-2 pe-4 mb-4 text-sm text-blue-200 bg-blue-100 rounded-full bg-blue-900 text-blue-300 hover:bg-blue-200 hover:bg-blue-800"
+        target="_blank"
+        href="https://forms.office.com/Pages/ResponsePage.aspx?id=FM9wg_MWFky4PHJAcWVDVjmQyI33t55Ch-24lIq1xThURFkyTEE4SjVWRkpHMzJKREQzTk0wSFlMVC4u&origin=QRCode"
+        className="text-white inline-flex justify-between items-center p-2 pe-4 mb-4 text-sm text-blue-200 bg-red-600 rounded-full"
       >
-        <span className="text-xs bg-blue-600 rounded-full text-white px-4 py-1.5 me-3">
-          New
+        <span className="text-xs bg-red-500 rounded-full px-4 py-1.5 me-3">
+          New!
         </span>
         <span className="text-sm font-medium">
-          New virtual patient, self directed learning platform has been launched
+          Please click here to give us feedback!
         </span>
         <svg
           className="w-2.5 h-2.5 ms-2 rtl:rotate-180"

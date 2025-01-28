@@ -12,9 +12,19 @@ const LogOut = () => {
   }, [navigate]);
 
   return (
-    <p onClick={() => onLogOut()} className="mt-8 cursor-pointer">
-      <i className="fa-solid fa-right-from-bracket" /> Log out
-    </p>
+    <div>
+      <p
+        onClick={() => {
+          window.open("/help", "_blank");
+        }}
+        className="mt-8 cursor-pointer"
+      >
+        <i className="fa-solid fa-circle-question"></i> Help
+      </p>
+      <p onClick={() => onLogOut()} className="mt-6 cursor-pointer">
+        <i className="fa-solid fa-right-from-bracket" /> Log out
+      </p>
+    </div>
   );
 };
 

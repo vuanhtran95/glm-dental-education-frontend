@@ -15,6 +15,9 @@ import {
 } from "src/hooks/useNotification";
 import { SuccessCallback } from "src/types";
 
+import qrPng from "src/assets/qr.png";
+import HelpSection from "./components/help-section";
+
 interface LoginProps {
   updateToken: (newToken: string | null) => void;
 }
@@ -49,12 +52,12 @@ const Login: React.FC<LoginProps> = ({ updateToken }) => {
 
   return (
     <div className="flex flex-col justify-center px-6 py-12 lg:px-8">
+      <HelpSection />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign in
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-700">
+          Please Sign in to use the platform
         </h2>
       </div>
-
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <Formik
           initialValues={loginInitialValues}
@@ -87,6 +90,17 @@ const Login: React.FC<LoginProps> = ({ updateToken }) => {
             Sign up
           </a>
         </p>
+        <div className="qr-feedback-container mt-16">
+          <p className="feedback-title mb-4 text-lg text-primary ">
+            Please give us a feedback, thanks so much :)
+          </p>
+          <img src={qrPng}></img>
+
+          <p className="text-center">
+            AI based Interactive Platforms Feedback Questionnaire BDS/BSc DTH
+            24-25
+          </p>
+        </div>
       </div>
     </div>
   );

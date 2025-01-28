@@ -8,14 +8,18 @@ import LogOut from "./log-out";
 import ListDialog from "./list-dialog";
 import { UserRole } from "src/store/user/types";
 import useAllowedRoles from "src/hooks/useUserRole";
+import { useNavigate } from "react-router";
 
 interface Props {
   className?: string;
   setSidebar: (state: boolean) => void;
+  isActive: boolean;
 }
 
-const MenuItem = ({ className, setSidebar }: Props) => {
+const MenuItem = ({ className, setSidebar, isActive }: Props) => {
   const userInfo = getUserInfo();
+
+  const navigate = useNavigate();
 
   const { dialogData, fetchDialogList } = useDialogList({
     userId: userInfo?._id || "",
@@ -38,8 +42,13 @@ const MenuItem = ({ className, setSidebar }: Props) => {
       }`}
       aria-label="Sidebar"
     >
-      <div className="h-full flex flex-col px-3 py-4 overflow-y-auto bg-gray-50 bg-gray-800">
-        <LogoSection />
+      <div className="h-full flex flex-col px-3 py-20 md:py-4 overflow-y-auto bg-gray-50 bg-gray-800">
+        <LogoSection
+          onClick={() => {
+            setSidebar(!isActive);
+            navigate("/new-chat");
+          }}
+        />
         {isStudent && (
           <>
             <NewChatItem setSidebar={setSidebar} />

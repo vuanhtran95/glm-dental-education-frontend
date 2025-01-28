@@ -14,6 +14,7 @@ import PageContainer from "./components/page-container";
 import EvaluateList from "./pages/evaluate/list";
 import EvaluateDetail from "./pages/evaluate/detail";
 import { useToken } from "./hooks/useToken";
+import HelpPage from "./pages/help";
 
 interface ProtectedRoutesProps {
   token: string | null;
@@ -42,6 +43,10 @@ const App = () => {
     {
       path: "*",
       element: <NotFound />,
+    },
+    {
+      path: "/help",
+      element: <HelpPage />,
     },
     {
       element: <ProtectedRoutes token={token} />,

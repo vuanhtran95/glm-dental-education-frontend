@@ -1,6 +1,10 @@
-const LogoSection = () => {
+interface Props {
+  onClick: () => void;
+}
+
+const LogoSection = ({ onClick }: Props) => {
   return (
-    <div className="mb-10 flex">
+    <div className="mb-10 flex" onClick={onClick}>
       <a href="#" className="flex items-center ps-2.5">
         <img
           src="https://flowbite.com/docs/images/logo.svg"

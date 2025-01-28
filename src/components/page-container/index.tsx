@@ -13,6 +13,7 @@ const PageContainer = () => {
       <SideBar
         className={`${isActive ? "translate-x-0" : ""}`}
         setSidebar={setSidebar}
+        isActive={isActive}
       />
       <Header openSidebar={() => setSidebar(!isActive)} />
       <Outlet />
