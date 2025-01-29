@@ -7,7 +7,7 @@ const HelpSection = () => {
           window.open("/help", "_blank");
         }}
       >
-        <a className="text-white inline-flex justify-between items-center p-2 pe-4 mb-4 text-sm text-blue-200 bg-green-600 rounded-full">
+        <a className="cursor-pointer text-white inline-flex justify-between items-center p-2 pe-4 mb-4 text-sm text-blue-200 bg-green-600 rounded-full">
           <span className="text-xs bg-green-800 rounded-full px-4 py-1.5 me-3">
             Click here
           </span>

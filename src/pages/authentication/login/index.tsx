@@ -90,9 +90,20 @@ const Login: React.FC<LoginProps> = ({ updateToken }) => {
             Sign up
           </a>
         </p>
-        <div className="qr-feedback-container mt-16">
+        <div
+          className="qr-feedback-container mt-16"
+          onClick={() => {
+            window.open(
+              "https://forms.office.com/Pages/ResponsePage.aspx?id=FM9wg_MWFky4PHJAcWVDVjmQyI33t55Ch-24lIq1xThURFkyTEE4SjVWRkpHMzJKREQzTk0wSFlMVC4u&origin=QRCode",
+              "_blank",
+            );
+          }}
+        >
+          <p className="feedback-title text-lg text-primary ">
+            Please scan or tap here to give us a feedback
+          </p>
           <p className="feedback-title mb-4 text-lg text-primary ">
-            Please give us a feedback, thanks so much :)
+            Thanks so much :)
           </p>
           <img src={qrPng}></img>
 
