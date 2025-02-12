@@ -94,7 +94,7 @@ const Login: React.FC<LoginProps> = ({ updateToken }) => {
           className="qr-feedback-container mt-16"
           onClick={() => {
             window.open(
-              "https://forms.office.com/Pages/ResponsePage.aspx?id=FM9wg_MWFky4PHJAcWVDVjmQyI33t55Ch-24lIq1xThURFkyTEE4SjVWRkpHMzJKREQzTk0wSFlMVC4u&origin=QRCode",
+              "https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fforms.office.com%2FPages%2FDesignPageV2.aspx%3Fsubpage%3Ddesign%26FormId%3DFM9wg_MWFky4PHJAcWVDVjmQyI33t55Ch-24lIq1xThUNjFYS0xJRzlXTEZGTzBSNEFNWU00UUpNVi4u&data=05%7C02%7Canh.v.tran%40kcl.ac.uk%7C977fd21e59244894736208dd49c6d90f%7C8370cf1416f34c16b83c724071654356%7C0%7C0%7C638747840588567068%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=ma9KYoTJVJhfELAVu1ogjpMLgBFnVLG96PrRl7jMsGo%3D&reserved=0",
               "_blank",
             );
           }}
