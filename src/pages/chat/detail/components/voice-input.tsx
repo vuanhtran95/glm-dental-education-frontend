@@ -13,6 +13,7 @@ interface Props {
   startRecording: () => void;
   onSend: () => Promise<void>;
   isLoading: boolean;
+  isSending: boolean;
 }
 
 const VoiceInput = ({
@@ -25,6 +26,7 @@ const VoiceInput = ({
   startRecording,
   onSend,
   isLoading,
+  isSending,
 }: Props) => {
   const { isMobile } = useResponsive();
 
@@ -52,7 +54,6 @@ const VoiceInput = ({
   const onClickSend = useCallback(async () => {
     stopListening();
     stopRecording();
-    setMode(MicrophoneMode.IDLE);
     setMode(MicrophoneMode.SENDING);
     onSend().then(() => {
       resetTranscript();
@@ -81,7 +82,7 @@ const VoiceInput = ({
       <div className="flex justify-end pb-1 pr-1 text-white text-xs">
         {!isLoading && (
           <>
-            {mode === MicrophoneMode.IDLE && (
+            {mode === MicrophoneMode.IDLE && !isSending && (
               <button
                 onClick={() => onClickRecord()}
                 type="submit"
@@ -123,7 +124,7 @@ const VoiceInput = ({
               </>
             )}
 
-            {mode === MicrophoneMode.SENDING && (
+            {(mode === MicrophoneMode.SENDING || isSending) && (
               <>
                 <button
                   onClick={() => onClickSend()}

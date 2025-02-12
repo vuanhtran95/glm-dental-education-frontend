@@ -8,7 +8,7 @@ declare global {
 import { useAudioRecorder } from "react-audio-voice-recorder";
 
 import MessageBox from "../../../components/message-box/message-box";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { EMessageRole } from "../../../store/dialog/types";
 import ScenarioInformation from "./components/scenario-information";
 import { makeS3Uri } from "./utils";
@@ -33,6 +33,8 @@ const ChatDetail = () => {
   const { isMobile } = useResponsive();
 
   const { recordingBlob, startRecording, stopRecording } = useAudioRecorder();
+
+  const [isSending, setIsSending] = useState(false);
 
   const {
     startListening,
@@ -60,11 +62,14 @@ const ChatDetail = () => {
   }, [fetchDialogDetail, onSpeak]);
 
   const onCreateMessage = useCallback(
-    async (newMessage: string, uri?: string) => {
+    async (newMessage: string, uri?: string, callback?: () => void) => {
       if (!dialogId) return;
 
       try {
-        createMessage({ content: newMessage, uri }, refetch);
+        createMessage({ content: newMessage, uri }, () => {
+          callback?.();
+          refetch();
+        });
       } catch (e) {
         console.error(e);
       }
@@ -75,10 +80,14 @@ const ChatDetail = () => {
   const onClickSend = useCallback(async () => {
     if (!recordingBlob) return;
 
+    setIsSending(true);
+
     const s3Id = await uploadBlob(recordingBlob);
     const uri = makeS3Uri(s3Id);
 
-    await onCreateMessage(transcript, uri);
+    await onCreateMessage(transcript, uri, () => {
+      setIsSending(false);
+    });
 
     resetTranscript();
   }, [uploadBlob, recordingBlob, onCreateMessage, transcript, resetTranscript]);
@@ -110,6 +119,7 @@ const ChatDetail = () => {
               startRecording={startRecording}
               onSend={onClickSend}
               isLoading={isLoading}
+              isSending={isSending}
             />
           )}
         </div>

@@ -14,7 +14,7 @@ const api = axios.create({
   },
 });
 
-api.defaults.timeout = 15000;
+api.defaults.timeout = 40000;
 
 // Add a request interceptor
 api.interceptors.request.use(function (config) {

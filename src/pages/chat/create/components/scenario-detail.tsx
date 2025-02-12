@@ -30,10 +30,6 @@ const ScenarioDetailSection = ({ scenarioDetail, onStart }: Props) => {
       </p>
 
       <p className="text-white mb-4 text-left">
-        Additional: {scenarioDetail?.clinicalContext}
-      </p>
-
-      <p className="text-white mb-4 text-left">
         Emotional State: {scenarioDetail?.emotionalState}
       </p>
 
