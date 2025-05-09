@@ -17,12 +17,12 @@ import VoiceInput from "./components/voice-input";
 import useAmazonS3 from "src/hooks/useAmazonS3";
 import useMessage from "src/hooks/useMessage";
 import useSpeechToText from "src/hooks/useSpeechToText";
-import useTextToSpeech from "src/hooks/useTextToSpeech";
 import { Gender } from "src/store/scenario/types";
 import StatusGroup from "./components/status-group";
 import { UserRole } from "src/store/user/types";
 import useAllowedRoles from "src/hooks/useUserRole";
 import useResponsive from "src/hooks/useResponsive";
+import { useElevenLabs } from "src/hooks/useElevenLabs";
 
 const ChatDetail = () => {
   const params = useParams();
@@ -53,13 +53,18 @@ const ChatDetail = () => {
     dialogId,
   });
 
-  const { onSpeak } = useTextToSpeech(scenario?.gender === Gender.MALE);
+  // const { onSpeak } = useTextToSpeech(scenario?.gender === Gender.MALE);
+
+  const { onSpeakStream: onSpeakElevenLabs } = useElevenLabs(
+    scenario?.gender === Gender.MALE ? Gender.MALE : Gender.FEMALE,
+  );
 
   const refetch = useCallback(async () => {
     fetchDialogDetail((text: string) => {
-      onSpeak(text);
+      // onSpeak(text);
+      onSpeakElevenLabs(text);
     });
-  }, [fetchDialogDetail, onSpeak]);
+  }, [fetchDialogDetail, onSpeakElevenLabs]);
 
   const onCreateMessage = useCallback(
     async (newMessage: string, uri?: string, callback?: () => void) => {
